@@ -3,20 +3,18 @@
 @import "tailwindcss";
 
 :root {
-  --atlas-green: #2D5016;
-  --atlas-ochre: #C4870A;
-  --atlas-cream: #F5F0E8;
-  --atlas-red: #8B1A1A;
-  --atlas-black: #1A1A18;
+  --atlas-blue: #1B75BC;
+  --atlas-green: #6B9433;
+  --atlas-cream: #F0F4F0;
+  --atlas-dark: #1A2433;
+  --atlas-mid: #3D5A3E;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   background: var(--atlas-cream);
-  color: var(--atlas-black);
+  color: var(--atlas-dark);
   font-family: 'Inter', sans-serif;
 }
 
@@ -27,15 +25,9 @@ h1, h2, h3, h4, h5, h6 {
 .leaflet-container {
   height: 100%;
   width: 100%;
-  border-radius: 0.5rem;
 }
 
 @media print {
-  nav, .no-print {
-    display: none !important;
-  }
-  body {
-    background: white;
-    color: black;
-  }
+  nav, .no-print { display: none !important; }
+  body { background: white; color: black; }
 }
