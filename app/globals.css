@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+@import 'leaflet/dist/leaflet.css';
+@import "tailwindcss";
+
+:root {
+  --atlas-green: #2D5016;
+  --atlas-ochre: #C4870A;
+  --atlas-cream: #F5F0E8;
+  --atlas-red: #8B1A1A;
+  --atlas-black: #1A1A18;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--atlas-cream);
+  color: var(--atlas-black);
+  font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  border-radius: 0.5rem;
+}
+
+@media print {
+  nav, .no-print {
+    display: none !important;
+  }
+  body {
+    background: white;
+    color: black;
+  }
+}
