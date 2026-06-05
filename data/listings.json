@@ -279,5 +279,65 @@
     "lat": 44.1053,
     "lng": -78.9460,
     "tags": ["bikes", "appliances", "mending", "rural outreach"]
+  },
+  {
+    "id": "26",
+    "name": "Durham East Cross Forest Conservation Area",
+    "category": "Public Space",
+    "address": "4560 Devitts Rd, Blackstock, ON (east of Regional Rd 57)",
+    "hours": "Open year-round, dawn to dusk",
+    "description": "A forested conservation area south of Blackstock with trail access through mixed woodland. Maintained by the Central Lake Ontario Conservation Authority. One of the larger natural areas in the south end of the township.",
+    "contact": "Explore Durham East Cross Forest | Trails and Nature",
+    "lat": 44.0050,
+    "lng": -78.9300,
+    "tags": ["trails", "forest", "conservation", "Blackstock", "CLOCA"]
+  },
+  {
+    "id": "27",
+    "name": "Scugog Island Crown Land",
+    "category": "Public Space",
+    "address": "Island Road, north of Great Blue Heron Casino, Port Perry, ON",
+    "hours": "Open year-round — check Crown Land Use Policy Atlas for permitted uses",
+    "description": "Publicly accessible Crown land on Scugog Island. Follow Island Road north past the Great Blue Heron Charity Casino to the Carnegie Beach Road intersection — a marked entrance will be on your right. Used for walking, birdwatching, and quiet recreation.",
+    "contact": "Crown Land Use Policy Atlas | ontario.ca",
+    "lat": 44.1450,
+    "lng": -78.9640,
+    "tags": ["Crown land", "Island", "birdwatching", "public access", "Lake Scugog"]
+  },
+  {
+    "id": "28",
+    "name": "Nonquon Provincial Wildlife Area",
+    "category": "Public Space",
+    "address": "Access from Scugog Line 10, Old Simcoe Road, and Scugog Line 12",
+    "hours": "Open year-round — roadside parking only",
+    "description": "A provincially significant wildlife area known for waterfowl, amphibians, and wetland habitat. Multiple access points off Scugog Lines 10 and 12. No facilities — come for the birds, the quiet, and the seasonal flooding spectacle.",
+    "contact": "Nonquon Wildlife Area • Ontario Nature Trails",
+    "lat": 44.1300,
+    "lng": -79.0100,
+    "tags": ["wildlife", "wetland", "birdwatching", "provincial", "no facilities"]
+  },
+  {
+    "id": "29",
+    "name": "Crow's Pass Conservation Area",
+    "category": "Public Space",
+    "address": "231 Middle March Rd, Port Perry, ON",
+    "hours": "Open year-round",
+    "description": "A quiet conservation area south of Port Perry with forested trails, wetlands, and creek corridors. Maintained by CLOCA. Good for a short walk without needing to leave the township.",
+    "contact": "Crow's Pass | CLOCA | Central Lake Ontario Conservation Authority",
+    "lat": 44.0870,
+    "lng": -78.9810,
+    "tags": ["trails", "wetland", "creek", "CLOCA", "Port Perry"]
+  },
+  {
+    "id": "30",
+    "name": "Beaver River Wetland Conservation Area",
+    "category": "Public Space",
+    "address": "Beaver River Wetland, Lake Simcoe Region",
+    "hours": "Open year-round",
+    "description": "A significant wetland conservation area at the northern edge of Scugog's watershed, managed by the Lake Simcoe Region Conservation Authority. Important habitat for migratory birds and rare plant species.",
+    "contact": "Beaver River Wetland — Lake Simcoe Region Conservation Authority",
+    "lat": 44.3500,
+    "lng": -79.0800,
+    "tags": ["wetland", "migratory birds", "conservation", "Lake Simcoe"]
   }
 ]
