@@ -14,11 +14,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full antialiased">
-      <head>
-        <script dangerouslySetInnerHTML={{
-          __html: `try{var t=localStorage.getItem('atlas-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}`
-        }} />
-      </head>
       <body className="min-h-full flex flex-col">
         <Nav />
         <main className="flex-1">{children}</main>

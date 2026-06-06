@@ -18,7 +18,10 @@ function ThemeToggle() {
 
   useEffect(() => {
     const stored = localStorage.getItem("atlas-theme") as "dark" | "light" | null;
-    if (stored) setTheme(stored);
+    if (stored) {
+      setTheme(stored);
+      document.documentElement.setAttribute("data-theme", stored);
+    }
   }, []);
 
   function toggle() {
