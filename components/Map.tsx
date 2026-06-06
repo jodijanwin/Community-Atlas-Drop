@@ -5,6 +5,19 @@ import { MapContainer, TileLayer, Marker, Popup, useMap, GeoJSON } from "react-l
 import L from "leaflet";
 import { Listing, CATEGORY_COLORS } from "@/types";
 
+const LAYERS = {
+  clean: {
+    label: "Clean",
+    url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  },
+  trails: {
+    label: "Trails",
+    url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  },
+};
+
 function createColoredIcon(color: string) {
   return L.divIcon({
     className: "",
@@ -32,6 +45,7 @@ interface Props {
 export default function AtlasMap({ listings, selected, onSelect }: Props) {
   const [durhamGeo, setDurhamGeo] = useState<object | null>(null);
   const [scugogGeo, setScugogGeo] = useState<object | null>(null);
+  const [activeLayer, setActiveLayer] = useState<keyof typeof LAYERS>("clean");
 
   useEffect(() => {
     fetch("https://nominatim.openstreetmap.org/search?q=Regional+Municipality+of+Durham+Ontario+Canada&polygon_geojson=1&format=json&limit=1")
@@ -45,66 +59,92 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
       .catch(() => {});
   }, []);
 
+  const layer = LAYERS[activeLayer];
+
   return (
-    <MapContainer
-      center={[44.1053, -78.9200]}
-      zoom={11}
-      style={{ height: "100%", width: "100%" }}
-    >
-      <TileLayer
-        url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-      />
+    <div style={{ position: "relative", height: "100%", width: "100%" }}>
+      {/* Layer toggle */}
+      <div style={{ position: "absolute", top: 12, right: 12, zIndex: 1000, display: "flex", borderRadius: 8, overflow: "hidden", boxShadow: "0 2px 8px rgba(0,0,0,0.18)" }}>
+        {(Object.keys(LAYERS) as (keyof typeof LAYERS)[]).map((key) => (
+          <button
+            key={key}
+            onClick={() => setActiveLayer(key)}
+            style={{
+              padding: "6px 14px",
+              fontSize: 12,
+              fontWeight: 600,
+              fontFamily: "'Space Grotesk', sans-serif",
+              border: "none",
+              cursor: "pointer",
+              background: activeLayer === key ? "#1B75BC" : "white",
+              color: activeLayer === key ? "white" : "#5A7080",
+              transition: "all 0.15s",
+            }}
+          >
+            {LAYERS[key].label}
+          </button>
+        ))}
+      </div>
 
-      {/* Durham Region — faint fill, thin border */}
-      {durhamGeo && (
-        <GeoJSON
-          data={durhamGeo as GeoJSON.GeoJsonObject}
-          style={{
-            color: "#1B75BC",
-            weight: 1,
-            opacity: 0.3,
-            fillColor: "#1B75BC",
-            fillOpacity: 0.04,
-            dashArray: "4 4",
-          }}
+      <MapContainer
+        center={[44.1053, -78.9200]}
+        zoom={11}
+        style={{ height: "100%", width: "100%" }}
+      >
+        <TileLayer
+          key={activeLayer}
+          url={layer.url}
+          attribution={layer.attribution}
         />
-      )}
 
-      {/* Scugog Township — bold border, no fill */}
-      {scugogGeo && (
-        <GeoJSON
-          data={scugogGeo as GeoJSON.GeoJsonObject}
-          style={{
-            color: "#1B75BC",
-            weight: 3,
-            opacity: 0.85,
-            fillColor: "#6B9433",
-            fillOpacity: 0.06,
-          }}
-        />
-      )}
+        {durhamGeo && (
+          <GeoJSON
+            data={durhamGeo as GeoJSON.GeoJsonObject}
+            style={{
+              color: "#1B75BC",
+              weight: 1,
+              opacity: 0.3,
+              fillColor: "#1B75BC",
+              fillOpacity: 0.04,
+              dashArray: "4 4",
+            }}
+          />
+        )}
 
-      <FlyToSelected listing={selected} />
+        {scugogGeo && (
+          <GeoJSON
+            data={scugogGeo as GeoJSON.GeoJsonObject}
+            style={{
+              color: "#1B75BC",
+              weight: 3,
+              opacity: 0.85,
+              fillColor: "#6B9433",
+              fillOpacity: 0.06,
+            }}
+          />
+        )}
 
-      {listings.map((listing) => (
-        <Marker
-          key={listing.id}
-          position={[listing.lat, listing.lng]}
-          icon={createColoredIcon(CATEGORY_COLORS[listing.category])}
-          eventHandlers={{ click: () => onSelect(listing) }}
-        >
-          <Popup>
-            <div style={{ fontFamily: "'Space Grotesk', sans-serif", minWidth: 200 }}>
-              <p style={{ fontSize: 11, fontWeight: 600, color: CATEGORY_COLORS[listing.category], margin: "0 0 2px" }}>{listing.category}</p>
-              <p style={{ fontSize: 13, fontWeight: 700, margin: "0 0 4px" }}>{listing.name}</p>
-              <p style={{ fontSize: 11, color: "#5A6E5B", margin: "0 0 2px" }}>{listing.address}</p>
-              <p style={{ fontSize: 11, fontWeight: 600, color: "#1B75BC", margin: "0 0 6px" }}>{listing.hours}</p>
-              <p style={{ fontSize: 11, lineHeight: 1.5, margin: 0 }}>{listing.description}</p>
-            </div>
-          </Popup>
-        </Marker>
-      ))}
-    </MapContainer>
+        <FlyToSelected listing={selected} />
+
+        {listings.map((listing) => (
+          <Marker
+            key={listing.id}
+            position={[listing.lat, listing.lng]}
+            icon={createColoredIcon(CATEGORY_COLORS[listing.category])}
+            eventHandlers={{ click: () => onSelect(listing) }}
+          >
+            <Popup>
+              <div style={{ fontFamily: "'Space Grotesk', sans-serif", minWidth: 200 }}>
+                <p style={{ fontSize: 11, fontWeight: 600, color: CATEGORY_COLORS[listing.category], margin: "0 0 2px" }}>{listing.category}</p>
+                <p style={{ fontSize: 13, fontWeight: 700, margin: "0 0 4px" }}>{listing.name}</p>
+                <p style={{ fontSize: 11, color: "#5A6E5B", margin: "0 0 2px" }}>{listing.address}</p>
+                <p style={{ fontSize: 11, fontWeight: 600, color: "#1B75BC", margin: "0 0 6px" }}>{listing.hours}</p>
+                <p style={{ fontSize: 11, lineHeight: 1.5, margin: 0 }}>{listing.description}</p>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
+      </MapContainer>
+    </div>
   );
 }
