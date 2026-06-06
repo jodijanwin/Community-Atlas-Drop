@@ -1,0 +1,38 @@
+[
+  {
+    "week": 1,
+    "label": "Happy New Year — atlas updated with 3 new listings",
+    "url": "",
+    "type": "update"
+  },
+  {
+    "week": 8,
+    "label": "Port Perry Repair Café returns for the season",
+    "url": "",
+    "type": "event"
+  },
+  {
+    "week": 12,
+    "label": "Scugog Shores Tenant Network: know-your-rights night",
+    "url": "",
+    "type": "event"
+  },
+  {
+    "week": 16,
+    "label": "Lake Scugog Growers Collective opens for the season",
+    "url": "",
+    "type": "news"
+  },
+  {
+    "week": 20,
+    "label": "Nestleton Community Garden plots available — waitlist open",
+    "url": "",
+    "type": "news"
+  },
+  {
+    "week": 23,
+    "label": "30 resources now mapped across Scugog Township",
+    "url": "",
+    "type": "update"
+  }
+]

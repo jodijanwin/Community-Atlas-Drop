@@ -1,7 +1,9 @@
 import Link from "next/link";
 import listings from "@/data/listings.json";
 import stories from "@/data/stories.json";
+import weeklyEntries from "@/data/weekly.json";
 import { Category, CATEGORY_COLORS } from "@/types";
+import WeeklyGrid from "@/components/WeeklyGrid";
 
 const STATS = [
   { value: listings.length.toString(), label: "resources mapped" },
@@ -133,6 +135,22 @@ export default function HomePage() {
             Scugog Township is full of skills, generosity, and care that go unrecognized and unconnected. Once people see it, they can't un-see it — and they start to join it.
           </p>
           <Link href="/about" className="text-sm font-semibold underline" style={{ color: "#5A7080" }}>Read the full story of this project →</Link>
+        </div>
+      </section>
+
+      {/* ── 52 WEEKS IN SCUGOG ──────────────────────────────── */}
+      <section className="px-6 py-14 border-t" style={{ borderColor: "#243040" }}>
+        <div className="max-w-4xl mx-auto">
+          <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "#5A7080" }}>This year</p>
+          <h2 className="text-3xl font-bold mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "#F0F4F0" }}>52 Weeks in Scugog</h2>
+          <p className="text-sm mb-8 max-w-xl" style={{ color: "#5A7080" }}>
+            Each square is a week. Marked weeks have something attached — an event, a news story, an atlas update. The empty ones ahead are possibility.
+          </p>
+          <WeeklyGrid entries={weeklyEntries as any} />
+          <p className="text-xs mt-6" style={{ color: "#3D4E5C" }}>
+            Want to add something to a week?{" "}
+            <Link href="/submit" className="underline" style={{ color: "#5A7080" }}>Submit it.</Link>
+          </p>
         </div>
       </section>
 
