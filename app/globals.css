@@ -2,19 +2,45 @@
 @import 'leaflet/dist/leaflet.css';
 @import "tailwindcss";
 
+/* ── Dark mode (default) ───────────────────── */
 :root {
-  --atlas-blue: #1B75BC;
-  --atlas-green: #6B9433;
-  --atlas-cream: #F0F4F0;
-  --atlas-dark: #1A2433;
-  --atlas-mid: #3D5A3E;
+  --bg:           #1A2433;
+  --bg-card:      #1E2E3E;
+  --bg-page:      #F0F4F0;
+  --bg-white:     #ffffff;
+  --text:         #F0F4F0;
+  --text-2:       #8AA0A8;
+  --text-3:       #5A7080;
+  --text-4:       #3D4E5C;
+  --text-dark:    #1A2433;
+  --accent:       #6BB8F0;
+  --border:       #243040;
+  --border-2:     #2D3F52;
+  --border-light: #D8E4D8;
+}
+
+/* ── Light mode ────────────────────────────── */
+html[data-theme="light"] {
+  --bg:           #ffffff;
+  --bg-card:      #F0F4F0;
+  --bg-page:      #F8FAF8;
+  --bg-white:     #ffffff;
+  --text:         #1A2433;
+  --text-2:       #5A7080;
+  --text-3:       #3D5060;
+  --text-4:       #8AA0A8;
+  --text-dark:    #1A2433;
+  --accent:       #1B75BC;
+  --border:       #D8E4D8;
+  --border-2:     #C8D8C8;
+  --border-light: #D8E4D8;
 }
 
 * { box-sizing: border-box; }
 
 body {
-  background: var(--atlas-cream);
-  color: var(--atlas-dark);
+  background: var(--bg-page);
+  color: var(--text-dark);
   font-family: 'Inter', sans-serif;
 }
 

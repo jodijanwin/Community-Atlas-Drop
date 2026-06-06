@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function AboutPage() {
   return (
-    <div style={{ background: "#F0F4F0", minHeight: "calc(100vh - 56px)" }}>
+    <div style={{ background: "var(--bg-page)", minHeight: "calc(100vh - 56px)" }}>
       <div className="max-w-2xl mx-auto px-6 py-12 sm:py-16">
         <div className="mb-12">
           <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#1B75BC" }}>About This Project</p>
@@ -20,7 +20,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="mb-10 p-6 rounded-lg border-l-4" style={{ background: "white", borderLeftColor: "#6B9433", boxShadow: "0 1px 4px rgba(0,0,0,0.05)" }}>
+        <section className="mb-10 p-6 rounded-lg border-l-4" style={{ background: "var(--bg-white)", borderLeftColor: "#6B9433", boxShadow: "0 1px 4px rgba(0,0,0,0.05)" }}>
           <h2 className="text-xl font-bold mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "#1A2433" }}>Why It Works</h2>
           <div className="space-y-3 text-sm leading-relaxed" style={{ color: "#3D5040" }}>
             <p>A community that sees only scarcity behaves one way. A community that sees itself as resourced, connected, and capable begins to self-organize. The atlas is an epiphany device — it makes cooperation imaginable, then practical.</p>
