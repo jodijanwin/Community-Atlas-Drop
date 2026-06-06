@@ -58,7 +58,7 @@ export default function WeeklyGrid({ entries }: Props) {
       </div>
 
       {/* Grid */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(13, minmax(0, 1fr))", gap: 4 }}>
         {Array.from({ length: 52 }, (_, i) => {
           const week = i + 1;
           const isPast = week < currentWeek;

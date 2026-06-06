@@ -34,19 +34,19 @@ function AtlasContent() {
   }), [selectedCategory, query]);
 
   return (
-    <div style={{ background: "var(--bg-page)", height: "calc(100vh - 56px)", display: "flex", flexDirection: "column" }}>
-      <div className="px-4 py-3 border-b shrink-0" style={{ background: "var(--bg-white)", borderColor: "var(--border-light)" }}>
+    <div style={{ background: "#F0F4F0", height: "calc(100vh - 56px)", display: "flex", flexDirection: "column" }}>
+      <div className="px-4 py-3 border-b shrink-0" style={{ background: "white", borderColor: "#D8E4D8" }}>
         <div className="max-w-7xl mx-auto flex flex-col gap-3">
           <div className="flex items-center gap-3">
             <h1 className="text-lg font-bold shrink-0" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "#1A2433" }}>Scugog Community Atlas</h1>
-            <input type="text" placeholder="Search resources, skills, places…" value={query} onChange={(e) => setQuery(e.target.value)} className="flex-1 max-w-sm text-sm px-3 py-1.5 rounded-lg border outline-none" style={{ borderColor: "var(--border-light)", background: "#F8FAF8", color: "#1A2433" }} />
+            <input type="text" placeholder="Search resources, skills, places…" value={query} onChange={(e) => setQuery(e.target.value)} className="flex-1 max-w-sm text-sm px-3 py-1.5 rounded-lg border outline-none" style={{ borderColor: "#D8E4D8", background: "#F8FAF8", color: "#1A2433" }} />
             <span className="text-xs shrink-0" style={{ color: "#8AA0A8" }}>{filtered.length} of {listings.length} shown</span>
           </div>
           <CategoryFilter selected={selectedCategory} onChange={setSelectedCategory} />
         </div>
       </div>
       <div className="flex-1 flex overflow-hidden">
-        <div className="w-full sm:w-80 lg:w-96 shrink-0 overflow-y-auto border-r" style={{ borderColor: "var(--border-light)", background: "var(--bg-page)" }}>
+        <div className="w-full sm:w-80 lg:w-96 shrink-0 overflow-y-auto border-r" style={{ borderColor: "#D8E4D8", background: "#F0F4F0" }}>
           {filtered.length === 0 ? (
             <div className="p-6 text-center"><p className="text-sm" style={{ color: "#8AA0A8" }}>No resources match your search.</p></div>
           ) : (
@@ -67,7 +67,7 @@ function AtlasContent() {
 
 export default function AtlasPage() {
   return (
-    <Suspense fallback={<div style={{ background: "var(--bg-page)", height: "calc(100vh - 56px)" }} />}>
+    <Suspense fallback={<div style={{ background: "#F0F4F0", height: "calc(100vh - 56px)" }} />}>
       <AtlasContent />
     </Suspense>
   );
