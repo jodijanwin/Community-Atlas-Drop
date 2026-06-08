@@ -1,0 +1,68 @@
+[
+  {
+    "id": "1",
+    "title": "Port Perry Repair Café",
+    "date": "2026-06-14",
+    "time": "10:00–13:00",
+    "location": "Port Perry Legion Hall, 16 Water St, Port Perry",
+    "category": "Repair Skills",
+    "description": "Bring your broken things — small appliances, clothing, bikes, electronics. Volunteer fixers will work with you to repair them for free. No appointment needed.",
+    "contact": "portperryrepaircafe@gmail.com",
+    "recurring": "Second Saturday of every month"
+  },
+  {
+    "id": "2",
+    "title": "Scugog Shores Farmers Market — Season Opening",
+    "date": "2026-06-20",
+    "time": "08:00–13:00",
+    "location": "Scugog Memorial Public Library Parking Lot, Port Perry",
+    "category": "Free Food",
+    "description": "Opening weekend of the summer market. Local growers, bakers, and makers. Cash and debit accepted at most vendors.",
+    "contact": "",
+    "recurring": "Every Saturday through October"
+  },
+  {
+    "id": "3",
+    "title": "Tenant Know-Your-Rights Night",
+    "date": "2026-06-25",
+    "time": "18:30–20:30",
+    "location": "Blackstock Community Centre, 23 Baldwin St, Blackstock",
+    "category": "Tenant Defense",
+    "description": "A plain-language walk through the Residential Tenancies Act for Scugog renters. What landlords can and can't do, how to respond to N-forms, and where to get help. Free and open to all.",
+    "contact": "scugogtenants@proton.me",
+    "recurring": ""
+  },
+  {
+    "id": "4",
+    "title": "Nestleton Community Garden — Work Bee",
+    "date": "2026-07-05",
+    "time": "09:00–12:00",
+    "location": "Nestleton Community Garden, Nestleton Station",
+    "category": "Mutual Aid",
+    "description": "Seasonal work bee — weeding, bed prep, and shared harvest. New plot holders welcome. Bring gloves and a water bottle.",
+    "contact": "",
+    "recurring": "First Sunday of the month, June–September"
+  },
+  {
+    "id": "5",
+    "title": "Scugog Seed & Plant Swap",
+    "date": "2026-07-12",
+    "time": "10:00–14:00",
+    "location": "Prince Albert Community Hall, Prince Albert",
+    "category": "Local Makers",
+    "description": "Bring seeds, seedlings, cuttings, or bulbs — take what you need. Heirloom varieties especially welcome. Free coffee and conversation.",
+    "contact": "",
+    "recurring": ""
+  },
+  {
+    "id": "6",
+    "title": "Co-op Information Night — Is a Co-op Right for Us?",
+    "date": "2026-07-17",
+    "time": "19:00–21:00",
+    "location": "Port Perry Public Library, 247 Queen St, Port Perry",
+    "category": "Co-op Leads",
+    "description": "An open conversation for anyone curious about starting or joining a co-operative in Scugog — food buying co-ops, housing co-ops, worker co-ops. Facilitated by a member of Co-operatives and Mutuals Canada.",
+    "contact": "library@scugog.ca",
+    "recurring": ""
+  }
+]
