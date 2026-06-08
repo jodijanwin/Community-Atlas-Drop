@@ -1,7 +1,9 @@
 import Link from "next/link";
 import listings from "@/data/listings.json";
 import stories from "@/data/stories.json";
+import weeklyEntries from "@/data/weekly.json";
 import { Category, CATEGORY_COLORS } from "@/types";
+import WeeklyGrid from "@/components/WeeklyGrid";
 
 const STATS = [
   { value: listings.length.toString(), label: "resources mapped" },
@@ -136,8 +138,24 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── A FEW PLACES TO START — white ───────────────────── */}
+      {/* ── 52 WEEKS IN SCUGOG — white ───────────────────────── */}
       <section className="px-6 py-14 border-t" style={{ background: "white", borderColor: "#D8E4D8" }}>
+        <div className="max-w-4xl mx-auto">
+          <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "#8AA0A8" }}>This year</p>
+          <h2 className="text-3xl font-bold mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "#1A2433" }}>52 Weeks in Scugog</h2>
+          <p className="text-sm mb-8 max-w-xl" style={{ color: "#5A7080" }}>
+            Each square is a week. Marked weeks have something attached — an event, a news story, an atlas update. The empty ones ahead are possibility.
+          </p>
+          <WeeklyGrid entries={weeklyEntries as any} />
+          <p className="text-xs mt-6" style={{ color: "#8AA0A8" }}>
+            Want to add something to a week?{" "}
+            <Link href="/submit" className="underline" style={{ color: "#5A7080" }}>Submit it.</Link>
+          </p>
+        </div>
+      </section>
+
+      {/* ── A FEW PLACES TO START — light ───────────────────── */}
+      <section className="px-6 py-14 border-t" style={{ background: "#F0F4F0", borderColor: "#D8E4D8" }}>
         <div className="max-w-4xl mx-auto">
           <div className="flex items-end justify-between mb-6">
             <h2 className="text-2xl font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "#1A2433" }}>A few places to start</h2>
@@ -145,7 +163,7 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {listings.slice(0, 3).map((listing) => (
-              <Link key={listing.id} href={`/atlas?id=${listing.id}`} className="p-4 rounded-lg border transition-all hover:shadow-sm" style={{ background: "#F8FAF8", borderColor: "#D8E4D8" }}>
+              <Link key={listing.id} href={`/atlas?id=${listing.id}`} className="p-4 rounded-lg border transition-all hover:shadow-sm" style={{ background: "white", borderColor: "#D8E4D8" }}>
                 <div className="flex items-center gap-2 mb-2">
                   <div className="w-2 h-2 rounded-full shrink-0" style={{ background: CATEGORY_COLORS[listing.category as Category] }} />
                   <span className="text-xs" style={{ color: "#5A7080" }}>{listing.category}</span>
@@ -155,20 +173,6 @@ export default function HomePage() {
               </Link>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ── UPCOMING EVENTS TEASER — light ──────────────────── */}
-      <section className="px-6 py-14 border-t" style={{ background: "#F0F4F0", borderColor: "#D8E4D8" }}>
-        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "#6B9433" }}>What's on</p>
-            <h2 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "#1A2433" }}>Community Events</h2>
-            <p className="text-sm max-w-md" style={{ color: "#5A7080" }}>Repair cafés, seed swaps, tenant nights, market days — what's coming up in Scugog this month.</p>
-          </div>
-          <Link href="/events" className="shrink-0 px-6 py-2.5 rounded-lg text-sm font-semibold transition-all hover:opacity-90" style={{ fontFamily: "'Space Grotesk', sans-serif", background: "#6B9433", color: "white" }}>
-            See all events →
-          </Link>
         </div>
       </section>
 
