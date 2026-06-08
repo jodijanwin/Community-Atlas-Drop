@@ -44,18 +44,12 @@ interface Props {
 
 export default function AtlasMap({ listings, selected, onSelect }: Props) {
   const [durhamGeo, setDurhamGeo] = useState<object | null>(null);
-  const [scugogGeo, setScugogGeo] = useState<object | null>(null);
   const [activeLayer, setActiveLayer] = useState<keyof typeof LAYERS>("clean");
 
   useEffect(() => {
     fetch("https://nominatim.openstreetmap.org/search?q=Regional+Municipality+of+Durham+Ontario+Canada&polygon_geojson=1&format=json&limit=1")
       .then((r) => r.json())
       .then((data) => { if (data[0]?.geojson) setDurhamGeo(data[0].geojson); })
-      .catch(() => {});
-
-    fetch("https://nominatim.openstreetmap.org/search?q=Scugog+Township+Ontario+Canada&polygon_geojson=1&format=json&limit=1")
-      .then((r) => r.json())
-      .then((data) => { if (data[0]?.geojson) setScugogGeo(data[0].geojson); })
       .catch(() => {});
   }, []);
 
@@ -73,11 +67,11 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
               padding: "6px 14px",
               fontSize: 12,
               fontWeight: 600,
-              fontFamily: "'Space Grotesk', sans-serif",
+              fontFamily: "'Lora', serif",
               border: "none",
               cursor: "pointer",
-              background: activeLayer === key ? "#1B75BC" : "white",
-              color: activeLayer === key ? "white" : "#5A7080",
+              background: activeLayer === key ? "#2F6F73" : "white",
+              color: activeLayer === key ? "white" : "#6B6158",
               transition: "all 0.15s",
             }}
           >
@@ -87,8 +81,8 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
       </div>
 
       <MapContainer
-        center={[44.1053, -78.9200]}
-        zoom={11}
+        center={[44.2200, -79.0400]}
+        zoom={10}
         style={{ height: "100%", width: "100%" }}
       >
         <TileLayer
@@ -101,25 +95,12 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
           <GeoJSON
             data={durhamGeo as GeoJSON.GeoJsonObject}
             style={{
-              color: "#1B75BC",
+              color: "#2F6F73",
               weight: 1,
               opacity: 0.3,
-              fillColor: "#1B75BC",
+              fillColor: "#2F6F73",
               fillOpacity: 0.04,
               dashArray: "4 4",
-            }}
-          />
-        )}
-
-        {scugogGeo && (
-          <GeoJSON
-            data={scugogGeo as GeoJSON.GeoJsonObject}
-            style={{
-              color: "#1B75BC",
-              weight: 3,
-              opacity: 0.85,
-              fillColor: "#6B9433",
-              fillOpacity: 0.06,
             }}
           />
         )}
@@ -134,11 +115,11 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
             eventHandlers={{ click: () => onSelect(listing) }}
           >
             <Popup>
-              <div style={{ fontFamily: "'Space Grotesk', sans-serif", minWidth: 200 }}>
+              <div style={{ fontFamily: "'Lora', serif", minWidth: 200 }}>
                 <p style={{ fontSize: 11, fontWeight: 600, color: CATEGORY_COLORS[listing.category], margin: "0 0 2px" }}>{listing.category}</p>
                 <p style={{ fontSize: 13, fontWeight: 700, margin: "0 0 4px" }}>{listing.name}</p>
-                <p style={{ fontSize: 11, color: "#5A6E5B", margin: "0 0 2px" }}>{listing.address}</p>
-                <p style={{ fontSize: 11, fontWeight: 600, color: "#1B75BC", margin: "0 0 6px" }}>{listing.hours}</p>
+                <p style={{ fontSize: 11, color: "#6B6158", margin: "0 0 2px" }}>{listing.address}</p>
+                <p style={{ fontSize: 11, fontWeight: 600, color: "#2F6F73", margin: "0 0 6px" }}>{listing.hours}</p>
                 <p style={{ fontSize: 11, lineHeight: 1.5, margin: 0 }}>{listing.description}</p>
               </div>
             </Popup>

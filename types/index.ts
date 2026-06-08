@@ -22,14 +22,14 @@ export interface Listing {
 }
 
 export const CATEGORY_COLORS: Record<Category, string> = {
-  "Free Food": "#E07B39",
-  "Tenant Defense": "#C0392B",
-  "Public Space": "#2980B9",
-  "Repair Skills": "#D4AC0D",
-  "Local Makers": "#27AE60",
-  "Gathering Places": "#8E44AD",
-  "Mutual Aid": "#16A085",
-  "Co-op Leads": "#2C3E82",
+  "Free Food": "#7A9E7E",
+  "Tenant Defense": "#C65A1E",
+  "Public Space": "#2F6F73",
+  "Repair Skills": "#E3A24C",
+  "Local Makers": "#2F5D50",
+  "Gathering Places": "#8B9D8A",
+  "Mutual Aid": "#5B8C7A",
+  "Co-op Leads": "#C2A04A",
 };
 
 export const CATEGORY_BG: Record<Category, string> = {

@@ -41,66 +41,78 @@ const ACTIVIST_RESOURCES = [
 
 const LOCAL_RESOURCES = [
   {
-    name: "Scugog Tourism",
-    description: "Official tourism resource for Scugog Township — events, attractions, and what's happening locally.",
-    url: "https://www.scugog.ca/en/tourism/tourism.aspx",
-    tag: "Township",
-  },
-  {
-    name: "Port Perry — Destination Ontario",
-    description: "Provincial tourism profile of Port Perry, covering local gems, trails, and community highlights.",
-    url: "https://www.destinationontario.com/en-ca/regions/central-ontario/port-perry",
-    tag: "Tourism",
-  },
-  {
-    name: "Sideroads of Scugog",
-    description: "A community-led resource celebrating the rural roads, places, and stories of Scugog Township.",
-    url: "https://www.sideroadsofscugog.ca",
+    name: "North Durham Chamber of Commerce",
+    description: "Business and community advocacy covering Scugog, Uxbridge, and Brock. A connecting point for local enterprise and economic development across all three townships.",
+    url: "https://northdurhamchamber.ca/",
     tag: "Community",
   },
   {
-    name: "Focus on Scugog",
-    description: "Local news, events, and community information specific to Scugog Township.",
-    url: "https://www.focusonscugog.com",
+    name: "The Standard Newspaper",
+    description: "Primary local news source covering Scugog, Uxbridge, and Brock Townships. Covers community events, local governance, and social issues.",
+    url: "https://www.thestandardnewspaper.ca/",
     tag: "Local News",
+  },
+  {
+    name: "Durham Tourism — North Durham Communities",
+    description: "Regional tourism resource covering Port Perry, Uxbridge, Beaverton, Cannington, and Sunderland — useful for discovering local events and seasonal highlights.",
+    url: "https://www.durham.ca/en/tourism/communities.aspx",
+    tag: "Tourism",
+  },
+  {
+    name: "Community Development Council Durham",
+    description: "Inter-agency network coordinating service planning across North Durham. Connects northern rural service providers and hosts community forums.",
+    url: "https://www.cdcd.org/social-planning-council/",
+    tag: "Social Planning",
+  },
+  {
+    name: "North House — Housing Support",
+    description: "Lead housing support org for all three townships. Eviction prevention, landlord mediation, rental support, and emergency rent assistance.",
+    url: "https://northhouse.ca/",
+    tag: "Housing",
+  },
+  {
+    name: "Uxbridge Trail System",
+    description: "Over 300 km of trails connecting Durham Forest, Oak Ridges Trail, and the Trans-Canada Trail. The Trail Capital of Canada — hiking, cycling, skiing, and equestrian use.",
+    url: "https://www.uxbridge.ca/en/explore-and-play/trail-system.aspx",
+    tag: "Trails",
   },
 ];
 
 function ResourceCard({ name, description, url, tag }: { name: string; description: string; url: string; tag: string }) {
   return (
-    <a href={url} target="_blank" rel="noopener noreferrer" className="block p-5 rounded-lg border transition-all hover:border-blue-700/50 hover:scale-[1.01]" style={{ background: "white", borderColor: "#D8E4D8" }}>
+    <a href={url} target="_blank" rel="noopener noreferrer" className="block p-5 rounded-lg border transition-all hover:border-teal-700/50 hover:scale-[1.01]" style={{ background: "white", borderColor: "#C2D1DB" }}>
       <div className="flex items-start justify-between gap-2 mb-2">
-        <h3 className="text-sm font-semibold leading-snug" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "#1A2433" }}>{name}</h3>
-        <span className="shrink-0 text-xs px-2 py-0.5 rounded" style={{ background: "rgba(27,117,188,0.15)", color: "#6BB8F0" }}>{tag}</span>
+        <h3 className="text-sm font-semibold leading-snug" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>{name}</h3>
+        <span className="shrink-0 text-xs px-2 py-0.5 rounded" style={{ background: "rgba(47,111,115,0.15)", color: "#2F6F73" }}>{tag}</span>
       </div>
-      <p className="text-xs leading-relaxed" style={{ color: "#5A7080" }}>{description}</p>
-      <p className="text-xs mt-2 font-medium" style={{ color: "#1B75BC" }}>Visit →</p>
+      <p className="text-xs leading-relaxed" style={{ color: "#6B6158" }}>{description}</p>
+      <p className="text-xs mt-2 font-medium" style={{ color: "#2F6F73" }}>Visit →</p>
     </a>
   );
 }
 
 export default function ResourcesPage() {
   return (
-    <div style={{ background: "#F0F4F0", minHeight: "calc(100vh - 56px)" }}>
+    <div style={{ background: "#F6F1E8", minHeight: "calc(100vh - 56px)" }}>
       <div className="max-w-4xl mx-auto px-6 py-12 sm:py-16">
 
         {/* Header */}
         <div className="mb-12">
-          <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#1B75BC" }}>Further Reading & Links</p>
-          <h1 className="text-4xl sm:text-5xl font-bold leading-tight mb-5" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "#1A2433" }}>Resources</h1>
-          <div className="w-12 h-0.5 mb-5" style={{ background: "#1B75BC" }} />
-          <p className="text-base leading-relaxed max-w-xl" style={{ color: "#5A7080" }}>
-            Tools for organizers and links to local community media. Natural areas are mapped in the <Link href="/atlas?category=Public+Space" style={{ color: "#6BB8F0" }}>Public Space</Link> category of the atlas.
+          <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#2F6F73" }}>Further Reading & Links</p>
+          <h1 className="text-4xl sm:text-5xl font-bold leading-tight mb-5" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>Resources</h1>
+          <div className="w-12 h-0.5 mb-5" style={{ background: "#2F6F73" }} />
+          <p className="text-base leading-relaxed max-w-xl" style={{ color: "#6B6158" }}>
+            Tools for organizers and links to local community media for North Durham Region. Natural areas are mapped in the <Link href="/atlas?category=Public+Space" style={{ color: "#2F6F73" }}>Public Space</Link> category of the atlas.
           </p>
         </div>
 
         {/* Activist & Organizer Resources */}
         <section className="mb-14">
           <div className="flex items-center gap-3 mb-6">
-            <h2 className="text-xl font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "#1A2433" }}>For Organizers & Activists</h2>
-            <div className="flex-1 border-t" style={{ borderColor: "#D8E4D8" }} />
+            <h2 className="text-xl font-bold" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>For Organizers & Activists</h2>
+            <div className="flex-1 border-t" style={{ borderColor: "#C2D1DB" }} />
           </div>
-          <p className="text-sm mb-6" style={{ color: "#5A7080" }}>
+          <p className="text-sm mb-6" style={{ color: "#6B6158" }}>
             Shareable resources for anyone doing community work — tactics, theory, guides, and archives.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -113,11 +125,11 @@ export default function ResourcesPage() {
         {/* Local Resources */}
         <section className="mb-14">
           <div className="flex items-center gap-3 mb-6">
-            <h2 className="text-xl font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "#1A2433" }}>Local Scugog Resources</h2>
-            <div className="flex-1 border-t" style={{ borderColor: "#D8E4D8" }} />
+            <h2 className="text-xl font-bold" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>Local North Durham Resources</h2>
+            <div className="flex-1 border-t" style={{ borderColor: "#C2D1DB" }} />
           </div>
-          <p className="text-sm mb-6" style={{ color: "#5A7080" }}>
-            Community media, tourism, and local information sources covering Scugog Township.
+          <p className="text-sm mb-6" style={{ color: "#6B6158" }}>
+            Community media, tourism, and local information sources covering North Durham — Scugog, Uxbridge, and Brock Townships.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {LOCAL_RESOURCES.map((r) => (
@@ -127,10 +139,10 @@ export default function ResourcesPage() {
         </section>
 
         {/* CTA */}
-        <div className="p-6 rounded-lg" style={{ background: "#243040" }}>
-          <p className="text-sm font-semibold mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "#1A2433" }}>Know a resource that should be here?</p>
-          <p className="text-sm mb-4" style={{ color: "#5A7080" }}>A local organization, a useful tool, a conservation area we missed — add it.</p>
-          <Link href="/submit" className="inline-block px-5 py-2.5 rounded-lg text-sm font-semibold transition-all hover:opacity-90" style={{ fontFamily: "'Space Grotesk', sans-serif", background: "#1B75BC", color: "white" }}>Submit a resource →</Link>
+        <div className="p-6 rounded-lg" style={{ background: "#2F5D50" }}>
+          <p className="text-sm font-semibold mb-1" style={{ fontFamily: "'Lora', serif", color: "#F6F1E8" }}>Know a resource that should be here?</p>
+          <p className="text-sm mb-4" style={{ color: "#9EB8AE" }}>A local organization, a useful tool, a conservation area we missed — add it.</p>
+          <Link href="/submit" className="inline-block px-5 py-2.5 rounded-lg text-sm font-semibold transition-all hover:opacity-90" style={{ fontFamily: "'Lora', serif", background: "#C65A1E", color: "white" }}>Submit a resource →</Link>
         </div>
 
       </div>

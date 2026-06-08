@@ -3,8 +3,8 @@ import "./globals.css";
 import Nav from "@/components/Nav";
 
 export const metadata: Metadata = {
-  title: "Community Atlas Drop",
-  description: "Make hidden abundance impossible to ignore. A living map of mutual aid, free services, local makers, and trusted gathering spots.",
+  title: "North Durham Community Atlas",
+  description: "A living map of mutual aid, free services, local makers, and trusted gathering spots across Scugog, Uxbridge, and Brock Townships.",
 };
 
 export default function RootLayout({
