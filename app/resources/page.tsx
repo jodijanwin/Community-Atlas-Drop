@@ -37,6 +37,12 @@ const ACTIVIST_RESOURCES = [
     url: "https://activisthandbook.org",
     tag: "Campaigning",
   },
+  {
+    name: "Ontario Nonprofit Network",
+    description: "Provincial network supporting Ontario's nonprofit and charity sector. Policy resources, capacity-building tools, and sector-wide advocacy for community organizations.",
+    url: "https://theonn.ca",
+    tag: "Nonprofits",
+  },
 ];
 
 const LOCAL_RESOURCES = [
@@ -75,6 +81,24 @@ const LOCAL_RESOURCES = [
     description: "Over 300 km of trails connecting Durham Forest, Oak Ridges Trail, and the Trans-Canada Trail. The Trail Capital of Canada — hiking, cycling, skiing, and equestrian use.",
     url: "https://www.uxbridge.ca/en/explore-and-play/trail-system.aspx",
     tag: "Trails",
+  },
+  {
+    name: "Oak Ridges Moraine Land Trust",
+    description: "Conserves ecologically sensitive lands across the Moraine, including properties in Uxbridge and Brock. Maintains publicly accessible conservation trails and runs volunteer stewardship events.",
+    url: "https://www.oakridgesmoraine.org",
+    tag: "Conservation",
+  },
+  {
+    name: "North Durham Family Health Team",
+    description: "Interdisciplinary primary care serving North Durham — family doctors, nurses, social workers, dietitians, and mental health support. Accepts new patients in underserved areas.",
+    url: "https://www.northdurhamfht.ca",
+    tag: "Health",
+  },
+  {
+    name: "Port Perry Wifi — Communicate Freely",
+    description: "Grassroots community wireless network providing free or low-cost internet to Port Perry residents. One of the only active community-owned broadband initiatives in rural Ontario.",
+    url: "https://www.portperrywifi.ca",
+    tag: "Digital Equity",
   },
 ];
 

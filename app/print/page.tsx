@@ -4,7 +4,7 @@ import listings from "@/data/listings.json";
 import { Listing, Category, CATEGORY_COLORS } from "@/types";
 
 const ALL_CATEGORIES: Category[] = ["Free Food","Tenant Defense","Public Space","Repair Skills","Local Makers","Gathering Places","Mutual Aid","Co-op Leads"];
-const MISSING = ["A permanently affordable gathering space in Port Perry","A tenant organizing network for rural rent increases","A community land trust for North Durham","A care co-op for isolated rural residents","A bulk food buying co-op accessible without a car","Community-owned broadband for the rural north"];
+const MISSING = ["A permanently affordable gathering space in Port Perry","A tenant organizing network for rural rent increases","A community land trust for North Durham","A care co-op for isolated rural residents","A bulk food buying co-op accessible without a car","Expanded community broadband beyond Port Perry Wifi's current coverage"];
 
 export default function PrintPage() {
   const typedListings = listings as Listing[];

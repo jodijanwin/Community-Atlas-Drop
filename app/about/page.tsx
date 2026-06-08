@@ -39,7 +39,7 @@ export default function AboutPage() {
               "A community land trust capable of acquiring even one parcel in the township",
               "A care co-op for elderly and isolated rural residents",
               "A bulk food buying co-op accessible to residents without vehicles",
-              "A community-owned broadband initiative for the underserved rural north",
+              "Expanded community-owned broadband beyond Port Perry Wifi's existing network — bringing digital equity to the rural north",
             ].map((item) => (
               <li key={item} className="flex items-start gap-2.5 text-sm leading-relaxed" style={{ color: "#3F352C" }}>
                 <span className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full" style={{ background: "#C65A1E" }} />

@@ -459,5 +459,53 @@
     "description": "Over 300 km of trails for hiking, cycling, cross-country skiing, and equestrian use. Connects to the Trans-Canada Trail, Durham Forest, and Oak Ridges Trail. The Trail Capital of Canada.",
     "contact": "uxbridge.ca/trail-system",
     "tags": ["trails", "hiking", "Uxbridge", "outdoor"]
+  },
+  {
+    "id": "41",
+    "name": "North Durham Family Health Team",
+    "category": "Mutual Aid",
+    "address": "210 Millard St, Whitchurch-Stouffville (serves North Durham region)",
+    "lat": 44.1068,
+    "lng": -79.1197,
+    "hours": "Mon–Fri 8am–5pm",
+    "description": "Interdisciplinary primary care team serving patients across North Durham. Includes family doctors, nurses, social workers, dietitians, and mental health support. Accepts new patients in underserved areas.",
+    "contact": "northdurhamfht.ca",
+    "tags": ["health", "primary care", "mental health", "social work"]
+  },
+  {
+    "id": "42",
+    "name": "Port Perry PROBUS Club",
+    "category": "Gathering Places",
+    "address": "Port Perry Legion, 247 Water St, Port Perry, ON",
+    "lat": 44.1063,
+    "lng": -78.9502,
+    "hours": "2nd Tuesday of month, 10am",
+    "description": "Social and recreational club for retired and semi-retired residents of North Durham. Monthly meetings with guest speakers, plus interest groups for hiking, cards, book club, and travel. A large and active network for anyone newly retired or recently moved.",
+    "contact": "probusportperry.ca",
+    "tags": ["seniors", "social", "retired", "Port Perry"]
+  },
+  {
+    "id": "43",
+    "name": "Oak Ridges Moraine Land Trust",
+    "category": "Public Space",
+    "address": "Oak Ridges Moraine — multiple properties across North Durham",
+    "lat": 44.0520,
+    "lng": -79.1600,
+    "hours": "Trails open year-round",
+    "description": "Conserves and stewards ecologically sensitive lands across the Oak Ridges Moraine, including properties in Uxbridge and Brock townships. Maintains publicly accessible conservation lands and runs volunteer stewardship events.",
+    "contact": "oakridgesmoraine.org",
+    "tags": ["conservation", "moraine", "land trust", "trails", "Uxbridge"]
+  },
+  {
+    "id": "44",
+    "name": "Port Perry Wifi — Communicate Freely",
+    "category": "Co-op Leads",
+    "address": "Port Perry and surrounding area, Scugog Township",
+    "lat": 44.1070,
+    "lng": -78.9465,
+    "hours": "Community-run — see website for coverage areas",
+    "description": "A grassroots community wireless network providing free or low-cost internet access to residents of Port Perry. One of the few active community-owned broadband initiatives in rural Ontario — a working model for the digital equity gaps across North Durham.",
+    "contact": "portperrywifi.ca",
+    "tags": ["wifi", "broadband", "digital equity", "community-owned", "Port Perry"]
   }
 ]
