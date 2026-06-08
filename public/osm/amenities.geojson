@@ -1,0 +1,1390 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.9993604,
+          44.0014171
+        ]
+      },
+      "properties": {
+        "id": 916268540,
+        "amenity": "community_centre",
+        "source": "CanVec 6.0 - NRCan"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.9211215,
+          44.0046336
+        ]
+      },
+      "properties": {
+        "id": 1206872625,
+        "name": "Durham Kubota",
+        "note": "Kubata",
+        "shop": "farm"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.2849062,
+          44.138772
+        ]
+      },
+      "properties": {
+        "id": 13007780639,
+        "addr:city": "Mount Albert",
+        "addr:housenumber": "122",
+        "addr:postcode": "L0G 1M0",
+        "addr:street": "Ashworth Road",
+        "amenity": "cafe",
+        "farm:pick_your_own": "yes",
+        "name": "Brooks Farms",
+        "note:addr:city": "Administratively in Uxbridge but business uses Mount Albert address and so does Canada Post",
+        "phone": "+1-905-473-3246",
+        "shop": "farm",
+        "website": "https://www.brooksfarms.com/"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.3676877,
+          44.3089759
+        ]
+      },
+      "properties": {
+        "id": 3780946387,
+        "alt_name": "Sutton Public Library",
+        "amenity": "library",
+        "name": "Georgina Public Library - Peter Gzowski Branch",
+        "operator": "Georgina Public Library",
+        "website": "http://www.georginalibrary.ca/"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.1260729,
+          44.1029824
+        ]
+      },
+      "properties": {
+        "id": 7473840134,
+        "amenity": "social_facility",
+        "name": "Community Care Durham"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.0658516,
+          44.2600179
+        ]
+      },
+      "properties": {
+        "id": 7707593925,
+        "amenity": "library",
+        "name": "Brock Libraries - Sunderland Branch",
+        "operator": "Brock Libraries"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.9732293,
+          44.0841937
+        ]
+      },
+      "properties": {
+        "id": 6845450147,
+        "name": "Puckrin's",
+        "shop": "farm"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.8993733,
+          44.1553721
+        ]
+      },
+      "properties": {
+        "id": 916216024,
+        "amenity": "community_centre",
+        "building": "yes",
+        "source": "CanVec 6.0 - NRCan"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.194147,
+          44.3093992
+        ]
+      },
+      "properties": {
+        "id": 7729192377,
+        "amenity": "library",
+        "name": "Georgina Public Library - Pefferlaw Branch",
+        "operator": "Georgina Public Library"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.0379733,
+          44.3492384
+        ]
+      },
+      "properties": {
+        "id": 7707600394,
+        "amenity": "library",
+        "name": "Brock Libraries - Cannington Branch",
+        "operator": "Brock Libraries"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.8571391,
+          44.2841615
+        ]
+      },
+      "properties": {
+        "id": 7647380389,
+        "amenity": "library",
+        "name": "Kawartha Lakes Public Library - Little Britain Branch",
+        "operator": "Kawartha Lakes Public Library",
+        "operator:type": "public",
+        "operator:wikidata": "Q53677996"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.8806176,
+          44.3357626
+        ]
+      },
+      "properties": {
+        "id": 911863840,
+        "amenity": "community_centre",
+        "building": "yes",
+        "name": "Oakwood Community Centre",
+        "source": "CanVec 6.0 - NRCan"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.9884706,
+          44.3986645
+        ]
+      },
+      "properties": {
+        "id": 7647391010,
+        "amenity": "library",
+        "name": "Kawartha Lakes Public Library - Woodville Branch",
+        "operator": "Kawartha Lakes Public Library",
+        "operator:type": "public",
+        "operator:wikidata": "Q53677996"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.3355987,
+          44.599043
+        ]
+      },
+      "properties": {
+        "id": 7708051344,
+        "amenity": "library",
+        "name": "Ramara Township Public Library - Atherley Branch",
+        "operator": "Ramara Township Public Library",
+        "operator:type": "public"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.1787082,
+          44.5468123
+        ]
+      },
+      "properties": {
+        "id": 7708051345,
+        "amenity": "library",
+        "name": "Ramara Township Public Library - Brechin Branch",
+        "operator": "Ramara Township Public Library",
+        "operator:type": "public"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.0619228,
+          44.5305242
+        ]
+      },
+      "properties": {
+        "id": 7647323529,
+        "amenity": "community_centre",
+        "name": "Bolsover Commuinty Centre"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.9785107,
+          44.5628029
+        ]
+      },
+      "properties": {
+        "id": 7647367937,
+        "amenity": "library",
+        "name": "Kawartha Lakes Public Library - Kirkfield Branch",
+        "operator": "Kawartha Lakes Public Library",
+        "operator:type": "public",
+        "operator:wikidata": "Q53677996"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.7431579,
+          44.1249555
+        ]
+      },
+      "properties": {
+        "id": 3591083131,
+        "name": "Who's Farm",
+        "shop": "farm"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.7774233,
+          44.2411179
+        ]
+      },
+      "properties": {
+        "id": 13903338956,
+        "name": "Stellmar Farm",
+        "shop": "farm",
+        "website": "https://www.stellmarfarm.com/"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.749633,
+          44.3433399
+        ]
+      },
+      "properties": {
+        "id": 7315359574,
+        "addr:housenumber": "240",
+        "addr:postcode": "K9V 5K5",
+        "addr:street": "Mary Street West",
+        "amenity": "social_facility",
+        "name": "Caressant Care Lindsay Nursing Home",
+        "social_facility": "nursing_home",
+        "social_facility:for": "senior"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.7478757,
+          44.3422777
+        ]
+      },
+      "properties": {
+        "id": 7315359575,
+        "addr:housenumber": "225",
+        "addr:postcode": "K9V 5K3",
+        "addr:street": "Mary Street West",
+        "amenity": "social_facility",
+        "name": "Frost Manor",
+        "social_facility": "nursing_home",
+        "social_facility:for": "senior"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.7405491,
+          44.3546726
+        ]
+      },
+      "properties": {
+        "id": 2381886621,
+        "addr:city": "Lindsay",
+        "addr:housenumber": "190",
+        "addr:postcode": "K9V 2Y6",
+        "addr:street": "Kent Street West",
+        "amenity": "library",
+        "email": "lindsaylibrary@city.kawarthalakes.on.ca",
+        "fax": "+1-705-324-7140",
+        "internet_access": "wlan",
+        "name": "Kawartha Lakes Public Library - Lindsay Branch",
+        "opening_hours": "Mo-Th 10:00-20:00, Fr-Sa 10:00-17:00, Su off; Oct Su[3]-May 25 Su 13:00-16:00",
+        "operator": "Kawartha Lakes Public Library",
+        "operator:type": "public",
+        "operator:wikidata": "Q53677996",
+        "phone": "+1-705-324-5632",
+        "source": "http://www.city.kawarthalakes.on.ca/residents/library-services/hours-and-locations/lindsay",
+        "wikidata": "Q62015893"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.8301945,
+          44.4048088
+        ]
+      },
+      "properties": {
+        "id": 911721388,
+        "amenity": "community_centre",
+        "building": "yes",
+        "source": "CanVec 6.0 - NRCan"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.850919,
+          44.4915098
+        ]
+      },
+      "properties": {
+        "id": 6841349908,
+        "name": "Zehns",
+        "shop": "farm"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.7431814,
+          44.5314399
+        ]
+      },
+      "properties": {
+        "id": 10837823416,
+        "amenity": "community_centre",
+        "description": "Sports and Recreation Centre",
+        "name": "Fenelon Falls Community Centre"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.7378633,
+          44.5384731
+        ]
+      },
+      "properties": {
+        "id": 2276410776,
+        "amenity": "library",
+        "name": "Kawartha Lakes Public Library - Fenelon Falls Branch",
+        "operator": "Kawartha Lakes Public Library",
+        "operator:type": "public",
+        "operator:wikidata": "Q53677996"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.3931045,
+          44.0031523
+        ]
+      },
+      "properties": {
+        "id": 1457841332,
+        "amenity": "community_centre",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.2866296,
+          44.0406354
+        ]
+      },
+      "properties": {
+        "id": 77103216,
+        "amenity": "community_centre",
+        "building": "yes",
+        "name": "Ballantrae Community Centre",
+        "source": "CanVec 6.0 - NRCan"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.2627178,
+          44.0029978
+        ]
+      },
+      "properties": {
+        "id": 783507646,
+        "addr:housenumber": "13621",
+        "addr:postcode": "L4A 3C8",
+        "addr:street": "Ninth Line",
+        "amenity": "social_facility",
+        "building": "yes",
+        "name": "Bloomington Cove Care Community",
+        "social_facility": "nursing_home",
+        "social_facility:for": "senior"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.2022742,
+          44.0349017
+        ]
+      },
+      "properties": {
+        "id": 169993722,
+        "addr:city": "Goodwood",
+        "addr:housenumber": "268",
+        "addr:postcode": "L0C 1A0",
+        "addr:street": "Regional Highway 47",
+        "amenity": "community_centre",
+        "building": "yes",
+        "capacity": "149",
+        "name": "Goodwood Community Centre",
+        "operator": "Township of Uxbridge",
+        "source": "Bing"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.9994219,
+          44.0014182
+        ]
+      },
+      "properties": {
+        "id": 783757137,
+        "addr:city": "Whitby",
+        "addr:housenumber": "780",
+        "addr:province": "Ontario",
+        "addr:street": "Myrtle Road West",
+        "amenity": "community_centre",
+        "building": "yes",
+        "source": "bing"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.310981,
+          44.1350165
+        ]
+      },
+      "properties": {
+        "id": 146986207,
+        "addr:city": "East Gwillimbury",
+        "amenity": "community_centre",
+        "building": "yes",
+        "name": "Mount Albert Community Centre",
+        "source": "Bing"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.3101825,
+          44.140441
+        ]
+      },
+      "properties": {
+        "id": 256638950,
+        "amenity": "library",
+        "building": "public",
+        "name": "East Gwillimbury Public Library - Mount Albert Branch",
+        "operator": "East Gwillimbury Public Library",
+        "source": "Bing"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.3914726,
+          44.318723
+        ]
+      },
+      "properties": {
+        "id": 306467938,
+        "amenity": "community_centre",
+        "building": "commercial",
+        "name": "Jackson's Point Conference Centre",
+        "note": "Salvation Army conference centre and multiple cottages",
+        "operator": "The Salvation Army",
+        "operator:type": "charitable",
+        "operator:wikidata": "Q188307"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.3915111,
+          44.3188376
+        ]
+      },
+      "properties": {
+        "id": 334440250,
+        "amenity": "community_centre",
+        "name": "The Jackson's Point Conference Centre",
+        "website": "http://www.sajpcc.com/"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.3616565,
+          44.3039355
+        ]
+      },
+      "properties": {
+        "id": 332488788,
+        "addr:housenumber": "160",
+        "addr:postcode": "L0E 1R0",
+        "addr:street": "High Street",
+        "amenity": "social_facility",
+        "building": "yes",
+        "building:levels": "3",
+        "name": "River Glen Haven Nursing Home",
+        "social_facility": "nursing_home",
+        "social_facility:for": "senior"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.3681125,
+          44.3085357
+        ]
+      },
+      "properties": {
+        "id": 133686232,
+        "amenity": "community_centre",
+        "building": "public",
+        "name": "Sutton Multi-Use Complex"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.362649,
+          44.306249
+        ]
+      },
+      "properties": {
+        "id": 59729186,
+        "addr:city": "Georgina",
+        "addr:housenumber": "20849",
+        "addr:province": "Ontario",
+        "addr:street": "Dalton Road",
+        "amenity": "community_centre",
+        "building": "public",
+        "name": "The Link",
+        "operator": "Town of Georgina"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.3314979,
+          44.3116371
+        ]
+      },
+      "properties": {
+        "id": 332777273,
+        "access": "private",
+        "amenity": "community_centre",
+        "building": "yes",
+        "name": "Clubhouse"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.204357,
+          44.1360938
+        ]
+      },
+      "properties": {
+        "id": 437044542,
+        "addr:housenumber": "433",
+        "addr:street": "Sandford Road",
+        "amenity": "community_centre",
+        "building": "church",
+        "name": "Sandford Recreation Centre",
+        "website": "https://www.uxbridge.ca/en/explore-and-play/facilities-and-rentals.aspx#Sandford-Community-Centre"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.1309528,
+          44.0913173
+        ]
+      },
+      "properties": {
+        "id": 657727815,
+        "addr:city": "Uxbridge",
+        "addr:housenumber": "6",
+        "addr:postcode": "L9P 1S9",
+        "addr:street": "Douglas Road",
+        "amenity": "social_facility",
+        "building": "yes",
+        "name": "Douglas Crossing Retirement Community",
+        "social_facility": "group_home",
+        "social_facility:for": "senior"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.1392831,
+          44.1045791
+        ]
+      },
+      "properties": {
+        "id": 130549382,
+        "addr:city": "Uxbridge",
+        "addr:housenumber": "3",
+        "addr:postcode": "L9P 0B7",
+        "addr:street": "Norm Goodspeed Drive",
+        "amenity": "social_facility",
+        "building": "yes",
+        "building:levels": "2",
+        "check_date": "2024-09-02",
+        "name": "Butternut Manor",
+        "social_facility": "group_home",
+        "social_facility:for": "senior"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.1224881,
+          44.1084284
+        ]
+      },
+      "properties": {
+        "id": 130406458,
+        "addr:city": "Uxbridge",
+        "addr:housenumber": "9",
+        "addr:street": "Toronto Street South",
+        "amenity": "library",
+        "building": "public",
+        "internet_access": "wlan",
+        "name": "Uxbridge Public Library - Main Branch",
+        "operator": "Uxbridge Public Library",
+        "wikidata": "Q72980758"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.1119445,
+          44.1040815
+        ]
+      },
+      "properties": {
+        "id": 77093580,
+        "addr:city": "Uxbridge",
+        "addr:housenumber": "130",
+        "addr:postcode": "L9P 1L3",
+        "addr:street": "Reach Street",
+        "amenity": "social_facility",
+        "building": "yes",
+        "name": "ReachView Village",
+        "social_facility": "nursing_home",
+        "social_facility:for": "senior",
+        "source": "CanVec 6.0 - NRCan"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.265363,
+          44.2006685
+        ]
+      },
+      "properties": {
+        "id": 661587446,
+        "amenity": "library",
+        "building": "yes",
+        "name": "Uxbridge Public Library - Zephyr Branch",
+        "operator": "Uxbridge Public Library"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.185593,
+          44.257491
+        ]
+      },
+      "properties": {
+        "id": 661486127,
+        "amenity": "community_centre",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.0664985,
+          44.263028
+        ]
+      },
+      "properties": {
+        "id": 661475176,
+        "addr:city": "Sunderland",
+        "addr:housenumber": "82",
+        "addr:postcode": "L0C 1H0",
+        "addr:street": "River Street",
+        "amenity": "social_facility",
+        "building": "commercial",
+        "name": "Dre's Lodge",
+        "social_facility": "group_home",
+        "social_facility:for": "senior"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.9469865,
+          44.107603
+        ]
+      },
+      "properties": {
+        "id": 657435886,
+        "addr:city": "Port Perry",
+        "addr:housenumber": "293",
+        "addr:postcode": "L9L 1S6",
+        "addr:street": "Perry Street",
+        "amenity": "social_facility",
+        "building": "yes",
+        "check_date": "2024-03-25",
+        "name": "West Shore Residence",
+        "social_facility": "group_home",
+        "social_facility:for": "senior"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.9422835,
+          44.106757
+        ]
+      },
+      "properties": {
+        "id": 240216046,
+        "amenity": "library",
+        "building": "yes",
+        "name": "Scugog Public Library",
+        "operator": "Scugog Public Library",
+        "wikidata": "Q53678149"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.949687,
+          44.1116355
+        ]
+      },
+      "properties": {
+        "id": 127291879,
+        "addr:city": "Port Perry",
+        "addr:housenumber": "15941",
+        "addr:postcode": "L9L 1N5",
+        "addr:street": "Simcoe Street",
+        "amenity": "social_facility",
+        "building": "yes",
+        "check_date": "2024-08-09",
+        "name": "Port Perry Place",
+        "social_facility": "nursing_home",
+        "social_facility:for": "senior",
+        "source": "Bing"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.950009,
+          44.1121805
+        ]
+      },
+      "properties": {
+        "id": 240216047,
+        "addr:city": "Port Perry",
+        "addr:housenumber": "15987",
+        "addr:postcode": "L9L 1N5",
+        "addr:street": "Simcoe Street",
+        "amenity": "social_facility",
+        "building": "yes",
+        "name": "Port Perry Villa Retirement Living",
+        "social_facility": "group_home",
+        "social_facility:for": "senior"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.193437,
+          44.3463
+        ]
+      },
+      "properties": {
+        "id": 203429886,
+        "amenity": "community_centre",
+        "building": "public",
+        "name": "Port Bolster Community Hall"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.1638362,
+          44.4285773
+        ]
+      },
+      "properties": {
+        "id": 660986769,
+        "addr:city": "Beaverton",
+        "addr:housenumber": "133",
+        "addr:postcode": "L0K 1A0",
+        "addr:street": "Main Street",
+        "amenity": "social_facility",
+        "building": "yes",
+        "name": "Lakeview Manor",
+        "social_facility": "nursing_home",
+        "social_facility:for": "senior"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.161389,
+          44.430115
+        ]
+      },
+      "properties": {
+        "id": 59727353,
+        "amenity": "community_centre",
+        "building": "public",
+        "name": "Beaverton Thoran Community Centre"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.1526615,
+          44.428993
+        ]
+      },
+      "properties": {
+        "id": 465482227,
+        "amenity": "library",
+        "building": "public",
+        "building:colour": "brick",
+        "building:levels": "2",
+        "name": "Brock Libraries - Beaverton Branch",
+        "operator": "Brock Libraries"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.9888249,
+          44.3069665
+        ]
+      },
+      "properties": {
+        "id": 661184074,
+        "addr:housenumber": "16990",
+        "addr:postcode": "K0M 2J0",
+        "addr:street": "Simcoe Street",
+        "amenity": "community_centre",
+        "building": "yes",
+        "name": "Manilla Community Hall",
+        "phone": "+1 705-432-2355"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.0374705,
+          44.3458965
+        ]
+      },
+      "properties": {
+        "id": 191010837,
+        "addr:city": "Cannington",
+        "addr:housenumber": "131",
+        "addr:postcode": "L0E 1E0",
+        "addr:street": "Laidlaw Street South",
+        "amenity": "social_facility",
+        "building": "yes",
+        "name": "Chartwell Bon Air Long Term Care Residence",
+        "operator": "Chartwell",
+        "operator:wikidata": "Q5086953",
+        "social_facility": "nursing_home",
+        "social_facility:for": "senior",
+        "source": "Bing"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.0332605,
+          44.3482965
+        ]
+      },
+      "properties": {
+        "id": 59727361,
+        "amenity": "community_centre",
+        "building": "public"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.8784338,
+          44.3329308
+        ]
+      },
+      "properties": {
+        "id": 687228084,
+        "addr:housenumber": "932",
+        "addr:street": "Highway 7",
+        "amenity": "library",
+        "building": "yes",
+        "name": "Kawartha Lakes Library - Oakwood Branch",
+        "operator": "Kawartha Lakes Public Library",
+        "operator:type": "public",
+        "operator:wikidata": "Q53677996"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.3967315,
+          44.6066066
+        ]
+      },
+      "properties": {
+        "id": 484644897,
+        "addr:city": "Orillia",
+        "addr:housenumber": "298",
+        "addr:postcode": "L3V 0C3",
+        "addr:street": "Forest Avenue North",
+        "amenity": "social_facility",
+        "building": "yes",
+        "name": "Leacock Retirement Lodge",
+        "social_facility": "group_home",
+        "social_facility:for": "senior"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.3951571,
+          44.6066378
+        ]
+      },
+      "properties": {
+        "id": 489085110,
+        "addr:city": "Orillia",
+        "addr:housenumber": "25",
+        "addr:postcode": "L3V 7T9",
+        "addr:street": "Museum Drive",
+        "amenity": "social_facility",
+        "building": "yes",
+        "name": "Leacock Care Centre",
+        "social_facility": "nursing_home",
+        "social_facility:for": "senior"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.3846821,
+          44.606775
+        ]
+      },
+      "properties": {
+        "id": 215082287,
+        "amenity": "community_centre",
+        "building": "yes",
+        "name": "Barnfield Point Recreation Centre",
+        "source": "Bing"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.3518543,
+          44.6480363
+        ]
+      },
+      "properties": {
+        "id": 413202912,
+        "amenity": "social_facility",
+        "building": "yes",
+        "name": "Chippewas of Rama Senior's Center",
+        "social_facility": "nursing_home",
+        "social_facility:for": "senior"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.3503541,
+          44.6490701
+        ]
+      },
+      "properties": {
+        "id": 195680012,
+        "amenity": "community_centre",
+        "building": "yes",
+        "name": "Chippewas of Rama Community Hall"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.7450651,
+          44.0205773
+        ]
+      },
+      "properties": {
+        "id": 1351431589,
+        "addr:city": "Haydon",
+        "addr:housenumber": "2503",
+        "addr:province": "Ontario",
+        "addr:street": "Concession Road 8",
+        "amenity": "community_centre",
+        "building": "yes",
+        "community_centre": "community_hall",
+        "name": "Haydon Community Hall",
+        "operator": "Municipality of Clarington",
+        "operator:type": "government"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.7175704,
+          44.0100612
+        ]
+      },
+      "properties": {
+        "id": 501841917,
+        "addr:housenumber": "2716",
+        "addr:street": "Concession Road 7",
+        "amenity": "community_centre",
+        "building": "yes",
+        "name": "Tyrone Community Centre"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.7965215,
+          44.1403745
+        ]
+      },
+      "properties": {
+        "id": 657935950,
+        "addr:city": "Scugog",
+        "addr:housenumber": "3871",
+        "addr:street": "Highway 7A",
+        "amenity": "community_centre",
+        "building": "public",
+        "name": "Nestleton Community Centre",
+        "source": "CanVec 6.0 - NRCan"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.7606186,
+          44.3446347
+        ]
+      },
+      "properties": {
+        "id": 783317509,
+        "addr:housenumber": "114",
+        "addr:postcode": "K9V 6L1",
+        "addr:street": "McLaughlin Road",
+        "amenity": "social_facility",
+        "building": "yes",
+        "check_date": "2026-03-25",
+        "name": "Caressant Care on McLaughlin Road",
+        "social_facility": "nursing_home",
+        "social_facility:for": "senior"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.7439601,
+          44.3385919
+        ]
+      },
+      "properties": {
+        "id": 77436902,
+        "addr:housenumber": "220",
+        "addr:postcode": "K9V 4R2",
+        "addr:street": "Angeline Street South",
+        "amenity": "social_facility",
+        "building": "yes",
+        "name": "Victoria Manor Home for the Aged",
+        "social_facility": "nursing_home",
+        "social_facility:for": "senior",
+        "source": "CanVec 6.0 - NRCan"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.7442113,
+          44.3461867
+        ]
+      },
+      "properties": {
+        "id": 163493270,
+        "addr:housenumber": "84",
+        "addr:postcode": "K9V 0G6",
+        "addr:street": "Adelaide Street South",
+        "amenity": "social_facility",
+        "building": "apartments",
+        "name": "Adelaide Place Retirement Community",
+        "social_facility": "group_home",
+        "social_facility:for": "senior",
+        "source": "Bing"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.7387106,
+          44.36053
+        ]
+      },
+      "properties": {
+        "id": 786985381,
+        "addr:housenumber": "140",
+        "addr:postcode": "K9V 5R4",
+        "addr:street": "William Street North",
+        "amenity": "social_facility",
+        "building": "yes",
+        "name": "William Place",
+        "social_facility": "group_home",
+        "social_facility:for": "senior"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.7671362,
+          44.3769282
+        ]
+      },
+      "properties": {
+        "id": 786985380,
+        "addr:housenumber": "512",
+        "addr:postcode": "K9V 4R1",
+        "addr:street": "Thunder Bridge Road",
+        "amenity": "social_facility",
+        "building": "yes",
+        "name": "Country Estates Retirement Home",
+        "social_facility": "group_home",
+        "social_facility:for": "senior"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.7312031,
+          44.5284231
+        ]
+      },
+      "properties": {
+        "id": 783317496,
+        "addr:housenumber": "44",
+        "addr:postcode": "K0M 1N0",
+        "addr:street": "Wychwood Crescent",
+        "amenity": "social_facility",
+        "name": "Fenelon Court",
+        "social_facility": "nursing_home",
+        "social_facility:for": "senior"
+      }
+    }
+  ]
+}
