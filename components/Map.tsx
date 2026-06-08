@@ -5,79 +5,123 @@ import { MapContainer, TileLayer, Marker, Popup, useMap, GeoJSON } from "react-l
 import L from "leaflet";
 import { Listing, CATEGORY_COLORS } from "@/types";
 
-// ─── Durham Region ArcGIS REST API ────────────────────────────────────────────
-// Public open data: https://opendata.durham.ca
-// MapServer base: https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer
-// yourDurhamLayers: https://maps.durham.ca/arcgis/rest/services/yourDurham/yourDurhamLayers/MapServer
+// ─── Data sources ──────────────────────────────────────────────────────────────
+// Trails and parks come from OpenStreetMap via the Overpass API.
+// This API is public, CORS-enabled, and free.
+// Overpass API docs: https://wiki.openstreetmap.org/wiki/Overpass_API
 //
-// To add a new layer: add an entry to DURHAM_LAYERS below with the correct
-// ArcGIS layer number and style. See UPDATING.md for full instructions.
-//
-// North Durham bounding box used to filter all queries:
-//   SW: 44.00, -79.40   NE: 44.65, -78.70
+// North Durham bounding box: SW 44.00,-79.40  NE 44.65,-78.70
+// Overpass bbox format: south,west,north,east
 
-const NORTH_DURHAM_BBOX = "-79.4,44.0,-78.7,44.65";
+const BBOX = "44.0,-79.4,44.65,-78.7";
+const OVERPASS = "https://overpass-api.de/api/interpreter";
 
-const ARCGIS_BASE = "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer";
-const ARCGIS_YOUR_DURHAM = "https://maps.durham.ca/arcgis/rest/services/yourDurham/yourDurhamLayers/MapServer";
-
-function arcgisUrl(base: string, layerId: number) {
-  const [xmin, ymin, xmax, ymax] = NORTH_DURHAM_BBOX.split(",");
-  const geom = encodeURIComponent(JSON.stringify({ xmin, ymin, xmax, ymax, spatialReference: { wkid: 4326 } }));
-  return `${base}/${layerId}/query?where=1%3D1&geometry=${geom}&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&outFields=*&outSR=4326&f=geojson`;
+// Build an Overpass query URL
+function overpassUrl(query: string) {
+  return `${OVERPASS}?data=${encodeURIComponent(query)}`;
 }
 
-// Layers fetched from Durham Region Open Data.
-// Toggle visibility with the checkboxes in the map legend.
-const DURHAM_LAYERS = [
-  {
-    id: "trails",
-    label: "Regional Trails",
-    color: "#7A9E7E",
-    url: arcgisUrl(ARCGIS_YOUR_DURHAM, 11),
-    type: "line" as const,
-  },
-  {
-    id: "parks",
-    label: "Recreation Parks",
-    color: "#2F5D50",
-    url: arcgisUrl(ARCGIS_YOUR_DURHAM, 10),
-    type: "polygon" as const,
-  },
-  {
-    id: "community",
-    label: "Community Services",
-    color: "#2F6F73",
-    url: arcgisUrl(ARCGIS_BASE, 4),
-    type: "point" as const,
-  },
-  {
-    id: "healthcare",
-    label: "Healthcare",
-    color: "#C65A1E",
-    url: arcgisUrl(ARCGIS_BASE, 18),
-    type: "point" as const,
-  },
+// ─── Overpass queries ──────────────────────────────────────────────────────────
+
+const QUERIES = {
+  trails: `[out:json][timeout:30][bbox:${BBOX}];
+(
+  way["highway"~"^(path|footway|cycleway|track)$"]["name"];
+  way["route"~"^(hiking|bicycle|foot)$"];
+);
+out geom qt;`,
+
+  parks: `[out:json][timeout:30][bbox:${BBOX}];
+(
+  way["leisure"="park"]["name"];
+  way["natural"~"^(wood|forest)$"]["name"];
+  way["landuse"="recreation_ground"]["name"];
+);
+out geom qt;`,
+
+  amenities: `[out:json][timeout:30][bbox:${BBOX}];
+(
+  node["amenity"~"^(library|community_centre|social_facility|food_bank)$"];
+  node["amenity"="place_of_worship"]["name"]["community"="yes"];
+  node["shop"="farm"];
+);
+out body qt;`,
+} as const;
+
+type LayerId = keyof typeof QUERIES;
+
+// ─── Overpass JSON → GeoJSON converter ────────────────────────────────────────
+
+interface OverpassElement {
+  type: "node" | "way" | "relation";
+  id: number;
+  tags?: Record<string, string>;
+  lat?: number;
+  lon?: number;
+  geometry?: Array<{ lat: number; lon: number }>;
+}
+
+function overpassToGeoJSON(elements: OverpassElement[]): GeoJSON.FeatureCollection {
+  const features: GeoJSON.Feature[] = [];
+
+  for (const el of elements) {
+    if (el.type === "node" && el.lat !== undefined && el.lon !== undefined) {
+      features.push({
+        type: "Feature",
+        geometry: { type: "Point", coordinates: [el.lon, el.lat] },
+        properties: { id: el.id, ...el.tags },
+      });
+    } else if (el.type === "way" && el.geometry && el.geometry.length > 1) {
+      const coords = el.geometry.map((p) => [p.lon, p.lat] as [number, number]);
+      const isClosed =
+        coords.length > 3 &&
+        coords[0][0] === coords[coords.length - 1][0] &&
+        coords[0][1] === coords[coords.length - 1][1];
+
+      features.push({
+        type: "Feature",
+        geometry: isClosed
+          ? { type: "Polygon", coordinates: [coords] }
+          : { type: "LineString", coordinates: coords },
+        properties: { id: el.id, ...el.tags },
+      });
+    }
+  }
+
+  return { type: "FeatureCollection", features };
+}
+
+async function fetchOverpass(query: string): Promise<GeoJSON.FeatureCollection> {
+  const res = await fetch(overpassUrl(query));
+  if (!res.ok) throw new Error(`Overpass HTTP ${res.status}`);
+  const data = await res.json();
+  return overpassToGeoJSON(data.elements ?? []);
+}
+
+// ─── Layer definitions ─────────────────────────────────────────────────────────
+
+const LAYERS = [
+  { id: "trails" as LayerId, label: "Trails & Paths", color: "#7A9E7E", defaultOn: true },
+  { id: "parks" as LayerId, label: "Parks & Forests", color: "#2F5D50", defaultOn: true },
+  { id: "amenities" as LayerId, label: "Libraries & Services", color: "#2F6F73", defaultOn: false },
 ] as const;
 
-type DurhamLayerId = (typeof DURHAM_LAYERS)[number]["id"];
-
-// ─── Base map tile options ─────────────────────────────────────────────────────
+// ─── Tile options ──────────────────────────────────────────────────────────────
 
 const TILE_LAYERS = {
   clean: {
     label: "Minimal",
     url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
   },
-  satellite: {
+  terrain: {
     label: "Terrain",
     url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 };
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+// ─── Marker helpers ────────────────────────────────────────────────────────────
 
 function createColoredIcon(color: string) {
   return L.divIcon({
@@ -107,30 +151,23 @@ function FlyToSelected({ listing }: { listing: Listing | null }) {
   return null;
 }
 
-// ─── GeoJSON style helpers ─────────────────────────────────────────────────────
-
-function lineStyle(color: string) {
-  return { color, weight: 2.5, opacity: 0.75 };
-}
-
-function polygonStyle(color: string) {
-  return { color, weight: 1.5, opacity: 0.6, fillColor: color, fillOpacity: 0.12 };
-}
-
-// Build a popup string from ArcGIS feature properties (best-effort)
-function featurePopup(props: Record<string, unknown>, layerLabel: string): string {
-  const name = (props.NAME || props.Name || props.FACILITYNAME || props.SITE_NAME || props.TRAIL_NAME || props.PARK_NAME || "") as string;
-  const addr = (props.ADDRESS || props.STREET_NUMBER ? `${props.STREET_NUMBER} ${props.STREET_NAME}` : "") as string;
-  const type = (props.FACILITY_TYPE || props.TYPE || props.CATEGORY || "") as string;
-  return `<div style="font-family:'Lora',serif;min-width:160px">
-    <p style="font-size:10px;font-weight:700;color:#2F6F73;margin:0 0 3px">${layerLabel}</p>
-    ${name ? `<p style="font-size:12px;font-weight:700;margin:0 0 2px">${name}</p>` : ""}
-    ${type ? `<p style="font-size:10px;color:#3F352C;margin:0 0 2px">${type}</p>` : ""}
-    ${addr ? `<p style="font-size:10px;color:#3F352C;margin:0">${addr}</p>` : ""}
+// Build a readable popup for OSM features
+function osmPopup(props: Record<string, string>): string {
+  const name = props.name || props["name:en"] || "";
+  const type = props.amenity || props.leisure || props.natural || props.highway || props.route || "";
+  const operator = props.operator || props.brand || "";
+  const website = props.website || props["contact:website"] || "";
+  const hours = props.opening_hours || "";
+  return `<div style="font-family:'Lora',serif;min-width:150px">
+    <p style="font-size:10px;font-weight:700;color:#2F6F73;margin:0 0 3px;text-transform:capitalize">${type.replace(/_/g, " ")}</p>
+    ${name ? `<p style="font-size:12px;font-weight:700;margin:0 0 3px">${name}</p>` : ""}
+    ${operator ? `<p style="font-size:10px;color:#3F352C;margin:0 0 2px">${operator}</p>` : ""}
+    ${hours ? `<p style="font-size:10px;color:#2F6F73;margin:0 0 2px">${hours}</p>` : ""}
+    ${website ? `<p style="font-size:10px;margin:0"><a href="${website}" target="_blank" rel="noopener noreferrer" style="color:#2F6F73">Visit website →</a></p>` : ""}
   </div>`;
 }
 
-// ─── Component ────────────────────────────────────────────────────────────────
+// ─── Main component ────────────────────────────────────────────────────────────
 
 interface Props {
   listings: Listing[];
@@ -141,11 +178,13 @@ interface Props {
 export default function AtlasMap({ listings, selected, onSelect }: Props) {
   const [durhamGeo, setDurhamGeo] = useState<object | null>(null);
   const [activeTile, setActiveTile] = useState<keyof typeof TILE_LAYERS>("clean");
-  const [visibleLayers, setVisibleLayers] = useState<Set<DurhamLayerId>>(new Set(["trails", "parks"]));
-  const [layerData, setLayerData] = useState<Partial<Record<DurhamLayerId, GeoJSON.FeatureCollection>>>({});
-  const [layerErrors, setLayerErrors] = useState<Set<DurhamLayerId>>(new Set());
+  const [visibleLayers, setVisibleLayers] = useState<Set<LayerId>>(
+    new Set(LAYERS.filter((l) => l.defaultOn).map((l) => l.id))
+  );
+  const [layerData, setLayerData] = useState<Partial<Record<LayerId, GeoJSON.FeatureCollection>>>({});
+  const [layerStatus, setLayerStatus] = useState<Partial<Record<LayerId, "loading" | "ok" | "error">>>({});
 
-  // Durham boundary outline
+  // Durham boundary outline from Nominatim
   useEffect(() => {
     fetch("https://nominatim.openstreetmap.org/search?q=Regional+Municipality+of+Durham+Ontario+Canada&polygon_geojson=1&format=json&limit=1")
       .then((r) => r.json())
@@ -153,27 +192,26 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
       .catch(() => {});
   }, []);
 
-  // Fetch Durham open data layers on demand
+  // Fetch Overpass layers on demand
   useEffect(() => {
-    for (const layer of DURHAM_LAYERS) {
-      if (!visibleLayers.has(layer.id) || layerData[layer.id] || layerErrors.has(layer.id)) continue;
-      fetch(layer.url)
-        .then((r) => {
-          if (!r.ok) throw new Error(`HTTP ${r.status}`);
-          return r.json();
-        })
+    for (const layer of LAYERS) {
+      if (!visibleLayers.has(layer.id)) continue;
+      if (layerData[layer.id] || layerStatus[layer.id] === "loading" || layerStatus[layer.id] === "error") continue;
+
+      setLayerStatus((prev) => ({ ...prev, [layer.id]: "loading" }));
+
+      fetchOverpass(QUERIES[layer.id])
         .then((geo) => {
-          if (geo?.features) {
-            setLayerData((prev) => ({ ...prev, [layer.id]: geo }));
-          }
+          setLayerData((prev) => ({ ...prev, [layer.id]: geo }));
+          setLayerStatus((prev) => ({ ...prev, [layer.id]: "ok" }));
         })
         .catch(() => {
-          setLayerErrors((prev) => new Set(prev).add(layer.id));
+          setLayerStatus((prev) => ({ ...prev, [layer.id]: "error" }));
         });
     }
-  }, [visibleLayers, layerData, layerErrors]);
+  }, [visibleLayers, layerData, layerStatus]);
 
-  function toggleLayer(id: DurhamLayerId) {
+  function toggleLayer(id: LayerId) {
     setVisibleLayers((prev) => {
       const next = new Set(prev);
       next.has(id) ? next.delete(id) : next.add(id);
@@ -189,13 +227,13 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
       {/* ── Controls panel ── */}
       <div style={{
         position: "absolute", top: 12, right: 12, zIndex: 1000,
-        background: "white", borderRadius: 10, padding: "10px 14px",
-        boxShadow: "0 2px 12px rgba(0,0,0,0.18)", minWidth: 180,
+        background: "white", borderRadius: 10, padding: "12px 14px",
+        boxShadow: "0 2px 12px rgba(0,0,0,0.18)", minWidth: 186,
         fontFamily: "'Inter', sans-serif",
       }}>
         {/* Base map toggle */}
         <p style={{ fontSize: 10, fontWeight: 700, color: "#3F352C", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 6 }}>Base Map</p>
-        <div style={{ display: "flex", borderRadius: 6, overflow: "hidden", border: "1px solid #C2D1DB", marginBottom: 12 }}>
+        <div style={{ display: "flex", borderRadius: 6, overflow: "hidden", border: "1px solid #C2D1DB", marginBottom: 14 }}>
           {(Object.keys(TILE_LAYERS) as (keyof typeof TILE_LAYERS)[]).map((key) => (
             <button
               key={key}
@@ -213,19 +251,19 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
           ))}
         </div>
 
-        {/* Durham open data layer toggles */}
-        <p style={{ fontSize: 10, fontWeight: 700, color: "#3F352C", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 6 }}>
-          Regional Layers
-          <span style={{ fontWeight: 400, color: "#7A9E7E", marginLeft: 4 }}>Durham Open Data</span>
+        {/* Layer toggles */}
+        <p style={{ fontSize: 10, fontWeight: 700, color: "#3F352C", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 8 }}>
+          Map Layers
+          <span style={{ fontWeight: 400, color: "#7A9E7E", marginLeft: 5, textTransform: "none", letterSpacing: 0 }}>OpenStreetMap</span>
         </p>
-        {DURHAM_LAYERS.map((layer) => {
+        {LAYERS.map((layer) => {
           const on = visibleLayers.has(layer.id);
-          const loading = on && !layerData[layer.id] && !layerErrors.has(layer.id);
-          const errored = layerErrors.has(layer.id);
+          const status = layerStatus[layer.id];
+          const count = layerData[layer.id]?.features?.length;
           return (
             <label
               key={layer.id}
-              style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6, cursor: "pointer" }}
+              style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8, cursor: "pointer" }}
             >
               <div
                 onClick={() => toggleLayer(layer.id)}
@@ -236,17 +274,23 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
                   transition: "background 0.15s",
                 }}
               />
-              <span style={{ fontSize: 11, color: errored ? "#C65A1E" : "#3F352C", flex: 1 }}>
+              <span style={{ fontSize: 11, color: status === "error" ? "#C65A1E" : "#3F352C", flex: 1, lineHeight: 1.3 }}>
                 {layer.label}
               </span>
-              {loading && <span style={{ fontSize: 9, color: "#2F6F73" }}>…</span>}
-              {errored && <span style={{ fontSize: 9, color: "#C65A1E" }}>✕</span>}
+              {status === "loading" && <span style={{ fontSize: 9, color: "#2F6F73" }}>…</span>}
+              {status === "ok" && count !== undefined && <span style={{ fontSize: 9, color: "#7A9E7E" }}>{count}</span>}
+              {status === "error" && <span style={{ fontSize: 9, color: "#C65A1E" }} title="Could not load layer">✕</span>}
             </label>
           );
         })}
-        <p style={{ fontSize: 9, color: "#7A9E7E", marginTop: 8, lineHeight: 1.4 }}>
-          Data: <a href="https://opendata.durham.ca" target="_blank" rel="noopener noreferrer" style={{ color: "#2F6F73" }}>Durham Region Open Data</a>
-        </p>
+        <div style={{ borderTop: "1px solid #C2D1DB", marginTop: 8, paddingTop: 8 }}>
+          <p style={{ fontSize: 9, color: "#7A9E7E", lineHeight: 1.4, margin: 0 }}>
+            Regional data:{" "}
+            <a href="https://www.openstreetmap.org" target="_blank" rel="noopener noreferrer" style={{ color: "#2F6F73" }}>
+              © OpenStreetMap
+            </a>
+          </p>
+        </div>
       </div>
 
       <MapContainer
@@ -264,45 +308,58 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
           />
         )}
 
-        {/* Durham Open Data layers */}
-        {DURHAM_LAYERS.map((layer) => {
+        {/* OSM layers */}
+        {LAYERS.map((layer) => {
           const data = layerData[layer.id];
           if (!visibleLayers.has(layer.id) || !data) return null;
 
-          if (layer.type === "point") {
-            return data.features?.map((feature, i) => {
-              if (feature.geometry?.type !== "Point") return null;
+          // Points rendered as small markers
+          const points = data.features.filter((f) => f.geometry?.type === "Point");
+          const nonPoints = {
+            ...data,
+            features: data.features.filter((f) => f.geometry?.type !== "Point"),
+          };
+
+          const lineOrPolyStyle = (feature?: GeoJSON.Feature) => {
+            const isPolygon = feature?.geometry?.type === "Polygon" || feature?.geometry?.type === "MultiPolygon";
+            return isPolygon
+              ? { color: layer.color, weight: 1.5, opacity: 0.6, fillColor: layer.color, fillOpacity: 0.15 }
+              : { color: layer.color, weight: 2.5, opacity: 0.8 };
+          };
+
+          return [
+            nonPoints.features.length > 0 && (
+              <GeoJSON
+                key={`${layer.id}-geo`}
+                data={nonPoints as GeoJSON.GeoJsonObject}
+                style={lineOrPolyStyle}
+                onEachFeature={(feature, leafletLayer) => {
+                  const props = (feature.properties || {}) as Record<string, string>;
+                  if (props.name) leafletLayer.bindPopup(osmPopup(props));
+                }}
+              />
+            ),
+            ...points.map((feature, i) => {
               const [lng, lat] = (feature.geometry as GeoJSON.Point).coordinates;
+              const props = (feature.properties || {}) as Record<string, string>;
               return (
                 <Marker
-                  key={`${layer.id}-${i}`}
+                  key={`${layer.id}-pt-${i}`}
                   position={[lat, lng]}
                   icon={createSmallIcon(layer.color)}
                 >
                   <Popup>
-                    <div dangerouslySetInnerHTML={{ __html: featurePopup(feature.properties as Record<string, unknown> || {}, layer.label) }} />
+                    <div dangerouslySetInnerHTML={{ __html: osmPopup(props) }} />
                   </Popup>
                 </Marker>
               );
-            });
-          }
-
-          const styleFunc = layer.type === "line" ? lineStyle(layer.color) : polygonStyle(layer.color);
-          return (
-            <GeoJSON
-              key={layer.id}
-              data={data as GeoJSON.GeoJsonObject}
-              style={() => styleFunc}
-              onEachFeature={(feature, leafletLayer) => {
-                leafletLayer.bindPopup(featurePopup(feature.properties as Record<string, unknown> || {}, layer.label));
-              }}
-            />
-          );
+            }),
+          ];
         })}
 
         <FlyToSelected listing={selected} />
 
-        {/* Atlas listings */}
+        {/* Atlas listings — always on top */}
         {listings.map((listing) => (
           <Marker
             key={listing.id}

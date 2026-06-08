@@ -90,39 +90,46 @@ card will show "Community-submitted" instead of a link.
 
 ---
 
-## 4. Adding a Durham Region Open Data layer to the map
+## 4. Adding a map layer (OpenStreetMap data)
 
-The map fetches real-time data from **Durham Region's public ArcGIS API**.
-All available layer numbers are documented at:
+The map fetches real-time data from **OpenStreetMap via the Overpass API**
+(`https://overpass-api.de/api/interpreter`). This is free, public, and
+CORS-enabled — no API key needed.
 
-```
-https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer
-https://maps.durham.ca/arcgis/rest/services/yourDurham/yourDurhamLayers/MapServer
-```
+To add a new layer, open `components/Map.tsx` and:
 
-To add a new layer, open `components/Map.tsx` and find the `DURHAM_LAYERS`
-array near the top of the file. Add a new entry:
+**Step 1 — Add a query** to the `QUERIES` object:
 
 ```typescript
-{
-  id: "seniors",           // unique identifier (no spaces)
-  label: "Senior Services", // shown in the map legend
-  color: "#E3A24C",        // brand colour for this layer
-  url: arcgisUrl(ARCGIS_BASE, 18),  // layer number from the MapServer above
-  type: "point",           // "point", "line", or "polygon"
-},
+const QUERIES = {
+  trails: `...existing...`,
+  parks: `...existing...`,
+  amenities: `...existing...`,
+  seniors: `[out:json][timeout:30][bbox:${BBOX}];
+(
+  node["amenity"="retirement_home"];
+  node["amenity"="nursing_home"];
+);
+out body qt;`,
+} as const;
 ```
 
-**Finding the right layer number:**
-1. Open `https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer`
-   in your browser
-2. The page lists all layers with their numbers (e.g. `4 (COMMUNITY_Community_Services)`)
-3. Use that number in `arcgisUrl(ARCGIS_BASE, 4)`
+**Step 2 — Add a layer definition** to the `LAYERS` array:
 
-**Choosing a type:**
-- `point` — individual locations (e.g. buildings, stops, services)
-- `line` — linear features (e.g. trails, roads)
-- `polygon` — areas (e.g. parks, neighbourhoods)
+```typescript
+{ id: "seniors", label: "Senior Residences", color: "#E3A24C", defaultOn: false },
+```
+
+**Writing Overpass queries:**
+- The Overpass query language docs: https://wiki.openstreetmap.org/wiki/Overpass_API/Language_Guide
+- Test queries interactively at: https://overpass-turbo.eu
+  (set the map view to North Durham before running)
+- Common tags: `amenity`, `leisure`, `natural`, `highway`, `landuse`
+- `node` = a point (building, stop), `way` = a line or polygon (trail, park)
+- Always include `[bbox:${BBOX}]` to limit results to North Durham
+- Use `out body qt;` for points (nodes), `out geom qt;` for lines/polygons (ways)
+
+**Choosing a colour:** Use one of the eight brand colours listed in section 6.
 
 ---
 
