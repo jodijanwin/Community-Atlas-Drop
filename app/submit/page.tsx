@@ -7,7 +7,7 @@ const CATEGORIES = ["Free Food","Tenant Defense","Public Space","Repair Skills",
 
 const inputStyle = { borderColor: "#C2D1DB", background: "white", color: "#3F352C" };
 const labelStyle = { color: "#3F352C" };
-const optionalStyle = { color: "#6B6158" };
+const optionalStyle = { color: "#3F352C" };
 
 export default function SubmitPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -34,10 +34,10 @@ export default function SubmitPage() {
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </div>
           <h2 className="text-2xl font-bold mb-3" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>Thank you.</h2>
-          <p className="text-sm leading-relaxed mb-6" style={{ color: "#6B6158" }}>Your submission will be reviewed and added to the next monthly atlas update. Every listing is verified before it goes in — that&apos;s what makes this worth trusting.</p>
+          <p className="text-sm leading-relaxed mb-6" style={{ color: "#3F352C" }}>Your submission will be reviewed and added to the next monthly atlas update. Every listing is verified before it goes in — that&apos;s what makes this worth trusting.</p>
           <div className="flex gap-3 justify-center">
             <Link href="/atlas" className="px-5 py-2.5 rounded-lg text-sm font-semibold" style={{ background: "#2F5D50", color: "#F6F1E8" }}>Back to the Atlas</Link>
-            <button onClick={() => setSubmitted(false)} className="px-5 py-2.5 rounded-lg text-sm font-semibold border" style={{ borderColor: "#C2D1DB", color: "#6B6158" }}>Submit Another</button>
+            <button onClick={() => setSubmitted(false)} className="px-5 py-2.5 rounded-lg text-sm font-semibold border" style={{ borderColor: "#C2D1DB", color: "#3F352C" }}>Submit Another</button>
           </div>
         </div>
       </div>
@@ -50,7 +50,7 @@ export default function SubmitPage() {
         <div className="mb-8">
           <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "#2F6F73" }}>Community Submission</p>
           <h1 className="text-3xl sm:text-4xl font-bold mb-3" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>Add to the Atlas</h1>
-          <p className="text-sm leading-relaxed" style={{ color: "#6B6158" }}>You know something we don&apos;t. Maybe it&apos;s the neighbour on your concession who fixes small engines, the hall that&apos;s been quietly available for years, or the person giving away seedlings every spring. Add it here.</p>
+          <p className="text-sm leading-relaxed" style={{ color: "#3F352C" }}>You know something we don&apos;t. Maybe it&apos;s the neighbour on your concession who fixes small engines, the hall that&apos;s been quietly available for years, or the person giving away seedlings every spring. Add it here.</p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-5">
 
@@ -62,7 +62,7 @@ export default function SubmitPage() {
             </div>
             <div>
               <label className="block text-xs font-semibold mb-1.5" style={labelStyle}>Category *</label>
-              <select required name="category" value={form.category} onChange={handleChange} className="w-full px-3 py-2.5 rounded-lg border text-sm outline-none" style={{ ...inputStyle, color: form.category ? "#3F352C" : "#6B6158" }}>
+              <select required name="category" value={form.category} onChange={handleChange} className="w-full px-3 py-2.5 rounded-lg border text-sm outline-none" style={{ ...inputStyle, color: form.category ? "#3F352C" : "#3F352C" }}>
                 <option value="">Select a category</option>
                 {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
               </select>
@@ -118,7 +118,7 @@ export default function SubmitPage() {
 
           <div className="pt-2">
             <button type="submit" className="w-full sm:w-auto px-8 py-3 rounded-lg font-semibold text-sm transition-all hover:opacity-90" style={{ fontFamily: "'Lora', serif", background: "#C65A1E", color: "white" }}>Submit to the Atlas</button>
-            <p className="text-xs mt-3" style={{ color: "#6B6158" }}>All submissions are reviewed before publishing. We verify each listing by visit, call, or message.</p>
+            <p className="text-xs mt-3" style={{ color: "#3F352C" }}>All submissions are reviewed before publishing. We verify each listing by visit, call, or message.</p>
           </div>
         </form>
       </div>

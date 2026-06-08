@@ -85,7 +85,7 @@ function ResourceCard({ name, description, url, tag }: { name: string; descripti
         <h3 className="text-sm font-semibold leading-snug" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>{name}</h3>
         <span className="shrink-0 text-xs px-2 py-0.5 rounded" style={{ background: "rgba(47,111,115,0.15)", color: "#2F6F73" }}>{tag}</span>
       </div>
-      <p className="text-xs leading-relaxed" style={{ color: "#6B6158" }}>{description}</p>
+      <p className="text-xs leading-relaxed" style={{ color: "#3F352C" }}>{description}</p>
       <p className="text-xs mt-2 font-medium" style={{ color: "#2F6F73" }}>Visit →</p>
     </a>
   );
@@ -101,7 +101,7 @@ export default function ResourcesPage() {
           <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#2F6F73" }}>Further Reading & Links</p>
           <h1 className="text-4xl sm:text-5xl font-bold leading-tight mb-5" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>Resources</h1>
           <div className="w-12 h-0.5 mb-5" style={{ background: "#2F6F73" }} />
-          <p className="text-base leading-relaxed max-w-xl" style={{ color: "#6B6158" }}>
+          <p className="text-base leading-relaxed max-w-xl" style={{ color: "#3F352C" }}>
             Tools for organizers and links to local community media for North Durham Region. Natural areas are mapped in the <Link href="/atlas?category=Public+Space" style={{ color: "#2F6F73" }}>Public Space</Link> category of the atlas.
           </p>
         </div>
@@ -112,7 +112,7 @@ export default function ResourcesPage() {
             <h2 className="text-xl font-bold" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>For Organizers & Activists</h2>
             <div className="flex-1 border-t" style={{ borderColor: "#C2D1DB" }} />
           </div>
-          <p className="text-sm mb-6" style={{ color: "#6B6158" }}>
+          <p className="text-sm mb-6" style={{ color: "#3F352C" }}>
             Shareable resources for anyone doing community work — tactics, theory, guides, and archives.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -128,7 +128,7 @@ export default function ResourcesPage() {
             <h2 className="text-xl font-bold" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>Local North Durham Resources</h2>
             <div className="flex-1 border-t" style={{ borderColor: "#C2D1DB" }} />
           </div>
-          <p className="text-sm mb-6" style={{ color: "#6B6158" }}>
+          <p className="text-sm mb-6" style={{ color: "#3F352C" }}>
             Community media, tourism, and local information sources covering North Durham — Scugog, Uxbridge, and Brock Townships.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -141,7 +141,7 @@ export default function ResourcesPage() {
         {/* CTA */}
         <div className="p-6 rounded-lg" style={{ background: "#2F5D50" }}>
           <p className="text-sm font-semibold mb-1" style={{ fontFamily: "'Lora', serif", color: "#F6F1E8" }}>Know a resource that should be here?</p>
-          <p className="text-sm mb-4" style={{ color: "#9EB8AE" }}>A local organization, a useful tool, a conservation area we missed — add it.</p>
+          <p className="text-sm mb-4" style={{ color: "#C2D1DB" }}>A local organization, a useful tool, a conservation area we missed — add it.</p>
           <Link href="/submit" className="inline-block px-5 py-2.5 rounded-lg text-sm font-semibold transition-all hover:opacity-90" style={{ fontFamily: "'Lora', serif", background: "#C65A1E", color: "white" }}>Submit a resource →</Link>
         </div>
 

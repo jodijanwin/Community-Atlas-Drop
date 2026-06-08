@@ -71,7 +71,7 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
               border: "none",
               cursor: "pointer",
               background: activeLayer === key ? "#2F6F73" : "white",
-              color: activeLayer === key ? "white" : "#6B6158",
+              color: activeLayer === key ? "white" : "#3F352C",
               transition: "all 0.15s",
             }}
           >
@@ -118,7 +118,7 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
               <div style={{ fontFamily: "'Lora', serif", minWidth: 200 }}>
                 <p style={{ fontSize: 11, fontWeight: 600, color: CATEGORY_COLORS[listing.category], margin: "0 0 2px" }}>{listing.category}</p>
                 <p style={{ fontSize: 13, fontWeight: 700, margin: "0 0 4px" }}>{listing.name}</p>
-                <p style={{ fontSize: 11, color: "#6B6158", margin: "0 0 2px" }}>{listing.address}</p>
+                <p style={{ fontSize: 11, color: "#3F352C", margin: "0 0 2px" }}>{listing.address}</p>
                 <p style={{ fontSize: 11, fontWeight: 600, color: "#2F6F73", margin: "0 0 6px" }}>{listing.hours}</p>
                 <p style={{ fontSize: 11, lineHeight: 1.5, margin: 0 }}>{listing.description}</p>
               </div>
