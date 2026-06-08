@@ -46,25 +46,25 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── BY THE NUMBERS — cream ───────────────────────────── */}
-      <div className="border-b px-6 py-8" style={{ background: "#F6F1E8", borderColor: "#C2D1DB" }}>
+      {/* ── BY THE NUMBERS — teal ────────────────────────────── */}
+      <div className="px-6 py-10" style={{ background: "#2F6F73" }}>
         <div className="max-w-4xl mx-auto">
-          <p className="text-center text-xs font-bold uppercase tracking-widest mb-6" style={{ color: "#3F352C" }}>The economy of care — quantified</p>
+          <p className="text-center text-xs font-bold uppercase tracking-widest mb-6" style={{ color: "#C2D1DB" }}>The economy of care — quantified</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-10 sm:gap-20">
             {STATS.map(({ value, label }) => (
               <div key={label} className="text-center">
-                <p className="text-4xl font-bold" style={{ fontFamily: "'Lora', serif", color: "#2F6F73" }}>{value}</p>
-                <p className="text-xs mt-1 uppercase tracking-wider" style={{ color: "#3F352C" }}>{label}</p>
+                <p className="text-5xl font-bold" style={{ fontFamily: "'Lora', serif", color: "#F6F1E8" }}>{value}</p>
+                <p className="text-xs mt-1 uppercase tracking-wider" style={{ color: "#C2D1DB" }}>{label}</p>
               </div>
             ))}
           </div>
-          <p className="text-center text-xs mt-6 italic" style={{ color: "#3F352C" }}>
+          <p className="text-center text-xs mt-6 italic" style={{ color: "#C2D1DB" }}>
             Most of the work that holds North Durham together goes uncounted. This atlas counts some of it.
           </p>
         </div>
       </div>
 
-      {/* ── WHAT'S IN THE ATLAS ──────────────────────────────── */}
+      {/* ── WHAT'S IN THE ATLAS — blue-grey cards on cream ──── */}
       <section className="px-6 py-16" style={{ background: "#F6F1E8" }}>
         <div className="max-w-4xl mx-auto">
           <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "#2F6F73" }}>Mapping our common treasures</p>
@@ -76,7 +76,7 @@ export default function HomePage() {
             {CATEGORIES.map((cat) => {
               const count = listings.filter((l) => l.category === cat).length;
               return (
-                <Link key={cat} href={`/atlas?category=${encodeURIComponent(cat)}`} className="p-4 rounded-lg border transition-all hover:scale-[1.02] hover:shadow-sm" style={{ background: "white", borderColor: "#C2D1DB" }}>
+                <Link key={cat} href={`/atlas?category=${encodeURIComponent(cat)}`} className="p-4 rounded-lg border transition-all hover:scale-[1.02] hover:shadow-sm" style={{ background: "#C2D1DB", borderColor: "#C2D1DB" }}>
                   <div className="w-3 h-3 rounded-full mb-3" style={{ background: CATEGORY_COLORS[cat] }} />
                   <p className="text-sm font-semibold leading-tight" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>{cat}</p>
                   <p className="text-xs mt-1" style={{ color: "#3F352C" }}>{count} {count === 1 ? "listing" : "listings"}</p>
@@ -90,19 +90,33 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── STORIES OF SOLIDARITY ────────────────────────────── */}
-      <section className="px-6 py-16 border-t" style={{ background: "white", borderColor: "#C2D1DB" }}>
+      {/* ── PHILOSOPHY STRIP — teal background ───────────────── */}
+      <section className="px-6 py-16" style={{ background: "#2F6F73" }}>
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="text-2xl sm:text-3xl font-semibold leading-snug mb-4" style={{ fontFamily: "'Lora', serif", color: "#F6F1E8" }}>
+            &ldquo;Conventional advocacy says, <em>look what we lack.</em><br />
+            <span style={{ color: "#E3A24C" }}>This atlas says, look what we already have.</span>&rdquo;
+          </p>
+          <p className="text-sm max-w-xl mx-auto leading-relaxed mb-6" style={{ color: "#C2D1DB" }}>
+            North Durham is full of skills, generosity, and care that go unrecognized and unconnected. Once people see it, they can&apos;t un-see it — and they start to join it.
+          </p>
+          <Link href="/about" className="text-sm font-semibold underline" style={{ color: "#C2D1DB" }}>Read the full story of this project →</Link>
+        </div>
+      </section>
+
+      {/* ── STORIES OF SOLIDARITY — blue-grey background ─────── */}
+      <section className="px-6 py-16" style={{ background: "#C2D1DB" }}>
         <div className="max-w-4xl mx-auto">
-          <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "#7A9E7E" }}>Caring in action</p>
+          <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "#2F5D50" }}>Caring in action</p>
           <h2 className="text-3xl font-bold mb-2" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>Stories of Solidarity</h2>
           <p className="text-sm mb-8 max-w-xl" style={{ color: "#3F352C" }}>
             What&apos;s already happening here — reported, witnessed, passed on. Neighbours helping neighbours, quietly and without fanfare.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {stories.map((story) => (
-              <div key={story.id} className="p-5 rounded-lg border flex flex-col" style={{ background: "#F6F1E8", borderColor: "#C2D1DB" }}>
+              <div key={story.id} className="p-5 rounded-lg flex flex-col" style={{ background: "#F6F1E8" }}>
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="text-xs font-semibold px-2 py-0.5 rounded" style={{ background: "rgba(122,158,126,0.15)", color: "#2F5D50" }}>{story.source}</span>
+                  <span className="text-xs font-semibold px-2 py-0.5 rounded" style={{ background: "rgba(47,93,80,0.15)", color: "#2F5D50" }}>{story.source}</span>
                   <span className="text-xs" style={{ color: "#3F352C" }}>{story.date}</span>
                 </div>
                 <h3 className="text-sm font-semibold leading-snug mb-3 flex-1" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>{story.title}</h3>
@@ -117,27 +131,13 @@ export default function HomePage() {
           </div>
           <p className="text-xs mt-6 text-center" style={{ color: "#3F352C" }}>
             Know of a story that belongs here?{" "}
-            <Link href="/submit" className="underline" style={{ color: "#3F352C" }}>Submit it.</Link>
+            <Link href="/submit" className="underline font-semibold" style={{ color: "#2F5D50" }}>Submit it.</Link>
           </p>
         </div>
       </section>
 
-      {/* ── PHILOSOPHY STRIP ─────────────────────────────────── */}
-      <section className="px-6 py-14 border-t" style={{ background: "#F6F1E8", borderColor: "#C2D1DB" }}>
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="text-2xl sm:text-3xl font-semibold leading-snug mb-4" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>
-            &ldquo;Conventional advocacy says, <em>look what we lack.</em><br />
-            <span style={{ color: "#2F6F73" }}>This atlas says, look what we already have.</span>&rdquo;
-          </p>
-          <p className="text-sm max-w-xl mx-auto leading-relaxed mb-6" style={{ color: "#3F352C" }}>
-            North Durham is full of skills, generosity, and care that go unrecognized and unconnected. Once people see it, they can&apos;t un-see it — and they start to join it.
-          </p>
-          <Link href="/about" className="text-sm font-semibold underline" style={{ color: "#3F352C" }}>Read the full story of this project →</Link>
-        </div>
-      </section>
-
-      {/* ── A FEW PLACES TO START ────────────────────────────── */}
-      <section className="px-6 py-14 border-t" style={{ background: "white", borderColor: "#C2D1DB" }}>
+      {/* ── A FEW PLACES TO START — cream ───────────────────── */}
+      <section className="px-6 py-14" style={{ background: "#F6F1E8" }}>
         <div className="max-w-4xl mx-auto">
           <div className="flex items-end justify-between mb-6">
             <h2 className="text-2xl font-bold" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>A few places to start</h2>
@@ -145,7 +145,7 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {listings.slice(0, 3).map((listing) => (
-              <Link key={listing.id} href={`/atlas?id=${listing.id}`} className="p-4 rounded-lg border transition-all hover:shadow-sm" style={{ background: "#F6F1E8", borderColor: "#C2D1DB" }}>
+              <Link key={listing.id} href={`/atlas?id=${listing.id}`} className="p-4 rounded-lg border transition-all hover:shadow-sm" style={{ background: "white", borderColor: "#C2D1DB" }}>
                 <div className="flex items-center gap-2 mb-2">
                   <div className="w-2 h-2 rounded-full shrink-0" style={{ background: CATEGORY_COLORS[listing.category as Category] }} />
                   <span className="text-xs" style={{ color: "#3F352C" }}>{listing.category}</span>
@@ -158,11 +158,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── UPCOMING EVENTS TEASER ───────────────────────────── */}
-      <section className="px-6 py-14 border-t" style={{ background: "#F6F1E8", borderColor: "#C2D1DB" }}>
+      {/* ── UPCOMING EVENTS TEASER — amber ───────────────────── */}
+      <section className="px-6 py-14" style={{ background: "#E3A24C" }}>
         <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "#7A9E7E" }}>What&apos;s on</p>
+            <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "#2F5D50" }}>What&apos;s on</p>
             <h2 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>Community Events</h2>
             <p className="text-sm max-w-md" style={{ color: "#3F352C" }}>Repair cafés, seed swaps, tenant nights, market days — what&apos;s coming up across North Durham this month.</p>
           </div>
@@ -172,14 +172,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── PRINT CTA BANNER ─────────────────────────────────── */}
-      <section className="px-6 py-10 border-t" style={{ background: "rgba(47,111,115,0.06)", borderColor: "#C2D1DB" }}>
+      {/* ── PRINT CTA BANNER — burnt orange ──────────────────── */}
+      <section className="px-6 py-12" style={{ background: "#C65A1E" }}>
         <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
-            <p className="text-base font-semibold" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>Print your own North Durham Atlas zine</p>
-            <p className="text-sm mt-1" style={{ color: "#3F352C" }}>Take this offline — print and share in your café, library, or community board.</p>
+            <p className="text-base font-semibold" style={{ fontFamily: "'Lora', serif", color: "#F6F1E8" }}>Print your own North Durham Atlas zine</p>
+            <p className="text-sm mt-1" style={{ color: "#F6F1E8" }}>Take this offline — print and share in your café, library, or community board.</p>
           </div>
-          <Link href="/print" className="shrink-0 px-6 py-2.5 rounded-lg text-sm font-semibold transition-all hover:opacity-90" style={{ fontFamily: "'Lora', serif", background: "#C65A1E", color: "white" }}>
+          <Link href="/print" className="shrink-0 px-6 py-2.5 rounded-lg text-sm font-semibold transition-all hover:opacity-90 border-2" style={{ fontFamily: "'Lora', serif", background: "transparent", borderColor: "#F6F1E8", color: "#F6F1E8" }}>
             Print the Atlas →
           </Link>
         </div>
