@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap, GeoJSON } from "react-leaflet";
 import L from "leaflet";
+import React from "react";
 import { Listing, CATEGORY_COLORS } from "@/types";
 
 // ─── Data sources ──────────────────────────────────────────────────────────────
@@ -27,7 +28,7 @@ const QUERIES = {
   trails: `[out:json][timeout:30][bbox:${BBOX}];
 (
   way["highway"~"^(path|footway|cycleway|track)$"]["name"];
-  way["route"~"^(hiking|bicycle|foot)$"];
+  way["route"~"^(hiking|bicycle|foot)$"]["name"];
 );
 out geom qt;`,
 
@@ -41,11 +42,12 @@ out geom qt;`,
 
   amenities: `[out:json][timeout:30][bbox:${BBOX}];
 (
-  node["amenity"~"^(library|community_centre|social_facility|food_bank)$"];
-  node["amenity"="place_of_worship"]["name"]["community"="yes"];
-  node["shop"="farm"];
+  node["amenity"~"^(library|community_centre|social_facility)$"];
+  way["amenity"~"^(library|community_centre|social_facility)$"];
+  node["shop"="farm"]["name"];
+  way["shop"="farm"]["name"];
 );
-out body qt;`,
+out center body qt;`,
 } as const;
 
 type LayerId = keyof typeof QUERIES;
@@ -58,6 +60,7 @@ interface OverpassElement {
   tags?: Record<string, string>;
   lat?: number;
   lon?: number;
+  center?: { lat: number; lon: number };
   geometry?: Array<{ lat: number; lon: number }>;
 }
 
@@ -65,26 +68,37 @@ function overpassToGeoJSON(elements: OverpassElement[]): GeoJSON.FeatureCollecti
   const features: GeoJSON.Feature[] = [];
 
   for (const el of elements) {
+    const props = { id: el.id, ...el.tags };
+
     if (el.type === "node" && el.lat !== undefined && el.lon !== undefined) {
       features.push({
         type: "Feature",
         geometry: { type: "Point", coordinates: [el.lon, el.lat] },
-        properties: { id: el.id, ...el.tags },
+        properties: props,
       });
-    } else if (el.type === "way" && el.geometry && el.geometry.length > 1) {
-      const coords = el.geometry.map((p) => [p.lon, p.lat] as [number, number]);
-      const isClosed =
-        coords.length > 3 &&
-        coords[0][0] === coords[coords.length - 1][0] &&
-        coords[0][1] === coords[coords.length - 1][1];
-
-      features.push({
-        type: "Feature",
-        geometry: isClosed
-          ? { type: "Polygon", coordinates: [coords] }
-          : { type: "LineString", coordinates: coords },
-        properties: { id: el.id, ...el.tags },
-      });
+    } else if (el.type === "way") {
+      if (el.geometry && el.geometry.length > 1) {
+        // Full geometry available (out geom)
+        const coords = el.geometry.map((p) => [p.lon, p.lat] as [number, number]);
+        const isClosed =
+          coords.length > 3 &&
+          coords[0][0] === coords[coords.length - 1][0] &&
+          coords[0][1] === coords[coords.length - 1][1];
+        features.push({
+          type: "Feature",
+          geometry: isClosed
+            ? { type: "Polygon", coordinates: [coords] }
+            : { type: "LineString", coordinates: coords },
+          properties: props,
+        });
+      } else if (el.center) {
+        // Center point only (out center body)
+        features.push({
+          type: "Feature",
+          geometry: { type: "Point", coordinates: [el.center.lon, el.center.lat] },
+          properties: props,
+        });
+      }
     }
   }
 
@@ -103,7 +117,7 @@ async function fetchOverpass(query: string): Promise<GeoJSON.FeatureCollection> 
 const LAYERS = [
   { id: "trails" as LayerId, label: "Trails & Paths", color: "#7A9E7E", defaultOn: true },
   { id: "parks" as LayerId, label: "Parks & Forests", color: "#2F5D50", defaultOn: true },
-  { id: "amenities" as LayerId, label: "Libraries & Services", color: "#2F6F73", defaultOn: false },
+  { id: "amenities" as LayerId, label: "Libraries & Services", color: "#2F6F73", defaultOn: true },
 ] as const;
 
 // ─── Tile options ──────────────────────────────────────────────────────────────
@@ -183,6 +197,7 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
   );
   const [layerData, setLayerData] = useState<Partial<Record<LayerId, GeoJSON.FeatureCollection>>>({});
   const [layerStatus, setLayerStatus] = useState<Partial<Record<LayerId, "loading" | "ok" | "error">>>({});
+  const fetchedLayers = useRef<Set<LayerId>>(new Set());
 
   // Durham boundary outline from Nominatim
   useEffect(() => {
@@ -192,12 +207,14 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
       .catch(() => {});
   }, []);
 
-  // Fetch Overpass layers on demand
+  // Fetch Overpass layers on demand — use a ref to track in-flight/done fetches
+  // so this effect only depends on visibleLayers and never re-runs due to state updates
   useEffect(() => {
     for (const layer of LAYERS) {
       if (!visibleLayers.has(layer.id)) continue;
-      if (layerData[layer.id] || layerStatus[layer.id] === "loading" || layerStatus[layer.id] === "error") continue;
+      if (fetchedLayers.current.has(layer.id)) continue;
 
+      fetchedLayers.current.add(layer.id);
       setLayerStatus((prev) => ({ ...prev, [layer.id]: "loading" }));
 
       fetchOverpass(QUERIES[layer.id])
@@ -209,7 +226,7 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
           setLayerStatus((prev) => ({ ...prev, [layer.id]: "error" }));
         });
     }
-  }, [visibleLayers, layerData, layerStatus]);
+  }, [visibleLayers]);
 
   function toggleLayer(id: LayerId) {
     setVisibleLayers((prev) => {
@@ -313,10 +330,9 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
           const data = layerData[layer.id];
           if (!visibleLayers.has(layer.id) || !data) return null;
 
-          // Points rendered as small markers
           const points = data.features.filter((f) => f.geometry?.type === "Point");
-          const nonPoints = {
-            ...data,
+          const nonPoints: GeoJSON.FeatureCollection = {
+            type: "FeatureCollection",
             features: data.features.filter((f) => f.geometry?.type !== "Point"),
           };
 
@@ -327,34 +343,36 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
               : { color: layer.color, weight: 2.5, opacity: 0.8 };
           };
 
-          return [
-            nonPoints.features.length > 0 && (
-              <GeoJSON
-                key={`${layer.id}-geo`}
-                data={nonPoints as GeoJSON.GeoJsonObject}
-                style={lineOrPolyStyle}
-                onEachFeature={(feature, leafletLayer) => {
-                  const props = (feature.properties || {}) as Record<string, string>;
-                  if (props.name) leafletLayer.bindPopup(osmPopup(props));
-                }}
-              />
-            ),
-            ...points.map((feature, i) => {
-              const [lng, lat] = (feature.geometry as GeoJSON.Point).coordinates;
-              const props = (feature.properties || {}) as Record<string, string>;
-              return (
-                <Marker
-                  key={`${layer.id}-pt-${i}`}
-                  position={[lat, lng]}
-                  icon={createSmallIcon(layer.color)}
-                >
-                  <Popup>
-                    <div dangerouslySetInnerHTML={{ __html: osmPopup(props) }} />
-                  </Popup>
-                </Marker>
-              );
-            }),
-          ];
+          return (
+            <React.Fragment key={layer.id}>
+              {nonPoints.features.length > 0 && (
+                <GeoJSON
+                  key={`${layer.id}-geo`}
+                  data={nonPoints as GeoJSON.GeoJsonObject}
+                  style={lineOrPolyStyle}
+                  onEachFeature={(feature, leafletLayer) => {
+                    const props = (feature.properties || {}) as Record<string, string>;
+                    if (props.name) leafletLayer.bindPopup(osmPopup(props));
+                  }}
+                />
+              )}
+              {points.map((feature, i) => {
+                const [lng, lat] = (feature.geometry as GeoJSON.Point).coordinates;
+                const props = (feature.properties || {}) as Record<string, string>;
+                return (
+                  <Marker
+                    key={`${layer.id}-pt-${i}`}
+                    position={[lat, lng]}
+                    icon={createSmallIcon(layer.color)}
+                  >
+                    <Popup>
+                      <div dangerouslySetInnerHTML={{ __html: osmPopup(props) }} />
+                    </Popup>
+                  </Marker>
+                );
+              })}
+            </React.Fragment>
+          );
         })}
 
         <FlyToSelected listing={selected} />
