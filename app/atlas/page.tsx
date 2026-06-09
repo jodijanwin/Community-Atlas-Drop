@@ -34,21 +34,21 @@ function AtlasContent() {
   }), [selectedCategory, query]);
 
   return (
-    <div style={{ background: "#F6F1E8", height: "calc(100vh - 56px)", display: "flex", flexDirection: "column" }}>
-      <div className="px-4 py-3 border-b shrink-0" style={{ background: "white", borderColor: "#C2D1DB" }}>
+    <div style={{ background: "#F5DEB3", height: "calc(100vh - 56px)", display: "flex", flexDirection: "column" }}>
+      <div className="px-4 py-3 border-b shrink-0" style={{ background: "white", borderColor: "#C8E0EC" }}>
         <div className="max-w-7xl mx-auto flex flex-col gap-3">
           <div className="flex items-center gap-3">
-            <h1 className="text-lg font-bold shrink-0" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>North Durham Community Atlas</h1>
-            <input type="text" placeholder="Search resources, skills, places…" value={query} onChange={(e) => setQuery(e.target.value)} className="flex-1 max-w-sm text-sm px-3 py-1.5 rounded-lg border outline-none" style={{ borderColor: "#C2D1DB", background: "#F6F1E8", color: "#3F352C" }} />
-            <span className="text-xs shrink-0" style={{ color: "#3F352C" }}>{filtered.length} of {listings.length} shown</span>
+            <h1 className="text-lg font-bold shrink-0" style={{ fontFamily: "'Lora', serif", color: "#0D2B3E" }}>North Durham Community Atlas</h1>
+            <input type="text" placeholder="Search resources, skills, places…" value={query} onChange={(e) => setQuery(e.target.value)} className="flex-1 max-w-sm text-sm px-3 py-1.5 rounded-lg border outline-none" style={{ borderColor: "#C8E0EC", background: "#F5DEB3", color: "#0D2B3E" }} />
+            <span className="text-xs shrink-0" style={{ color: "#0D2B3E" }}>{filtered.length} of {listings.length} shown</span>
           </div>
           <CategoryFilter selected={selectedCategory} onChange={setSelectedCategory} />
         </div>
       </div>
       <div className="flex-1 flex overflow-hidden">
-        <div className="w-full sm:w-80 lg:w-96 shrink-0 overflow-y-auto border-r" style={{ borderColor: "#C2D1DB", background: "#F6F1E8" }}>
+        <div className="w-full sm:w-80 lg:w-96 shrink-0 overflow-y-auto border-r" style={{ borderColor: "#C8E0EC", background: "#F5DEB3" }}>
           {filtered.length === 0 ? (
-            <div className="p-6 text-center"><p className="text-sm" style={{ color: "#3F352C" }}>No resources match your search.</p></div>
+            <div className="p-6 text-center"><p className="text-sm" style={{ color: "#0D2B3E" }}>No resources match your search.</p></div>
           ) : (
             <div className="p-3 space-y-2">
               {filtered.map((listing) => (
@@ -67,7 +67,7 @@ function AtlasContent() {
 
 export default function AtlasPage() {
   return (
-    <Suspense fallback={<div style={{ background: "#F6F1E8", height: "calc(100vh - 56px)" }} />}>
+    <Suspense fallback={<div style={{ background: "#F5DEB3", height: "calc(100vh - 56px)" }} />}>
       <AtlasContent />
     </Suspense>
   );

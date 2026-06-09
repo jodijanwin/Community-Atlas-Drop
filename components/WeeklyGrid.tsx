@@ -10,9 +10,9 @@ interface WeekEntry {
 }
 
 const TYPE_COLORS: Record<WeekEntry["type"], string> = {
-  event: "#7A9E7E",
-  news: "#2F6F73",
-  update: "#E3A24C",
+  event: "#5BAEC9",
+  news: "#1A6B8A",
+  update: "#FFA07A",
 };
 
 const TYPE_LABELS: Record<WeekEntry["type"], string> = {
@@ -43,17 +43,17 @@ export default function WeeklyGrid({ entries }: Props) {
       {/* Active entry callout */}
       <div style={{ minHeight: 52, marginBottom: 16 }}>
         {activeEntry ? (
-          <div className="flex items-start gap-3 p-3 rounded-lg" style={{ background: "#2F5D50", borderLeft: `3px solid ${TYPE_COLORS[activeEntry.type]}` }}>
+          <div className="flex items-start gap-3 p-3 rounded-lg" style={{ background: "#0A3D5C", borderLeft: `3px solid ${TYPE_COLORS[activeEntry.type]}` }}>
             <span className="text-xs font-bold px-2 py-0.5 rounded shrink-0 mt-0.5" style={{ background: `${TYPE_COLORS[activeEntry.type]}22`, color: TYPE_COLORS[activeEntry.type] }}>
               Wk {activeEntry.week} · {TYPE_LABELS[activeEntry.type]}
             </span>
-            <p className="text-sm leading-snug" style={{ color: "#F6F1E8" }}>{activeEntry.label}</p>
+            <p className="text-sm leading-snug" style={{ color: "#F5DEB3" }}>{activeEntry.label}</p>
             {activeEntry.url && (
-              <a href={activeEntry.url} target="_blank" rel="noopener noreferrer" className="text-xs shrink-0 font-medium" style={{ color: "#C2D1DB" }}>→</a>
+              <a href={activeEntry.url} target="_blank" rel="noopener noreferrer" className="text-xs shrink-0 font-medium" style={{ color: "#C8E0EC" }}>→</a>
             )}
           </div>
         ) : (
-          <p className="text-xs italic" style={{ color: "#C2D1DB" }}>Hover a marked week to see what happened.</p>
+          <p className="text-xs italic" style={{ color: "#C8E0EC" }}>Hover a marked week to see what happened.</p>
         )}
       </div>
 
@@ -66,9 +66,9 @@ export default function WeeklyGrid({ entries }: Props) {
           const entry = entryMap.get(week);
 
           let bg = "transparent";
-          let border = "#2F5D50";
-          if (isPast) { bg = "#2F5D50"; border = "#2F5D50"; }
-          if (isCurrent) { bg = "#2F6F73"; border = "#2F6F73"; }
+          let border = "#0A3D5C";
+          if (isPast) { bg = "#0A3D5C"; border = "#0A3D5C"; }
+          if (isCurrent) { bg = "#1A6B8A"; border = "#1A6B8A"; }
           if (entry && !isCurrent) { border = TYPE_COLORS[entry.type]; }
 
           return (
@@ -85,7 +85,7 @@ export default function WeeklyGrid({ entries }: Props) {
                 border: `1.5px solid ${border}`,
                 cursor: entry ? "pointer" : "default",
                 position: "relative",
-                boxShadow: isCurrent ? "0 0 8px rgba(47,111,115,0.6)" : "none",
+                boxShadow: isCurrent ? "0 0 8px rgba(26,107,138,0.6)" : "none",
                 transition: "transform 0.1s",
               }}
               title={`Week ${week}${entry ? ` — ${entry.label}` : ""}`}
@@ -110,19 +110,19 @@ export default function WeeklyGrid({ entries }: Props) {
       {/* Legend */}
       <div className="flex flex-wrap items-center gap-4 mt-4">
         <div className="flex items-center gap-1.5">
-          <div style={{ width: 10, height: 10, borderRadius: 2, background: "#2F5D50" }} />
-          <span className="text-xs" style={{ color: "#C2D1DB" }}>Past</span>
+          <div style={{ width: 10, height: 10, borderRadius: 2, background: "#0A3D5C" }} />
+          <span className="text-xs" style={{ color: "#C8E0EC" }}>Past</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <div style={{ width: 10, height: 10, borderRadius: 2, background: "#2F6F73", boxShadow: "0 0 5px rgba(47,111,115,0.6)" }} />
-          <span className="text-xs" style={{ color: "#C2D1DB" }}>This week</span>
+          <div style={{ width: 10, height: 10, borderRadius: 2, background: "#1A6B8A", boxShadow: "0 0 5px rgba(26,107,138,0.6)" }} />
+          <span className="text-xs" style={{ color: "#C8E0EC" }}>This week</span>
         </div>
         {(["event", "news", "update"] as const).map((type) => (
           <div key={type} className="flex items-center gap-1.5">
             <div style={{ width: 10, height: 10, borderRadius: 2, border: `1.5px solid ${TYPE_COLORS[type]}`, position: "relative" }}>
               <div style={{ position: "absolute", top: 1, right: 1, width: 3, height: 3, borderRadius: "50%", background: TYPE_COLORS[type] }} />
             </div>
-            <span className="text-xs" style={{ color: "#C2D1DB" }}>{TYPE_LABELS[type]}</span>
+            <span className="text-xs" style={{ color: "#C8E0EC" }}>{TYPE_LABELS[type]}</span>
           </div>
         ))}
       </div>

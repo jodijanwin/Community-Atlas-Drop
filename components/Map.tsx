@@ -16,9 +16,9 @@ import { Listing, CATEGORY_COLORS } from "@/types";
 // See UPDATING.md section 4 for full instructions.
 
 const LAYERS = [
-  { id: "trails",    label: "Trails & Paths",       color: "#7A9E7E", file: "/osm/trails.geojson",    defaultOn: true  },
-  { id: "parks",     label: "Parks & Forests",       color: "#2F5D50", file: "/osm/parks.geojson",     defaultOn: true  },
-  { id: "amenities", label: "Libraries & Services",  color: "#2F6F73", file: "/osm/amenities.geojson", defaultOn: true  },
+  { id: "trails",    label: "Trails & Paths",       color: "#5BAEC9", file: "/osm/trails.geojson",    defaultOn: true  },
+  { id: "parks",     label: "Parks & Forests",       color: "#0A3D5C", file: "/osm/parks.geojson",     defaultOn: true  },
+  { id: "amenities", label: "Libraries & Services",  color: "#1A6B8A", file: "/osm/amenities.geojson", defaultOn: true  },
 ] as const;
 
 type LayerId = (typeof LAYERS)[number]["id"];
@@ -75,11 +75,11 @@ function osmPopup(props: Record<string, string>): string {
   const hours = props.opening_hours || "";
   const website = props.website || props["contact:website"] || "";
   return `<div style="font-family:'Lora',serif;min-width:150px">
-    <p style="font-size:10px;font-weight:700;color:#2F6F73;margin:0 0 3px;text-transform:capitalize">${type}</p>
+    <p style="font-size:10px;font-weight:700;color:#1A6B8A;margin:0 0 3px;text-transform:capitalize">${type}</p>
     ${name ? `<p style="font-size:12px;font-weight:700;margin:0 0 3px">${name}</p>` : ""}
-    ${operator ? `<p style="font-size:10px;color:#3F352C;margin:0 0 2px">${operator}</p>` : ""}
-    ${hours ? `<p style="font-size:10px;color:#2F6F73;margin:0 0 2px">${hours}</p>` : ""}
-    ${website ? `<p style="font-size:10px;margin:0"><a href="${website}" target="_blank" rel="noopener noreferrer" style="color:#2F6F73">Visit →</a></p>` : ""}
+    ${operator ? `<p style="font-size:10px;color:#0D2B3E;margin:0 0 2px">${operator}</p>` : ""}
+    ${hours ? `<p style="font-size:10px;color:#1A6B8A;margin:0 0 2px">${hours}</p>` : ""}
+    ${website ? `<p style="font-size:10px;margin:0"><a href="${website}" target="_blank" rel="noopener noreferrer" style="color:#1A6B8A">Visit →</a></p>` : ""}
   </div>`;
 }
 
@@ -157,14 +157,14 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
         boxShadow: "0 2px 12px rgba(0,0,0,0.18)", minWidth: 190,
         fontFamily: "'Inter', sans-serif",
       }}>
-        <p style={{ fontSize: 10, fontWeight: 700, color: "#3F352C", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 6 }}>Base Map</p>
-        <div style={{ display: "flex", borderRadius: 6, overflow: "hidden", border: "1px solid #C2D1DB", marginBottom: 14 }}>
+        <p style={{ fontSize: 10, fontWeight: 700, color: "#0D2B3E", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 6 }}>Base Map</p>
+        <div style={{ display: "flex", borderRadius: 6, overflow: "hidden", border: "1px solid #C8E0EC", marginBottom: 14 }}>
           {(Object.keys(TILE_LAYERS) as (keyof typeof TILE_LAYERS)[]).map((key) => (
             <button key={key} onClick={() => setActiveTile(key)} style={{
               flex: 1, padding: "5px 0", fontSize: 11, fontWeight: 600,
               border: "none", cursor: "pointer",
-              background: activeTile === key ? "#2F6F73" : "white",
-              color: activeTile === key ? "white" : "#3F352C",
+              background: activeTile === key ? "#1A6B8A" : "white",
+              color: activeTile === key ? "white" : "#0D2B3E",
               transition: "all 0.15s",
             }}>
               {TILE_LAYERS[key].label}
@@ -172,9 +172,9 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
           ))}
         </div>
 
-        <p style={{ fontSize: 10, fontWeight: 700, color: "#3F352C", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 8 }}>
+        <p style={{ fontSize: 10, fontWeight: 700, color: "#0D2B3E", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 8 }}>
           Map Layers
-          <span style={{ fontWeight: 400, color: "#7A9E7E", marginLeft: 5, textTransform: "none", letterSpacing: 0 }}>OpenStreetMap</span>
+          <span style={{ fontWeight: 400, color: "#5BAEC9", marginLeft: 5, textTransform: "none", letterSpacing: 0 }}>OpenStreetMap</span>
         </p>
 
         {LAYERS.map((layer) => {
@@ -189,27 +189,27 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
                 border: `2px solid ${layer.color}`,
                 transition: "background 0.15s",
               }} />
-              <span style={{ fontSize: 11, color: "#3F352C", flex: 1, lineHeight: 1.3 }}>{layer.label}</span>
-              {status === "loading" && <span style={{ fontSize: 9, color: "#2F6F73" }}>…</span>}
-              {status === "ok" && count !== undefined && <span style={{ fontSize: 9, color: "#7A9E7E" }}>{count}</span>}
-              {status === "empty" && <span style={{ fontSize: 9, color: "#E3A24C" }}>run script</span>}
-              {status === "error" && <span style={{ fontSize: 9, color: "#C65A1E" }}>✕</span>}
+              <span style={{ fontSize: 11, color: "#0D2B3E", flex: 1, lineHeight: 1.3 }}>{layer.label}</span>
+              {status === "loading" && <span style={{ fontSize: 9, color: "#1A6B8A" }}>…</span>}
+              {status === "ok" && count !== undefined && <span style={{ fontSize: 9, color: "#5BAEC9" }}>{count}</span>}
+              {status === "empty" && <span style={{ fontSize: 9, color: "#FFA07A" }}>run script</span>}
+              {status === "error" && <span style={{ fontSize: 9, color: "#FF6B6B" }}>✕</span>}
             </label>
           );
         })}
 
         {hasEmptyLayers && (
-          <div style={{ borderTop: "1px solid #C2D1DB", marginTop: 8, paddingTop: 8 }}>
-            <p style={{ fontSize: 9, color: "#E3A24C", lineHeight: 1.5, margin: 0 }}>
+          <div style={{ borderTop: "1px solid #C8E0EC", marginTop: 8, paddingTop: 8 }}>
+            <p style={{ fontSize: 9, color: "#FFA07A", lineHeight: 1.5, margin: 0 }}>
               No regional data yet.<br />
-              Run: <code style={{ background: "#F6F1E8", padding: "1px 3px", borderRadius: 2 }}>node scripts/fetch-osm-data.mjs</code>
+              Run: <code style={{ background: "#F5DEB3", padding: "1px 3px", borderRadius: 2 }}>node scripts/fetch-osm-data.mjs</code>
             </p>
           </div>
         )}
 
-        <div style={{ borderTop: "1px solid #C2D1DB", marginTop: 8, paddingTop: 8 }}>
-          <p style={{ fontSize: 9, color: "#7A9E7E", lineHeight: 1.4, margin: 0 }}>
-            Data: <a href="https://www.openstreetmap.org" target="_blank" rel="noopener noreferrer" style={{ color: "#2F6F73" }}>© OpenStreetMap contributors</a>
+        <div style={{ borderTop: "1px solid #C8E0EC", marginTop: 8, paddingTop: 8 }}>
+          <p style={{ fontSize: 9, color: "#5BAEC9", lineHeight: 1.4, margin: 0 }}>
+            Data: <a href="https://www.openstreetmap.org" target="_blank" rel="noopener noreferrer" style={{ color: "#1A6B8A" }}>© OpenStreetMap contributors</a>
           </p>
         </div>
       </div>
@@ -220,7 +220,7 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
         {durhamGeo && (
           <GeoJSON
             data={durhamGeo as GeoJSON.GeoJsonObject}
-            style={{ color: "#2F6F73", weight: 1, opacity: 0.3, fillColor: "#2F6F73", fillOpacity: 0.04, dashArray: "4 4" }}
+            style={{ color: "#1A6B8A", weight: 1, opacity: 0.3, fillColor: "#1A6B8A", fillOpacity: 0.04, dashArray: "4 4" }}
           />
         )}
 
@@ -280,8 +280,8 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
               <div style={{ fontFamily: "'Lora', serif", minWidth: 200 }}>
                 <p style={{ fontSize: 11, fontWeight: 600, color: CATEGORY_COLORS[listing.category], margin: "0 0 2px" }}>{listing.category}</p>
                 <p style={{ fontSize: 13, fontWeight: 700, margin: "0 0 4px" }}>{listing.name}</p>
-                <p style={{ fontSize: 11, color: "#3F352C", margin: "0 0 2px" }}>{listing.address}</p>
-                <p style={{ fontSize: 11, fontWeight: 600, color: "#2F6F73", margin: "0 0 6px" }}>{listing.hours}</p>
+                <p style={{ fontSize: 11, color: "#0D2B3E", margin: "0 0 2px" }}>{listing.address}</p>
+                <p style={{ fontSize: 11, fontWeight: 600, color: "#1A6B8A", margin: "0 0 6px" }}>{listing.hours}</p>
                 <p style={{ fontSize: 11, lineHeight: 1.5, margin: 0 }}>{listing.description}</p>
               </div>
             </Popup>

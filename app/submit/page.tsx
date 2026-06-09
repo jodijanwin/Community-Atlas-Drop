@@ -5,9 +5,9 @@ import Link from "next/link";
 
 const CATEGORIES = ["Free Food","Tenant Defense","Public Space","Repair Skills","Local Makers","Gathering Places","Mutual Aid","Co-op Leads"];
 
-const inputStyle = { borderColor: "#C2D1DB", background: "white", color: "#3F352C" };
-const labelStyle = { color: "#3F352C" };
-const optionalStyle = { color: "#3F352C" };
+const inputStyle = { borderColor: "#C8E0EC", background: "white", color: "#0D2B3E" };
+const labelStyle = { color: "#0D2B3E" };
+const optionalStyle = { color: "#0D2B3E" };
 
 export default function SubmitPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -28,16 +28,16 @@ export default function SubmitPage() {
 
   if (submitted) {
     return (
-      <div style={{ background: "#F6F1E8", minHeight: "calc(100vh - 56px)" }} className="flex items-center justify-center px-6">
+      <div style={{ background: "#F5DEB3", minHeight: "calc(100vh - 56px)" }} className="flex items-center justify-center px-6">
         <div className="max-w-md text-center">
-          <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: "#7A9E7E" }}>
+          <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: "#5BAEC9" }}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </div>
-          <h2 className="text-2xl font-bold mb-3" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>Thank you.</h2>
-          <p className="text-sm leading-relaxed mb-6" style={{ color: "#3F352C" }}>Your submission will be reviewed and added to the next monthly atlas update. Every listing is verified before it goes in — that&apos;s what makes this worth trusting.</p>
+          <h2 className="text-2xl font-bold mb-3" style={{ fontFamily: "'Lora', serif", color: "#0D2B3E" }}>Thank you.</h2>
+          <p className="text-sm leading-relaxed mb-6" style={{ color: "#0D2B3E" }}>Your submission will be reviewed and added to the next monthly atlas update. Every listing is verified before it goes in — that&apos;s what makes this worth trusting.</p>
           <div className="flex gap-3 justify-center">
-            <Link href="/atlas" className="px-5 py-2.5 rounded-lg text-sm font-semibold" style={{ background: "#2F5D50", color: "#F6F1E8" }}>Back to the Atlas</Link>
-            <button onClick={() => setSubmitted(false)} className="px-5 py-2.5 rounded-lg text-sm font-semibold border" style={{ borderColor: "#C2D1DB", color: "#3F352C" }}>Submit Another</button>
+            <Link href="/atlas" className="px-5 py-2.5 rounded-lg text-sm font-semibold" style={{ background: "#0A3D5C", color: "#F5DEB3" }}>Back to the Atlas</Link>
+            <button onClick={() => setSubmitted(false)} className="px-5 py-2.5 rounded-lg text-sm font-semibold border" style={{ borderColor: "#C8E0EC", color: "#0D2B3E" }}>Submit Another</button>
           </div>
         </div>
       </div>
@@ -45,12 +45,12 @@ export default function SubmitPage() {
   }
 
   return (
-    <div style={{ background: "#F6F1E8", minHeight: "calc(100vh - 56px)" }}>
+    <div style={{ background: "#F5DEB3", minHeight: "calc(100vh - 56px)" }}>
       <div className="max-w-2xl mx-auto px-6 py-12">
         <div className="mb-8">
-          <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "#2F6F73" }}>Community Submission</p>
-          <h1 className="text-3xl sm:text-4xl font-bold mb-3" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>Add to the Atlas</h1>
-          <p className="text-sm leading-relaxed" style={{ color: "#3F352C" }}>You know something we don&apos;t. Maybe it&apos;s the neighbour on your concession who fixes small engines, the hall that&apos;s been quietly available for years, or the person giving away seedlings every spring. Add it here.</p>
+          <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "#1A6B8A" }}>Community Submission</p>
+          <h1 className="text-3xl sm:text-4xl font-bold mb-3" style={{ fontFamily: "'Lora', serif", color: "#0D2B3E" }}>Add to the Atlas</h1>
+          <p className="text-sm leading-relaxed" style={{ color: "#0D2B3E" }}>You know something we don&apos;t. Maybe it&apos;s the neighbour on your concession who fixes small engines, the hall that&apos;s been quietly available for years, or the person giving away seedlings every spring. Add it here.</p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-5">
 
@@ -62,7 +62,7 @@ export default function SubmitPage() {
             </div>
             <div>
               <label className="block text-xs font-semibold mb-1.5" style={labelStyle}>Category *</label>
-              <select required name="category" value={form.category} onChange={handleChange} className="w-full px-3 py-2.5 rounded-lg border text-sm outline-none" style={{ ...inputStyle, color: form.category ? "#3F352C" : "#3F352C" }}>
+              <select required name="category" value={form.category} onChange={handleChange} className="w-full px-3 py-2.5 rounded-lg border text-sm outline-none" style={{ ...inputStyle, color: form.category ? "#0D2B3E" : "#0D2B3E" }}>
                 <option value="">Select a category</option>
                 {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
               </select>
@@ -82,7 +82,7 @@ export default function SubmitPage() {
           </div>
 
           {/* Event date + time */}
-          <div className="p-4 rounded-lg border-l-4" style={{ background: "rgba(122,158,126,0.06)", borderLeftColor: "#7A9E7E" }}>
+          <div className="p-4 rounded-lg border-l-4" style={{ background: "rgba(91,174,201,0.06)", borderLeftColor: "#5BAEC9" }}>
             <p className="text-xs font-semibold mb-3" style={labelStyle}>
               Is this for a specific event? <span className="font-normal" style={optionalStyle}>(optional)</span>
             </p>
@@ -111,14 +111,14 @@ export default function SubmitPage() {
           </div>
 
           {/* What's missing */}
-          <div className="p-4 rounded-lg border-l-4" style={{ background: "rgba(47,111,115,0.04)", borderLeftColor: "#2F6F73" }}>
+          <div className="p-4 rounded-lg border-l-4" style={{ background: "rgba(26,107,138,0.04)", borderLeftColor: "#1A6B8A" }}>
             <label className="block text-xs font-semibold mb-1.5" style={labelStyle}>What&apos;s missing in North Durham? <span className="font-normal" style={optionalStyle}>(optional)</span></label>
             <textarea name="missing" value={form.missing} onChange={handleChange} rows={3} placeholder="What would change your part of the region if it existed? Housing, transit, shared space, co-ops, anything." className="w-full px-3 py-2.5 rounded-lg border text-sm outline-none resize-none" style={inputStyle} />
           </div>
 
           <div className="pt-2">
-            <button type="submit" className="w-full sm:w-auto px-8 py-3 rounded-lg font-semibold text-sm transition-all hover:opacity-90" style={{ fontFamily: "'Lora', serif", background: "#C65A1E", color: "white" }}>Submit to the Atlas</button>
-            <p className="text-xs mt-3" style={{ color: "#3F352C" }}>All submissions are reviewed before publishing. We verify each listing by visit, call, or message.</p>
+            <button type="submit" className="w-full sm:w-auto px-8 py-3 rounded-lg font-semibold text-sm transition-all hover:opacity-90" style={{ fontFamily: "'Lora', serif", background: "#FF6B6B", color: "white" }}>Submit to the Atlas</button>
+            <p className="text-xs mt-3" style={{ color: "#0D2B3E" }}>All submissions are reviewed before publishing. We verify each listing by visit, call, or message.</p>
           </div>
         </form>
       </div>

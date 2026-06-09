@@ -43,23 +43,23 @@ const panelBase: React.CSSProperties = {
   flexDirection: "column",
   fontFamily: "'Georgia', serif",
   boxSizing: "border-box",
-  background: "#F6F1E8",
-  border: "0.5pt solid #C2D1DB",
+  background: "#F5DEB3",
+  border: "0.5pt solid #C8E0EC",
 };
 
 function P1() {
   return (
-    <div style={{ ...panelBase, background: "#2F5D50", justifyContent: "space-between" }}>
+    <div style={{ ...panelBase, background: "#0A3D5C", justifyContent: "space-between" }}>
       <div>
-        <p style={{ fontSize: 6, color: "#7A9E7E", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 3px" }}>Issue No. 1 · 2025–2026</p>
-        <p style={{ fontSize: 22, color: "#F6F1E8", fontWeight: 700, lineHeight: 1.05, margin: "0 0 4px" }}>
-          North<br /><span style={{ color: "#E3A24C" }}>Durham</span><br />Atlas
+        <p style={{ fontSize: 6, color: "#5BAEC9", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 3px" }}>Issue No. 1 · 2025–2026</p>
+        <p style={{ fontSize: 22, color: "#F5DEB3", fontWeight: 700, lineHeight: 1.05, margin: "0 0 4px" }}>
+          North<br /><span style={{ color: "#FFA07A" }}>Durham</span><br />Atlas
         </p>
       </div>
       <div>
-        <div style={{ height: 1, background: "#7A9E7E", opacity: 0.4, margin: "0 0 4px" }} />
-        <p style={{ fontSize: 6.5, color: "#C2D1DB", fontStyle: "italic", lineHeight: 1.4, margin: "0 0 3px" }}>Make hidden abundance impossible to ignore.</p>
-        <p style={{ fontSize: 5.5, color: "#7A9E7E", margin: 0 }}>Scugog · Uxbridge · Brock</p>
+        <div style={{ height: 1, background: "#5BAEC9", opacity: 0.4, margin: "0 0 4px" }} />
+        <p style={{ fontSize: 6.5, color: "#C8E0EC", fontStyle: "italic", lineHeight: 1.4, margin: "0 0 3px" }}>Make hidden abundance impossible to ignore.</p>
+        <p style={{ fontSize: 5.5, color: "#5BAEC9", margin: 0 }}>Scugog · Uxbridge · Brock</p>
       </div>
     </div>
   );
@@ -68,15 +68,15 @@ function P1() {
 function P2() {
   return (
     <div style={panelBase}>
-      <p style={{ fontSize: 6.5, color: "#2F6F73", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 4px" }}>Why this exists</p>
-      <p style={{ fontSize: 9, fontWeight: 700, color: "#3F352C", lineHeight: 1.3, margin: "0 0 5px" }}>This atlas is a counter-spell.</p>
-      <p style={{ fontSize: 7, color: "#3F352C", lineHeight: 1.5, margin: "0 0 5px", flex: 1 }}>
+      <p style={{ fontSize: 6.5, color: "#1A6B8A", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 4px" }}>Why this exists</p>
+      <p style={{ fontSize: 9, fontWeight: 700, color: "#0D2B3E", lineHeight: 1.3, margin: "0 0 5px" }}>This atlas is a counter-spell.</p>
+      <p style={{ fontSize: 7, color: "#0D2B3E", lineHeight: 1.5, margin: "0 0 5px", flex: 1 }}>
         North Durham is full of hidden abundance: repair cafés, below-market farmers, free Legion halls, mutual aid networks. Most residents have no idea.
       </p>
-      <p style={{ fontSize: 7, color: "#3F352C", lineHeight: 1.5, margin: 0 }}>
+      <p style={{ fontSize: 7, color: "#0D2B3E", lineHeight: 1.5, margin: 0 }}>
         By making fragments visible in one shareable atlas, you alter what people believe is possible in their own community.
       </p>
-      <p style={{ fontSize: 6.5, color: "#2F6F73", fontWeight: 600, fontStyle: "italic", marginTop: 5 }}>&ldquo;The map is not the destination. It is the opening move.&rdquo;</p>
+      <p style={{ fontSize: 6.5, color: "#1A6B8A", fontWeight: 600, fontStyle: "italic", marginTop: 5 }}>&ldquo;The map is not the destination. It is the opening move.&rdquo;</p>
     </div>
   );
 }
@@ -84,22 +84,22 @@ function P2() {
 function P3() {
   return (
     <div style={panelBase}>
-      <p style={{ fontSize: 6.5, color: "#7A9E7E", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 5px" }}>Solidarity in action</p>
+      <p style={{ fontSize: 6.5, color: "#5BAEC9", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 5px" }}>Solidarity in action</p>
       <div style={{ flex: 1 }}>
-        <div style={{ marginBottom: 7, paddingBottom: 7, borderBottom: "0.5pt solid #C2D1DB" }}>
-          <p style={{ fontSize: 6, color: "#2F6F73", fontWeight: 700, margin: "0 0 2px" }}>Scugog Citizen · April 2025</p>
-          <p style={{ fontSize: 7.5, fontWeight: 600, color: "#3F352C", lineHeight: 1.3, margin: "0 0 2px" }}>Port Perry Repair Café returns — the lineup is longer than ever</p>
-          <p style={{ fontSize: 6.5, color: "#3F352C", lineHeight: 1.4, margin: 0 }}>&ldquo;People come in defeated and leave amazed. Mostly amazed that someone just did it for free.&rdquo;</p>
+        <div style={{ marginBottom: 7, paddingBottom: 7, borderBottom: "0.5pt solid #C8E0EC" }}>
+          <p style={{ fontSize: 6, color: "#1A6B8A", fontWeight: 700, margin: "0 0 2px" }}>Scugog Citizen · April 2025</p>
+          <p style={{ fontSize: 7.5, fontWeight: 600, color: "#0D2B3E", lineHeight: 1.3, margin: "0 0 2px" }}>Port Perry Repair Café returns — the lineup is longer than ever</p>
+          <p style={{ fontSize: 6.5, color: "#0D2B3E", lineHeight: 1.4, margin: 0 }}>&ldquo;People come in defeated and leave amazed. Mostly amazed that someone just did it for free.&rdquo;</p>
         </div>
-        <div style={{ marginBottom: 7, paddingBottom: 7, borderBottom: "0.5pt solid #C2D1DB" }}>
-          <p style={{ fontSize: 6, color: "#2F6F73", fontWeight: 700, margin: "0 0 2px" }}>Durham Region This Week · March 2025</p>
-          <p style={{ fontSize: 7.5, fontWeight: 600, color: "#3F352C", lineHeight: 1.3, margin: "0 0 2px" }}>Blackstock General Store bulletin board: the original social network</p>
-          <p style={{ fontSize: 6.5, color: "#3F352C", lineHeight: 1.4, margin: 0 }}>A corkboard since 1987. Still tells you more than anything on your phone.</p>
+        <div style={{ marginBottom: 7, paddingBottom: 7, borderBottom: "0.5pt solid #C8E0EC" }}>
+          <p style={{ fontSize: 6, color: "#1A6B8A", fontWeight: 700, margin: "0 0 2px" }}>Durham Region This Week · March 2025</p>
+          <p style={{ fontSize: 7.5, fontWeight: 600, color: "#0D2B3E", lineHeight: 1.3, margin: "0 0 2px" }}>Blackstock General Store bulletin board: the original social network</p>
+          <p style={{ fontSize: 6.5, color: "#0D2B3E", lineHeight: 1.4, margin: 0 }}>A corkboard since 1987. Still tells you more than anything on your phone.</p>
         </div>
         <div>
-          <p style={{ fontSize: 6, color: "#2F6F73", fontWeight: 700, margin: "0 0 2px" }}>Community submission · Feb 2025</p>
-          <p style={{ fontSize: 7.5, fontWeight: 600, color: "#3F352C", lineHeight: 1.3, margin: "0 0 2px" }}>Scugog Mutual Aid quietly helped 40 families through last winter</p>
-          <p style={{ fontSize: 6.5, color: "#3F352C", lineHeight: 1.4, margin: 0 }}>No press release. Just neighbours helping neighbours.</p>
+          <p style={{ fontSize: 6, color: "#1A6B8A", fontWeight: 700, margin: "0 0 2px" }}>Community submission · Feb 2025</p>
+          <p style={{ fontSize: 7.5, fontWeight: 600, color: "#0D2B3E", lineHeight: 1.3, margin: "0 0 2px" }}>Scugog Mutual Aid quietly helped 40 families through last winter</p>
+          <p style={{ fontSize: 6.5, color: "#0D2B3E", lineHeight: 1.4, margin: 0 }}>No press release. Just neighbours helping neighbours.</p>
         </div>
       </div>
     </div>
@@ -109,14 +109,14 @@ function P3() {
 function P4() {
   return (
     <div style={panelBase}>
-      <p style={{ fontSize: 6.5, color: "#2F6F73", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 4px" }}>Resources</p>
+      <p style={{ fontSize: 6.5, color: "#1A6B8A", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 4px" }}>Resources</p>
       {col1.map((l) => (
         <div key={l.id} style={{ marginBottom: 4 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 3, marginBottom: 1 }}>
             <div style={{ width: 5, height: 5, borderRadius: "50%", background: CATEGORY_COLORS[l.category as Category], flexShrink: 0 }} />
-            <p style={{ fontSize: 7, fontWeight: 600, color: "#3F352C", lineHeight: 1.2, margin: 0 }}>{l.name}</p>
+            <p style={{ fontSize: 7, fontWeight: 600, color: "#0D2B3E", lineHeight: 1.2, margin: 0 }}>{l.name}</p>
           </div>
-          <p style={{ fontSize: 6, color: "#2F6F73", paddingLeft: 8, margin: 0 }}>{l.hours}</p>
+          <p style={{ fontSize: 6, color: "#1A6B8A", paddingLeft: 8, margin: 0 }}>{l.hours}</p>
         </div>
       ))}
     </div>
@@ -126,14 +126,14 @@ function P4() {
 function P5() {
   return (
     <div style={panelBase}>
-      <p style={{ fontSize: 6.5, color: "#2F6F73", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 4px" }}>Resources cont.</p>
+      <p style={{ fontSize: 6.5, color: "#1A6B8A", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 4px" }}>Resources cont.</p>
       {col2.map((l) => (
         <div key={l.id} style={{ marginBottom: 4 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 3, marginBottom: 1 }}>
             <div style={{ width: 5, height: 5, borderRadius: "50%", background: CATEGORY_COLORS[l.category as Category], flexShrink: 0 }} />
-            <p style={{ fontSize: 7, fontWeight: 600, color: "#3F352C", lineHeight: 1.2, margin: 0 }}>{l.name}</p>
+            <p style={{ fontSize: 7, fontWeight: 600, color: "#0D2B3E", lineHeight: 1.2, margin: 0 }}>{l.name}</p>
           </div>
-          <p style={{ fontSize: 6, color: "#2F6F73", paddingLeft: 8, margin: 0 }}>{l.hours}</p>
+          <p style={{ fontSize: 6, color: "#1A6B8A", paddingLeft: 8, margin: 0 }}>{l.hours}</p>
         </div>
       ))}
     </div>
@@ -142,8 +142,8 @@ function P5() {
 
 function P6() {
   return (
-    <div style={{ ...panelBase, background: "#C2D1DB" }}>
-      <p style={{ fontSize: 6.5, color: "#2F5D50", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 5px" }}>
+    <div style={{ ...panelBase, background: "#C8E0EC" }}>
+      <p style={{ fontSize: 6.5, color: "#0A3D5C", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 5px" }}>
         8 categories · {typedListings.length} resources
       </p>
       {ALL_CATEGORIES.map((cat) => {
@@ -151,25 +151,25 @@ function P6() {
         return (
           <div key={cat} style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 4.5 }}>
             <div style={{ width: 6, height: 6, borderRadius: "50%", background: CATEGORY_COLORS[cat], flexShrink: 0 }} />
-            <p style={{ fontSize: 7, color: "#3F352C", flex: 1, fontWeight: 500, margin: 0 }}>{cat}</p>
-            <p style={{ fontSize: 7, color: "#2F5D50", fontWeight: 700, margin: 0 }}>{count}</p>
+            <p style={{ fontSize: 7, color: "#0D2B3E", flex: 1, fontWeight: 500, margin: 0 }}>{cat}</p>
+            <p style={{ fontSize: 7, color: "#0A3D5C", fontWeight: 700, margin: 0 }}>{count}</p>
           </div>
         );
       })}
-      <p style={{ fontSize: 6, color: "#2F5D50", marginTop: "auto", paddingTop: 5, fontStyle: "italic" }}>Full map at the atlas website.</p>
+      <p style={{ fontSize: 6, color: "#0A3D5C", marginTop: "auto", paddingTop: 5, fontStyle: "italic" }}>Full map at the atlas website.</p>
     </div>
   );
 }
 
 function P7() {
   return (
-    <div style={{ ...panelBase, background: "#E3A24C" }}>
-      <p style={{ fontSize: 6.5, color: "#2F5D50", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 4px" }}>What&apos;s still missing</p>
-      <p style={{ fontSize: 6.5, color: "#3F352C", lineHeight: 1.4, margin: "0 0 5px" }}>The atlas names gaps — not as complaint, but as coordinate.</p>
+    <div style={{ ...panelBase, background: "#FFA07A" }}>
+      <p style={{ fontSize: 6.5, color: "#0A3D5C", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 4px" }}>What&apos;s still missing</p>
+      <p style={{ fontSize: 6.5, color: "#0D2B3E", lineHeight: 1.4, margin: "0 0 5px" }}>The atlas names gaps — not as complaint, but as coordinate.</p>
       {MISSING.map((item) => (
         <div key={item} style={{ display: "flex", gap: 4, marginBottom: 4 }}>
-          <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#C65A1E", flexShrink: 0, marginTop: 2 }} />
-          <p style={{ fontSize: 6.5, color: "#3F352C", lineHeight: 1.4, margin: 0 }}>{item}</p>
+          <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#FF6B6B", flexShrink: 0, marginTop: 2 }} />
+          <p style={{ fontSize: 6.5, color: "#0D2B3E", lineHeight: 1.4, margin: 0 }}>{item}</p>
         </div>
       ))}
     </div>
@@ -178,17 +178,17 @@ function P7() {
 
 function P8() {
   return (
-    <div style={{ ...panelBase, background: "#2F5D50", justifyContent: "space-between" }}>
+    <div style={{ ...panelBase, background: "#0A3D5C", justifyContent: "space-between" }}>
       <div>
-        <p style={{ fontSize: 6.5, color: "#7A9E7E", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 6px" }}>Know something we don&apos;t?</p>
-        <p style={{ fontSize: 9, color: "#F6F1E8", fontWeight: 600, lineHeight: 1.4, margin: "0 0 5px" }}>Submit a resource, story, or correction at the atlas website.</p>
-        <div style={{ height: 1, background: "#7A9E7E", opacity: 0.4, margin: "0 0 5px" }} />
-        <p style={{ fontSize: 6.5, color: "#C2D1DB", lineHeight: 1.5, margin: 0 }}>Community-authored and independent. Updated monthly. Not affiliated with any government or institution.</p>
+        <p style={{ fontSize: 6.5, color: "#5BAEC9", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 6px" }}>Know something we don&apos;t?</p>
+        <p style={{ fontSize: 9, color: "#F5DEB3", fontWeight: 600, lineHeight: 1.4, margin: "0 0 5px" }}>Submit a resource, story, or correction at the atlas website.</p>
+        <div style={{ height: 1, background: "#5BAEC9", opacity: 0.4, margin: "0 0 5px" }} />
+        <p style={{ fontSize: 6.5, color: "#C8E0EC", lineHeight: 1.5, margin: 0 }}>Community-authored and independent. Updated monthly. Not affiliated with any government or institution.</p>
       </div>
       <div>
-        <div style={{ height: 1, background: "#7A9E7E", opacity: 0.3, margin: "0 0 4px" }} />
-        <p style={{ fontSize: 6.5, color: "#7A9E7E", fontWeight: 700, margin: "0 0 1px" }}>North Durham Community Atlas</p>
-        <p style={{ fontSize: 6, color: "#C2D1DB", margin: 0 }}>Scugog · Uxbridge · Brock · Issue No. 1</p>
+        <div style={{ height: 1, background: "#5BAEC9", opacity: 0.3, margin: "0 0 4px" }} />
+        <p style={{ fontSize: 6.5, color: "#5BAEC9", fontWeight: 700, margin: "0 0 1px" }}>North Durham Community Atlas</p>
+        <p style={{ fontSize: 6, color: "#C8E0EC", margin: 0 }}>Scugog · Uxbridge · Brock · Issue No. 1</p>
       </div>
     </div>
   );
@@ -231,7 +231,7 @@ export default function PrintSheet() {
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
         nav, header, footer { display: none !important; }
-        body { background: #F6F1E8 !important; }
+        body { background: #F5DEB3 !important; }
         main { padding: 0 !important; }
         @page { size: letter landscape; margin: 0.15in; }
         @media print {
@@ -242,23 +242,23 @@ export default function PrintSheet() {
       `}</style>
 
       {/* ── On-screen controls — hidden when printing ── */}
-      <div className="no-print" style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 9999, background: "#2F5D50", padding: "10px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
+      <div className="no-print" style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 9999, background: "#0A3D5C", padding: "10px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <span style={{ fontSize: 13, fontFamily: "'Lora', serif", color: "#F6F1E8", fontWeight: 600 }}>Mini Zine — Print Sheet</span>
+          <span style={{ fontSize: 13, fontFamily: "'Lora', serif", color: "#F5DEB3", fontWeight: 600 }}>Mini Zine — Print Sheet</span>
           <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
             <div
               onClick={() => setDoubleSided(!doubleSided)}
-              style={{ width: 36, height: 20, borderRadius: 10, background: doubleSided ? "#E3A24C" : "#2F6F73", position: "relative", transition: "background 0.2s", cursor: "pointer" }}
+              style={{ width: 36, height: 20, borderRadius: 10, background: doubleSided ? "#FFA07A" : "#1A6B8A", position: "relative", transition: "background 0.2s", cursor: "pointer" }}
             >
               <div style={{ position: "absolute", top: 2, left: doubleSided ? 18 : 2, width: 16, height: 16, borderRadius: "50%", background: "white", transition: "left 0.2s" }} />
             </div>
-            <span style={{ fontSize: 12, color: "#C2D1DB" }}>Double-sided (map on back)</span>
+            <span style={{ fontSize: 12, color: "#C8E0EC" }}>Double-sided (map on back)</span>
           </label>
         </div>
         <button
           onClick={handlePrint}
           disabled={!mapReady}
-          style={{ background: mapReady ? "#C65A1E" : "#888", color: "white", border: "none", padding: "7px 20px", borderRadius: 6, fontSize: 13, fontWeight: 600, fontFamily: "'Lora', serif", cursor: mapReady ? "pointer" : "not-allowed", transition: "background 0.2s" }}
+          style={{ background: mapReady ? "#FF6B6B" : "#888", color: "white", border: "none", padding: "7px 20px", borderRadius: 6, fontSize: 13, fontWeight: 600, fontFamily: "'Lora', serif", cursor: mapReady ? "pointer" : "not-allowed", transition: "background 0.2s" }}
         >
           {!mapReady && doubleSided ? "Loading map…" : doubleSided ? "Print double-sided →" : "Print single-sided →"}
         </button>
@@ -307,7 +307,7 @@ export default function PrintSheet() {
             width: "100vw",
             height: "100vh",
             position: "relative",
-            background: "#F6F1E8",
+            background: "#F5DEB3",
             display: "flex",
             flexDirection: "column",
           }}
@@ -323,23 +323,23 @@ export default function PrintSheet() {
             bottom: 0,
             left: 0,
             right: 0,
-            background: "rgba(47,93,80,0.92)",
+            background: "rgba(10,61,92,0.92)",
             padding: "6px 16px",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
           }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <p style={{ fontSize: 13, fontFamily: "'Lora', serif", color: "#F6F1E8", fontWeight: 700, margin: 0 }}>North Durham Community Atlas</p>
-              <span style={{ color: "#7A9E7E", fontSize: 10 }}>·</span>
-              <p style={{ fontSize: 10, color: "#C2D1DB", margin: 0 }}>{typedListings.length} verified resources · Scugog · Uxbridge · Brock</p>
+              <p style={{ fontSize: 13, fontFamily: "'Lora', serif", color: "#F5DEB3", fontWeight: 700, margin: 0 }}>North Durham Community Atlas</p>
+              <span style={{ color: "#5BAEC9", fontSize: 10 }}>·</span>
+              <p style={{ fontSize: 10, color: "#C8E0EC", margin: 0 }}>{typedListings.length} verified resources · Scugog · Uxbridge · Brock</p>
             </div>
             {/* Category legend */}
             <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
               {ALL_CATEGORIES.map((cat) => (
                 <div key={cat} style={{ display: "flex", alignItems: "center", gap: 4 }}>
                   <div style={{ width: 8, height: 8, borderRadius: "50%", background: CATEGORY_COLORS[cat] }} />
-                  <span style={{ fontSize: 9, color: "#C2D1DB" }}>{cat}</span>
+                  <span style={{ fontSize: 9, color: "#C8E0EC" }}>{cat}</span>
                 </div>
               ))}
             </div>
@@ -349,8 +349,8 @@ export default function PrintSheet() {
 
       {/* On-screen preview note for double-sided */}
       {doubleSided && (
-        <div className="no-print" style={{ padding: "20px 24px", background: "#2F5D50", margin: 0 }}>
-          <p style={{ fontSize: 12, color: "#C2D1DB", fontFamily: "'Inter', sans-serif" }}>
+        <div className="no-print" style={{ padding: "20px 24px", background: "#0A3D5C", margin: 0 }}>
+          <p style={{ fontSize: 12, color: "#C8E0EC", fontFamily: "'Inter', sans-serif" }}>
             ↑ Page 2 — print this on the back of the sheet. When folded, the map becomes the inside spread.
           </p>
         </div>
