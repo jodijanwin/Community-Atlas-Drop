@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import listings from "@/data/listings.json";
 import { Listing, Category, CATEGORY_COLORS } from "@/types";
@@ -200,6 +200,27 @@ const vLine: React.CSSProperties = { position: "absolute", top: 0, bottom: 0, wi
 
 export default function PrintSheet() {
   const [doubleSided, setDoubleSided] = useState(true);
+  const [mapReady, setMapReady] = useState(false);
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // When double-sided is on, poll for tile load completion before enabling print.
+  // When single-sided, the map isn't rendered so we're always ready.
+  useEffect(() => {
+    if (!doubleSided) {
+      setMapReady(true);
+      return;
+    }
+    setMapReady(false);
+    pollRef.current = setInterval(() => {
+      const loaded = document.querySelectorAll(".leaflet-tile-loaded").length;
+      const loading = document.querySelectorAll(".leaflet-tile-loading").length;
+      if (loaded > 4 && loading === 0) {
+        setMapReady(true);
+        if (pollRef.current) clearInterval(pollRef.current);
+      }
+    }, 300);
+    return () => { if (pollRef.current) clearInterval(pollRef.current); };
+  }, [doubleSided]);
 
   function handlePrint() {
     window.print();
@@ -234,8 +255,12 @@ export default function PrintSheet() {
             <span style={{ fontSize: 12, color: "#C2D1DB" }}>Double-sided (map on back)</span>
           </label>
         </div>
-        <button onClick={handlePrint} style={{ background: "#C65A1E", color: "white", border: "none", padding: "7px 20px", borderRadius: 6, fontSize: 13, fontWeight: 600, fontFamily: "'Lora', serif", cursor: "pointer" }}>
-          {doubleSided ? "Print double-sided →" : "Print single-sided →"}
+        <button
+          onClick={handlePrint}
+          disabled={!mapReady}
+          style={{ background: mapReady ? "#C65A1E" : "#888", color: "white", border: "none", padding: "7px 20px", borderRadius: 6, fontSize: 13, fontWeight: 600, fontFamily: "'Lora', serif", cursor: mapReady ? "pointer" : "not-allowed", transition: "background 0.2s" }}
+        >
+          {!mapReady && doubleSided ? "Loading map…" : doubleSided ? "Print double-sided →" : "Print single-sided →"}
         </button>
       </div>
 

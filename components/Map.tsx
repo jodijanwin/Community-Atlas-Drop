@@ -6,119 +6,22 @@ import L from "leaflet";
 import React from "react";
 import { Listing, CATEGORY_COLORS } from "@/types";
 
-// ─── Data sources ──────────────────────────────────────────────────────────────
-// Trails and parks come from OpenStreetMap via the Overpass API.
-// This API is public, CORS-enabled, and free.
-// Overpass API docs: https://wiki.openstreetmap.org/wiki/Overpass_API
+// ─── Regional map layers ───────────────────────────────────────────────────────
+// GeoJSON files are pre-built from OpenStreetMap data and served as static
+// assets from /public/osm/. To refresh the data, run:
 //
-// North Durham bounding box: SW 44.00,-79.40  NE 44.65,-78.70
-// Overpass bbox format: south,west,north,east
-
-const BBOX = "44.0,-79.4,44.65,-78.7";
-const OVERPASS = "https://overpass-api.de/api/interpreter";
-
-// Build an Overpass query URL
-function overpassUrl(query: string) {
-  return `${OVERPASS}?data=${encodeURIComponent(query)}`;
-}
-
-// ─── Overpass queries ──────────────────────────────────────────────────────────
-
-const QUERIES = {
-  trails: `[out:json][timeout:30][bbox:${BBOX}];
-(
-  way["highway"~"^(path|footway|cycleway|track)$"]["name"];
-  way["route"~"^(hiking|bicycle|foot)$"]["name"];
-);
-out geom qt;`,
-
-  parks: `[out:json][timeout:30][bbox:${BBOX}];
-(
-  way["leisure"="park"]["name"];
-  way["natural"~"^(wood|forest)$"]["name"];
-  way["landuse"="recreation_ground"]["name"];
-);
-out geom qt;`,
-
-  amenities: `[out:json][timeout:30][bbox:${BBOX}];
-(
-  node["amenity"~"^(library|community_centre|social_facility)$"];
-  way["amenity"~"^(library|community_centre|social_facility)$"];
-  node["shop"="farm"]["name"];
-  way["shop"="farm"]["name"];
-);
-out center body qt;`,
-} as const;
-
-type LayerId = keyof typeof QUERIES;
-
-// ─── Overpass JSON → GeoJSON converter ────────────────────────────────────────
-
-interface OverpassElement {
-  type: "node" | "way" | "relation";
-  id: number;
-  tags?: Record<string, string>;
-  lat?: number;
-  lon?: number;
-  center?: { lat: number; lon: number };
-  geometry?: Array<{ lat: number; lon: number }>;
-}
-
-function overpassToGeoJSON(elements: OverpassElement[]): GeoJSON.FeatureCollection {
-  const features: GeoJSON.Feature[] = [];
-
-  for (const el of elements) {
-    const props = { id: el.id, ...el.tags };
-
-    if (el.type === "node" && el.lat !== undefined && el.lon !== undefined) {
-      features.push({
-        type: "Feature",
-        geometry: { type: "Point", coordinates: [el.lon, el.lat] },
-        properties: props,
-      });
-    } else if (el.type === "way") {
-      if (el.geometry && el.geometry.length > 1) {
-        // Full geometry available (out geom)
-        const coords = el.geometry.map((p) => [p.lon, p.lat] as [number, number]);
-        const isClosed =
-          coords.length > 3 &&
-          coords[0][0] === coords[coords.length - 1][0] &&
-          coords[0][1] === coords[coords.length - 1][1];
-        features.push({
-          type: "Feature",
-          geometry: isClosed
-            ? { type: "Polygon", coordinates: [coords] }
-            : { type: "LineString", coordinates: coords },
-          properties: props,
-        });
-      } else if (el.center) {
-        // Center point only (out center body)
-        features.push({
-          type: "Feature",
-          geometry: { type: "Point", coordinates: [el.center.lon, el.center.lat] },
-          properties: props,
-        });
-      }
-    }
-  }
-
-  return { type: "FeatureCollection", features };
-}
-
-async function fetchOverpass(query: string): Promise<GeoJSON.FeatureCollection> {
-  const res = await fetch(overpassUrl(query));
-  if (!res.ok) throw new Error(`Overpass HTTP ${res.status}`);
-  const data = await res.json();
-  return overpassToGeoJSON(data.elements ?? []);
-}
-
-// ─── Layer definitions ─────────────────────────────────────────────────────────
+//   node scripts/fetch-osm-data.mjs
+//
+// then commit the updated files in public/osm/.
+// See UPDATING.md section 4 for full instructions.
 
 const LAYERS = [
-  { id: "trails" as LayerId, label: "Trails & Paths", color: "#7A9E7E", defaultOn: true },
-  { id: "parks" as LayerId, label: "Parks & Forests", color: "#2F5D50", defaultOn: true },
-  { id: "amenities" as LayerId, label: "Libraries & Services", color: "#2F6F73", defaultOn: true },
+  { id: "trails",    label: "Trails & Paths",       color: "#7A9E7E", file: "/osm/trails.geojson",    defaultOn: true  },
+  { id: "parks",     label: "Parks & Forests",       color: "#2F5D50", file: "/osm/parks.geojson",     defaultOn: true  },
+  { id: "amenities", label: "Libraries & Services",  color: "#2F6F73", file: "/osm/amenities.geojson", defaultOn: true  },
 ] as const;
+
+type LayerId = (typeof LAYERS)[number]["id"];
 
 // ─── Tile options ──────────────────────────────────────────────────────────────
 
@@ -165,23 +68,22 @@ function FlyToSelected({ listing }: { listing: Listing | null }) {
   return null;
 }
 
-// Build a readable popup for OSM features
 function osmPopup(props: Record<string, string>): string {
   const name = props.name || props["name:en"] || "";
-  const type = props.amenity || props.leisure || props.natural || props.highway || props.route || "";
+  const type = (props.amenity || props.leisure || props.natural || props.highway || props.shop || "").replace(/_/g, " ");
   const operator = props.operator || props.brand || "";
-  const website = props.website || props["contact:website"] || "";
   const hours = props.opening_hours || "";
+  const website = props.website || props["contact:website"] || "";
   return `<div style="font-family:'Lora',serif;min-width:150px">
-    <p style="font-size:10px;font-weight:700;color:#2F6F73;margin:0 0 3px;text-transform:capitalize">${type.replace(/_/g, " ")}</p>
+    <p style="font-size:10px;font-weight:700;color:#2F6F73;margin:0 0 3px;text-transform:capitalize">${type}</p>
     ${name ? `<p style="font-size:12px;font-weight:700;margin:0 0 3px">${name}</p>` : ""}
     ${operator ? `<p style="font-size:10px;color:#3F352C;margin:0 0 2px">${operator}</p>` : ""}
     ${hours ? `<p style="font-size:10px;color:#2F6F73;margin:0 0 2px">${hours}</p>` : ""}
-    ${website ? `<p style="font-size:10px;margin:0"><a href="${website}" target="_blank" rel="noopener noreferrer" style="color:#2F6F73">Visit website →</a></p>` : ""}
+    ${website ? `<p style="font-size:10px;margin:0"><a href="${website}" target="_blank" rel="noopener noreferrer" style="color:#2F6F73">Visit →</a></p>` : ""}
   </div>`;
 }
 
-// ─── Main component ────────────────────────────────────────────────────────────
+// ─── Component ────────────────────────────────────────────────────────────────
 
 interface Props {
   listings: Listing[];
@@ -196,10 +98,10 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
     new Set(LAYERS.filter((l) => l.defaultOn).map((l) => l.id))
   );
   const [layerData, setLayerData] = useState<Partial<Record<LayerId, GeoJSON.FeatureCollection>>>({});
-  const [layerStatus, setLayerStatus] = useState<Partial<Record<LayerId, "loading" | "ok" | "error">>>({});
-  const fetchedLayers = useRef<Set<LayerId>>(new Set());
+  const [layerStatus, setLayerStatus] = useState<Partial<Record<LayerId, "loading" | "ok" | "empty" | "error">>>({});
+  const fetchedRef = useRef<Set<LayerId>>(new Set());
 
-  // Durham boundary outline from Nominatim
+  // Durham boundary
   useEffect(() => {
     fetch("https://nominatim.openstreetmap.org/search?q=Regional+Municipality+of+Durham+Ontario+Canada&polygon_geojson=1&format=json&limit=1")
       .then((r) => r.json())
@@ -207,20 +109,26 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
       .catch(() => {});
   }, []);
 
-  // Fetch Overpass layers on demand — use a ref to track in-flight/done fetches
-  // so this effect only depends on visibleLayers and never re-runs due to state updates
+  // Fetch static GeoJSON files
   useEffect(() => {
     for (const layer of LAYERS) {
       if (!visibleLayers.has(layer.id)) continue;
-      if (fetchedLayers.current.has(layer.id)) continue;
+      if (fetchedRef.current.has(layer.id)) continue;
 
-      fetchedLayers.current.add(layer.id);
+      fetchedRef.current.add(layer.id);
       setLayerStatus((prev) => ({ ...prev, [layer.id]: "loading" }));
 
-      fetchOverpass(QUERIES[layer.id])
+      fetch(layer.file)
+        .then((r) => {
+          if (!r.ok) throw new Error(`HTTP ${r.status}`);
+          return r.json() as Promise<GeoJSON.FeatureCollection>;
+        })
         .then((geo) => {
           setLayerData((prev) => ({ ...prev, [layer.id]: geo }));
-          setLayerStatus((prev) => ({ ...prev, [layer.id]: "ok" }));
+          setLayerStatus((prev) => ({
+            ...prev,
+            [layer.id]: geo.features.length === 0 ? "empty" : "ok",
+          }));
         })
         .catch(() => {
           setLayerStatus((prev) => ({ ...prev, [layer.id]: "error" }));
@@ -237,87 +145,78 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
   }
 
   const tile = TILE_LAYERS[activeTile];
+  const hasEmptyLayers = Object.values(layerStatus).some((s) => s === "empty");
 
   return (
     <div style={{ position: "relative", height: "100%", width: "100%" }}>
 
       {/* ── Controls panel ── */}
-      <div style={{
+      <div className="no-print" style={{
         position: "absolute", top: 12, right: 12, zIndex: 1000,
         background: "white", borderRadius: 10, padding: "12px 14px",
-        boxShadow: "0 2px 12px rgba(0,0,0,0.18)", minWidth: 186,
+        boxShadow: "0 2px 12px rgba(0,0,0,0.18)", minWidth: 190,
         fontFamily: "'Inter', sans-serif",
       }}>
-        {/* Base map toggle */}
         <p style={{ fontSize: 10, fontWeight: 700, color: "#3F352C", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 6 }}>Base Map</p>
         <div style={{ display: "flex", borderRadius: 6, overflow: "hidden", border: "1px solid #C2D1DB", marginBottom: 14 }}>
           {(Object.keys(TILE_LAYERS) as (keyof typeof TILE_LAYERS)[]).map((key) => (
-            <button
-              key={key}
-              onClick={() => setActiveTile(key)}
-              style={{
-                flex: 1, padding: "5px 0", fontSize: 11, fontWeight: 600,
-                border: "none", cursor: "pointer",
-                background: activeTile === key ? "#2F6F73" : "white",
-                color: activeTile === key ? "white" : "#3F352C",
-                transition: "all 0.15s",
-              }}
-            >
+            <button key={key} onClick={() => setActiveTile(key)} style={{
+              flex: 1, padding: "5px 0", fontSize: 11, fontWeight: 600,
+              border: "none", cursor: "pointer",
+              background: activeTile === key ? "#2F6F73" : "white",
+              color: activeTile === key ? "white" : "#3F352C",
+              transition: "all 0.15s",
+            }}>
               {TILE_LAYERS[key].label}
             </button>
           ))}
         </div>
 
-        {/* Layer toggles */}
         <p style={{ fontSize: 10, fontWeight: 700, color: "#3F352C", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 8 }}>
           Map Layers
           <span style={{ fontWeight: 400, color: "#7A9E7E", marginLeft: 5, textTransform: "none", letterSpacing: 0 }}>OpenStreetMap</span>
         </p>
+
         {LAYERS.map((layer) => {
           const on = visibleLayers.has(layer.id);
           const status = layerStatus[layer.id];
           const count = layerData[layer.id]?.features?.length;
           return (
-            <label
-              key={layer.id}
-              style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8, cursor: "pointer" }}
-            >
-              <div
-                onClick={() => toggleLayer(layer.id)}
-                style={{
-                  width: 14, height: 14, borderRadius: 3, flexShrink: 0,
-                  background: on ? layer.color : "transparent",
-                  border: `2px solid ${layer.color}`,
-                  transition: "background 0.15s",
-                }}
-              />
-              <span style={{ fontSize: 11, color: status === "error" ? "#C65A1E" : "#3F352C", flex: 1, lineHeight: 1.3 }}>
-                {layer.label}
-              </span>
+            <label key={layer.id} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8, cursor: "pointer" }}>
+              <div onClick={() => toggleLayer(layer.id)} style={{
+                width: 14, height: 14, borderRadius: 3, flexShrink: 0,
+                background: on ? layer.color : "transparent",
+                border: `2px solid ${layer.color}`,
+                transition: "background 0.15s",
+              }} />
+              <span style={{ fontSize: 11, color: "#3F352C", flex: 1, lineHeight: 1.3 }}>{layer.label}</span>
               {status === "loading" && <span style={{ fontSize: 9, color: "#2F6F73" }}>…</span>}
               {status === "ok" && count !== undefined && <span style={{ fontSize: 9, color: "#7A9E7E" }}>{count}</span>}
-              {status === "error" && <span style={{ fontSize: 9, color: "#C65A1E" }} title="Could not load layer">✕</span>}
+              {status === "empty" && <span style={{ fontSize: 9, color: "#E3A24C" }}>run script</span>}
+              {status === "error" && <span style={{ fontSize: 9, color: "#C65A1E" }}>✕</span>}
             </label>
           );
         })}
+
+        {hasEmptyLayers && (
+          <div style={{ borderTop: "1px solid #C2D1DB", marginTop: 8, paddingTop: 8 }}>
+            <p style={{ fontSize: 9, color: "#E3A24C", lineHeight: 1.5, margin: 0 }}>
+              No regional data yet.<br />
+              Run: <code style={{ background: "#F6F1E8", padding: "1px 3px", borderRadius: 2 }}>node scripts/fetch-osm-data.mjs</code>
+            </p>
+          </div>
+        )}
+
         <div style={{ borderTop: "1px solid #C2D1DB", marginTop: 8, paddingTop: 8 }}>
           <p style={{ fontSize: 9, color: "#7A9E7E", lineHeight: 1.4, margin: 0 }}>
-            Regional data:{" "}
-            <a href="https://www.openstreetmap.org" target="_blank" rel="noopener noreferrer" style={{ color: "#2F6F73" }}>
-              © OpenStreetMap
-            </a>
+            Data: <a href="https://www.openstreetmap.org" target="_blank" rel="noopener noreferrer" style={{ color: "#2F6F73" }}>© OpenStreetMap contributors</a>
           </p>
         </div>
       </div>
 
-      <MapContainer
-        center={[44.2200, -79.0400]}
-        zoom={10}
-        style={{ height: "100%", width: "100%" }}
-      >
+      <MapContainer center={[44.2200, -79.0400]} zoom={10} style={{ height: "100%", width: "100%" }}>
         <TileLayer key={activeTile} url={tile.url} attribution={tile.attribution} />
 
-        {/* Durham Region boundary */}
         {durhamGeo && (
           <GeoJSON
             data={durhamGeo as GeoJSON.GeoJsonObject}
@@ -325,10 +224,9 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
           />
         )}
 
-        {/* OSM layers */}
         {LAYERS.map((layer) => {
           const data = layerData[layer.id];
-          if (!visibleLayers.has(layer.id) || !data) return null;
+          if (!visibleLayers.has(layer.id) || !data || data.features.length === 0) return null;
 
           const points = data.features.filter((f) => f.geometry?.type === "Point");
           const nonPoints: GeoJSON.FeatureCollection = {
@@ -336,9 +234,9 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
             features: data.features.filter((f) => f.geometry?.type !== "Point"),
           };
 
-          const lineOrPolyStyle = (feature?: GeoJSON.Feature) => {
-            const isPolygon = feature?.geometry?.type === "Polygon" || feature?.geometry?.type === "MultiPolygon";
-            return isPolygon
+          const styleFunc = (feature?: GeoJSON.Feature) => {
+            const isPoly = feature?.geometry?.type === "Polygon" || feature?.geometry?.type === "MultiPolygon";
+            return isPoly
               ? { color: layer.color, weight: 1.5, opacity: 0.6, fillColor: layer.color, fillOpacity: 0.15 }
               : { color: layer.color, weight: 2.5, opacity: 0.8 };
           };
@@ -349,7 +247,7 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
                 <GeoJSON
                   key={`${layer.id}-geo`}
                   data={nonPoints as GeoJSON.GeoJsonObject}
-                  style={lineOrPolyStyle}
+                  style={styleFunc}
                   onEachFeature={(feature, leafletLayer) => {
                     const props = (feature.properties || {}) as Record<string, string>;
                     if (props.name) leafletLayer.bindPopup(osmPopup(props));
@@ -360,14 +258,8 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
                 const [lng, lat] = (feature.geometry as GeoJSON.Point).coordinates;
                 const props = (feature.properties || {}) as Record<string, string>;
                 return (
-                  <Marker
-                    key={`${layer.id}-pt-${i}`}
-                    position={[lat, lng]}
-                    icon={createSmallIcon(layer.color)}
-                  >
-                    <Popup>
-                      <div dangerouslySetInnerHTML={{ __html: osmPopup(props) }} />
-                    </Popup>
+                  <Marker key={`${layer.id}-pt-${i}`} position={[lat, lng]} icon={createSmallIcon(layer.color)}>
+                    <Popup><div dangerouslySetInnerHTML={{ __html: osmPopup(props) }} /></Popup>
                   </Marker>
                 );
               })}
@@ -377,7 +269,6 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
 
         <FlyToSelected listing={selected} />
 
-        {/* Atlas listings — always on top */}
         {listings.map((listing) => (
           <Marker
             key={listing.id}
