@@ -1,17 +1,19 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import listings from "@/data/listings.json";
 import { Listing, Category, CATEGORY_COLORS } from "@/types";
 
-// Standalone print sheet — only the 8 panels, nothing else.
-// Opened in a new tab by the Mini Zine print button.
-// Auto-triggers window.print() on load.
+const PrintMap = dynamic(() => import("@/components/Map"), { ssr: false });
+
+// Standalone print sheet — opened in a new tab by the Mini Zine print button.
+// Single-sided: 8 panels in fold layout.
+// Double-sided: 8 panels (page 1) + full map spread (page 2, printed on back).
 //
-// Print layout for one-sheet 8-panel zine (letter landscape):
-//   Top row (rotated 180°): p2  p7  p6  p3
-//   Bottom row (right-side up): p1  p8  p5  p4
-// Fold: hotdog × 2 → cut center slit → push into booklet
+// Fold layout (letter landscape):
+//   Top row rotated 180°: p2  p7  p6  p3
+//   Bottom row right-side up: p1  p8  p5  p4
 
 const typedListings = listings as Listing[];
 
@@ -197,20 +199,49 @@ const hLine: React.CSSProperties = { position: "absolute", left: 0, right: 0, he
 const vLine: React.CSSProperties = { position: "absolute", top: 0, bottom: 0, width: 0, borderLeft: "0.5pt dashed #aaa", pointerEvents: "none" };
 
 export default function PrintSheet() {
-  useEffect(() => {
-    const t = setTimeout(() => window.print(), 800);
-    return () => clearTimeout(t);
-  }, []);
+  const [doubleSided, setDoubleSided] = useState(true);
+
+  function handlePrint() {
+    window.print();
+  }
 
   return (
     <>
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
         nav, header, footer { display: none !important; }
-        body { background: white !important; }
+        body { background: #F6F1E8 !important; }
         main { padding: 0 !important; }
-        @page { size: letter landscape; margin: 0.2in; }
+        @page { size: letter landscape; margin: 0.15in; }
+        @media print {
+          .no-print { display: none !important; }
+          .print-page { page-break-before: always; }
+          .leaflet-control-container { display: none !important; }
+        }
       `}</style>
+
+      {/* ── On-screen controls — hidden when printing ── */}
+      <div className="no-print" style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 9999, background: "#2F5D50", padding: "10px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <span style={{ fontSize: 13, fontFamily: "'Lora', serif", color: "#F6F1E8", fontWeight: 600 }}>Mini Zine — Print Sheet</span>
+          <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
+            <div
+              onClick={() => setDoubleSided(!doubleSided)}
+              style={{ width: 36, height: 20, borderRadius: 10, background: doubleSided ? "#E3A24C" : "#2F6F73", position: "relative", transition: "background 0.2s", cursor: "pointer" }}
+            >
+              <div style={{ position: "absolute", top: 2, left: doubleSided ? 18 : 2, width: 16, height: 16, borderRadius: "50%", background: "white", transition: "left 0.2s" }} />
+            </div>
+            <span style={{ fontSize: 12, color: "#C2D1DB" }}>Double-sided (map on back)</span>
+          </label>
+        </div>
+        <button onClick={handlePrint} style={{ background: "#C65A1E", color: "white", border: "none", padding: "7px 20px", borderRadius: 6, fontSize: 13, fontWeight: 600, fontFamily: "'Lora', serif", cursor: "pointer" }}>
+          {doubleSided ? "Print double-sided →" : "Print single-sided →"}
+        </button>
+      </div>
+
+      {/* ── PAGE 1: 8-panel fold sheet ── */}
+      <div style={{ paddingTop: 48 }} className="no-print" />{/* spacer for fixed toolbar on screen */}
+
       {/* 4 col × 2 row grid — panels sized to fill one landscape letter */}
       <div
         style={{
@@ -242,6 +273,63 @@ export default function PrintSheet() {
           <P5 />
           <P4 />
         </div>
+
+      {/* ── PAGE 2: Full map spread (double-sided back) ── */}
+      {doubleSided && (
+        <div
+          className="print-page"
+          style={{
+            width: "100vw",
+            height: "100vh",
+            position: "relative",
+            background: "#F6F1E8",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          {/* Map fills the whole page */}
+          <div style={{ flex: 1, position: "relative" }}>
+            <PrintMap listings={typedListings} selected={null} onSelect={() => {}} />
+          </div>
+
+          {/* Footer bar */}
+          <div style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            background: "rgba(47,93,80,0.92)",
+            padding: "6px 16px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <p style={{ fontSize: 13, fontFamily: "'Lora', serif", color: "#F6F1E8", fontWeight: 700, margin: 0 }}>North Durham Community Atlas</p>
+              <span style={{ color: "#7A9E7E", fontSize: 10 }}>·</span>
+              <p style={{ fontSize: 10, color: "#C2D1DB", margin: 0 }}>{typedListings.length} verified resources · Scugog · Uxbridge · Brock</p>
+            </div>
+            {/* Category legend */}
+            <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+              {ALL_CATEGORIES.map((cat) => (
+                <div key={cat} style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                  <div style={{ width: 8, height: 8, borderRadius: "50%", background: CATEGORY_COLORS[cat] }} />
+                  <span style={{ fontSize: 9, color: "#C2D1DB" }}>{cat}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* On-screen preview note for double-sided */}
+      {doubleSided && (
+        <div className="no-print" style={{ padding: "20px 24px", background: "#2F5D50", margin: 0 }}>
+          <p style={{ fontSize: 12, color: "#C2D1DB", fontFamily: "'Inter', sans-serif" }}>
+            ↑ Page 2 — print this on the back of the sheet. When folded, the map becomes the inside spread.
+          </p>
+        </div>
+      )}
     </>
   );
 }
