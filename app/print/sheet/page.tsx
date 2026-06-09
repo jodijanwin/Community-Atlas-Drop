@@ -198,30 +198,22 @@ const vLine: React.CSSProperties = { position: "absolute", top: 0, bottom: 0, wi
 
 export default function PrintSheet() {
   useEffect(() => {
-    // Small delay so fonts and colours render before the dialog opens
     const t = setTimeout(() => window.print(), 800);
     return () => clearTimeout(t);
   }, []);
 
   return (
-    <html>
-      <head>
-        <title>North Durham Atlas — Mini Zine Sheet</title>
-        <style>{`
-          * { box-sizing: border-box; margin: 0; padding: 0; }
-          html, body { width: 100%; height: 100%; background: white; }
-          @page { size: letter landscape; margin: 0.2in; }
-          @media print {
-            html, body { width: 100%; height: 100%; }
-            .sheet { width: 100% !important; height: 100% !important; }
-          }
-        `}</style>
-      </head>
-      <body>
-        {/* 4 col × 2 row grid — panels sized to fill one landscape letter */}
-        <div
-          className="sheet"
-          style={{
+    <>
+      <style>{`
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        nav, header, footer { display: none !important; }
+        body { background: white !important; }
+        main { padding: 0 !important; }
+        @page { size: letter landscape; margin: 0.2in; }
+      `}</style>
+      {/* 4 col × 2 row grid — panels sized to fill one landscape letter */}
+      <div
+        style={{
             display: "grid",
             gridTemplateColumns: "repeat(4, 1fr)",
             gridTemplateRows: "repeat(2, 1fr)",
@@ -250,7 +242,6 @@ export default function PrintSheet() {
           <P5 />
           <P4 />
         </div>
-      </body>
-    </html>
+    </>
   );
 }

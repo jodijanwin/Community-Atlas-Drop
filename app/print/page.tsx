@@ -427,14 +427,8 @@ function DigitalZine({ typedListings }: { typedListings: Listing[] }) {
 }
 
 export default function ZinePage() {
-  const [mode, setMode] = useState<"mini" | "digital" | "custom">("digital");
+  const [mode, setMode] = useState<"mini" | "digital">("digital");
   const typedListings = listings as Listing[];
-  const [pageUrl, setPageUrl] = useState("");
-
-  // Capture current URL for the "Print What You Like" link
-  useState(() => {
-    if (typeof window !== "undefined") setPageUrl(window.location.origin + "/print");
-  });
 
   function printMiniZine() {
     window.open("/print/sheet", "_blank");
@@ -455,7 +449,6 @@ export default function ZinePage() {
             {([
               ["digital", "Digital Edition"],
               ["mini", "Mini Zine"],
-              ["custom", "Print What You Like"],
             ] as const).map(([key, label]) => (
               <button key={key} onClick={() => setMode(key)} style={{ padding: "5px 14px", fontSize: 12, fontWeight: 600, fontFamily: "'Lora', serif", border: "none", cursor: "pointer", background: mode === key ? "#E3A24C" : "transparent", color: mode === key ? "#3F352C" : "#C2D1DB", transition: "all 0.15s" }}>
                 {label}
@@ -486,42 +479,6 @@ export default function ZinePage() {
       )}
 
       {mode === "digital" && <DigitalZine typedListings={typedListings} />}
-
-      {mode === "custom" && (
-        <div className="max-w-2xl mx-auto px-6 py-16 text-center">
-          <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: "#2F6F73" }}>Customise your print</p>
-          <h1 className="text-4xl font-bold mb-6" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>Print What You Like</h1>
-          <p className="text-sm leading-relaxed mb-8" style={{ color: "#3F352C" }}>
-            Use the free PrintWhatYouLike tool to choose exactly which sections to include — click to remove headers, sidebars, or anything you don&apos;t need, adjust font size, and save as PDF.
-          </p>
-          <a
-            href={`https://www.printwhatyoulike.com/print?url=${encodeURIComponent(typeof window !== "undefined" ? window.location.origin + "/print" : "")}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block px-8 py-3.5 rounded-lg font-semibold text-base mb-6"
-            style={{ fontFamily: "'Lora', serif", background: "#2F6F73", color: "white" }}
-          >
-            Open in PrintWhatYouLike →
-          </a>
-          <p className="text-xs" style={{ color: "#3F352C" }}>Opens the Digital Edition in PrintWhatYouLike. Click any element on the page to remove it, then hit Print.</p>
-          <div className="mt-10 p-6 rounded-lg text-left" style={{ background: "white", border: "1px solid #C2D1DB" }}>
-            <p className="text-sm font-semibold mb-3" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>How to use it:</p>
-            <ol className="space-y-2">
-              {[
-                "Click the button above — the atlas opens inside PrintWhatYouLike",
-                "Click any element (toolbar, nav, map, sections) to remove it",
-                "Use the top bar to adjust font size or background colour",
-                "Click Print when you're happy — save as PDF or send to printer",
-              ].map((step, i) => (
-                <li key={i} className="flex gap-3 text-sm" style={{ color: "#3F352C" }}>
-                  <span className="shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold" style={{ background: "#E3A24C", color: "#3F352C" }}>{i + 1}</span>
-                  {step}
-                </li>
-              ))}
-            </ol>
-          </div>
-        </div>
-      )}
 
       <style>{`
         @media print {
