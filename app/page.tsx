@@ -145,7 +145,7 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {listings.slice(0, 3).map((listing) => (
-              <Link key={listing.id} href={`/atlas?id=${listing.id}`} className="p-4 rounded-lg border transition-all hover:shadow-sm" style={{ background: "white", borderColor: "#C8E0EC" }}>
+              <Link key={listing.id} href={`/atlas?id=${listing.id}`} className="p-4 rounded-lg border transition-all hover:shadow-sm" style={{ background: "#FAF6F2", borderColor: "#C8E0EC" }}>
                 <div className="flex items-center gap-2 mb-2">
                   <div className="w-2 h-2 rounded-full shrink-0" style={{ background: CATEGORY_COLORS[listing.category as Category] }} />
                   <span className="text-xs" style={{ color: "#0D2B3E" }}>{listing.category}</span>

@@ -230,7 +230,7 @@ function MiniZine({ typedListings }: { typedListings: Listing[] }) {
         @media print {
           .no-print { display: none !important; }
           .mini-print { display: grid !important; }
-          body { background: white; margin: 0; }
+          body { background: #FAF6F2; margin: 0; }
           @page { size: letter landscape; margin: 0.25in; }
         }
         .mini-print {
@@ -381,7 +381,7 @@ function DigitalZine({ typedListings }: { typedListings: Listing[] }) {
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {catListings.map((listing) => (
-                      <Link key={listing.id} href={`/atlas?id=${listing.id}`} className="no-print p-4 rounded-lg block transition-all hover:shadow-md" style={{ background: "white" }}>
+                      <Link key={listing.id} href={`/atlas?id=${listing.id}`} className="no-print p-4 rounded-lg block transition-all hover:shadow-md" style={{ background: "#FAF6F2" }}>
                         <p className="font-semibold text-sm mb-0.5" style={{ fontFamily: "'Lora', serif", color: "#0D2B3E" }}>{listing.name}</p>
                         <p className="text-xs mb-1" style={{ color: "#1A6B8A" }}>{listing.hours}</p>
                         <p className="text-xs leading-snug" style={{ color: "#0D2B3E" }}>{listing.description}</p>
@@ -483,7 +483,7 @@ export default function ZinePage() {
       <style>{`
         @media print {
           .no-print { display: none !important; }
-          body { background: white; margin: 0; }
+          body { background: #FAF6F2; margin: 0; }
         }
       `}</style>
     </div>

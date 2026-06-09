@@ -56,7 +56,7 @@ function EventCard({ event, faded }: { event: Event; faded?: boolean }) {
   return (
     <div
       style={{
-        background: "white",
+        background: "#FAF6F2",
         borderRadius: 10,
         border: "1px solid #C8E0EC",
         padding: "16px 18px",
@@ -172,7 +172,7 @@ function CalendarView({ events }: { events: Event[] }) {
                 minHeight: 64,
                 borderRadius: 6,
                 padding: "6px 5px",
-                background: isToday ? "#F0F8F0" : "white",
+                background: isToday ? "#F0F8F0" : "#FAF6F2",
                 border: isToday ? "1.5px solid #5BAEC9" : "1px solid #E8E2D9",
                 position: "relative",
               }}
@@ -307,7 +307,7 @@ export default function EventsPage() {
                 </div>
               </section>
             ) : (
-              <div style={{ background: "white", border: "1px solid #C8E0EC", borderRadius: 10, padding: 32, textAlign: "center", marginBottom: 40 }}>
+              <div style={{ background: "#FAF6F2", border: "1px solid #C8E0EC", borderRadius: 10, padding: 32, textAlign: "center", marginBottom: 40 }}>
                 <p style={{ fontSize: 13, color: "#0D2B3E", marginBottom: 8 }}>No upcoming events{activeCategories.size > 0 ? " in these categories" : ""} listed yet.</p>
                 <Link href="/submit" style={{ fontSize: 13, fontWeight: 600, color: "#1A6B8A" }}>Know of one? Submit it →</Link>
               </div>
@@ -326,13 +326,13 @@ export default function EventsPage() {
 
         {/* ── Calendar view ── */}
         {view === "calendar" && (
-          <div style={{ background: "white", borderRadius: 12, border: "1px solid #C8E0EC", padding: 20, marginBottom: 40 }}>
+          <div style={{ background: "#FAF6F2", borderRadius: 12, border: "1px solid #C8E0EC", padding: 20, marginBottom: 40 }}>
             <CalendarView events={filtered} />
           </div>
         )}
 
         {/* Submit CTA */}
-        <div style={{ background: "white", borderLeft: "4px solid #5BAEC9", borderRadius: "0 10px 10px 0", padding: "20px 24px" }}>
+        <div style={{ background: "#FAF6F2", borderLeft: "4px solid #5BAEC9", borderRadius: "0 10px 10px 0", padding: "20px 24px" }}>
           <p style={{ fontFamily: "'Lora', serif", fontWeight: 600, fontSize: 14, color: "#0D2B3E", marginBottom: 4 }}>Know of an event that belongs here?</p>
           <p style={{ fontSize: 13, color: "#0D2B3E", marginBottom: 16, lineHeight: 1.5 }}>A repair night, a market, a community meeting, a skill share — if it&apos;s in North Durham and open to neighbours, add it.</p>
           <Link href="/submit" style={{ display: "inline-block", padding: "10px 20px", borderRadius: 8, fontSize: 13, fontWeight: 600, background: "#0A3D5C", color: "#F5DEB3", fontFamily: "'Lora', serif" }}>

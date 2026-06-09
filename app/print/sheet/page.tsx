@@ -250,7 +250,7 @@ export default function PrintSheet() {
               onClick={() => setDoubleSided(!doubleSided)}
               style={{ width: 36, height: 20, borderRadius: 10, background: doubleSided ? "#FFA07A" : "#1A6B8A", position: "relative", transition: "background 0.2s", cursor: "pointer" }}
             >
-              <div style={{ position: "absolute", top: 2, left: doubleSided ? 18 : 2, width: 16, height: 16, borderRadius: "50%", background: "white", transition: "left 0.2s" }} />
+              <div style={{ position: "absolute", top: 2, left: doubleSided ? 18 : 2, width: 16, height: 16, borderRadius: "50%", background: "#FAF6F2", transition: "left 0.2s" }} />
             </div>
             <span style={{ fontSize: 12, color: "#C8E0EC" }}>Double-sided (map on back)</span>
           </label>

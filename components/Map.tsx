@@ -153,7 +153,7 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
       {/* ── Controls panel ── */}
       <div className="no-print" style={{
         position: "absolute", top: 12, right: 12, zIndex: 1000,
-        background: "white", borderRadius: 10, padding: "12px 14px",
+        background: "#FAF6F2", borderRadius: 10, padding: "12px 14px",
         boxShadow: "0 2px 12px rgba(0,0,0,0.18)", minWidth: 190,
         fontFamily: "'Inter', sans-serif",
       }}>
@@ -163,7 +163,7 @@ export default function AtlasMap({ listings, selected, onSelect }: Props) {
             <button key={key} onClick={() => setActiveTile(key)} style={{
               flex: 1, padding: "5px 0", fontSize: 11, fontWeight: 600,
               border: "none", cursor: "pointer",
-              background: activeTile === key ? "#1A6B8A" : "white",
+              background: activeTile === key ? "#1A6B8A" : "#FAF6F2",
               color: activeTile === key ? "white" : "#0D2B3E",
               transition: "all 0.15s",
             }}>

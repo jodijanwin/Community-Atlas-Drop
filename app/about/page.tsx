@@ -20,7 +20,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="mb-10 p-6 rounded-lg border-l-4" style={{ background: "white", borderLeftColor: "#5BAEC9", boxShadow: "0 1px 4px rgba(0,0,0,0.05)" }}>
+        <section className="mb-10 p-6 rounded-lg border-l-4" style={{ background: "#FAF6F2", borderLeftColor: "#5BAEC9", boxShadow: "0 1px 4px rgba(0,0,0,0.05)" }}>
           <h2 className="text-xl font-bold mb-4" style={{ fontFamily: "'Lora', serif", color: "#0D2B3E" }}>Why It Works</h2>
           <div className="space-y-3 text-sm leading-relaxed" style={{ color: "#0D2B3E" }}>
             <p>A community that sees only scarcity behaves one way. A community that sees itself as resourced, connected, and capable begins to self-organize. The atlas is an epiphany device — it makes cooperation imaginable, then practical.</p>

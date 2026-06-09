@@ -35,7 +35,7 @@ function AtlasContent() {
 
   return (
     <div style={{ background: "#F5DEB3", height: "calc(100vh - 56px)", display: "flex", flexDirection: "column" }}>
-      <div className="px-4 py-3 border-b shrink-0" style={{ background: "white", borderColor: "#C8E0EC" }}>
+      <div className="px-4 py-3 border-b shrink-0" style={{ background: "#FAF6F2", borderColor: "#C8E0EC" }}>
         <div className="max-w-7xl mx-auto flex flex-col gap-3">
           <div className="flex items-center gap-3">
             <h1 className="text-lg font-bold shrink-0" style={{ fontFamily: "'Lora', serif", color: "#0D2B3E" }}>North Durham Community Atlas</h1>

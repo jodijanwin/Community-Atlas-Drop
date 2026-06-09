@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const CATEGORIES = ["Free Food","Tenant Defense","Public Space","Repair Skills","Local Makers","Gathering Places","Mutual Aid","Co-op Leads"];
 
-const inputStyle = { borderColor: "#C8E0EC", background: "white", color: "#0D2B3E" };
+const inputStyle = { borderColor: "#C8E0EC", background: "#FAF6F2", color: "#0D2B3E" };
 const labelStyle = { color: "#0D2B3E" };
 const optionalStyle = { color: "#0D2B3E" };
 

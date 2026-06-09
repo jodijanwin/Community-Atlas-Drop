@@ -104,7 +104,7 @@ const LOCAL_RESOURCES = [
 
 function ResourceCard({ name, description, url, tag }: { name: string; description: string; url: string; tag: string }) {
   return (
-    <a href={url} target="_blank" rel="noopener noreferrer" className="block p-5 rounded-lg border transition-all hover:border-teal-700/50 hover:scale-[1.01]" style={{ background: "white", borderColor: "#C8E0EC" }}>
+    <a href={url} target="_blank" rel="noopener noreferrer" className="block p-5 rounded-lg border transition-all hover:border-teal-700/50 hover:scale-[1.01]" style={{ background: "#FAF6F2", borderColor: "#C8E0EC" }}>
       <div className="flex items-start justify-between gap-2 mb-2">
         <h3 className="text-sm font-semibold leading-snug" style={{ fontFamily: "'Lora', serif", color: "#0D2B3E" }}>{name}</h3>
         <span className="shrink-0 text-xs px-2 py-0.5 rounded" style={{ background: "rgba(26,107,138,0.15)", color: "#1A6B8A" }}>{tag}</span>
