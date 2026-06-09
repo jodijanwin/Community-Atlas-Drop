@@ -10,8 +10,8 @@ import { Listing, Category, CATEGORY_COLORS } from "@/types";
 const ZineMap = dynamic(() => import("@/components/Map"), { ssr: false });
 
 const ALL_CATEGORIES: Category[] = [
-  "Free Food", "Tenant Defense", "Public Space", "Repair Skills",
-  "Local Makers", "Gathering Places", "Mutual Aid", "Co-op Leads",
+  "Free Food","Tenant Defense","Public Space","Repair Skills",
+  "Local Makers","Gathering Places","Mutual Aid","Co-op Leads",
 ];
 
 const MISSING = [
@@ -20,47 +20,32 @@ const MISSING = [
   "A community land trust for North Durham",
   "A care co-op for isolated rural residents",
   "A bulk food buying co-op accessible without a car",
-  "Expanded community broadband beyond Port Perry Wifi's current coverage",
+  "Expanded community broadband beyond Port Perry Wifi",
 ];
 
-// Torn paper edge — SVG wave divider
 function TornEdge({ flip = false, color = "#F6F1E8" }: { flip?: boolean; color?: string }) {
   return (
     <div style={{ lineHeight: 0, transform: flip ? "scaleY(-1)" : "none", marginBottom: -1 }}>
       <svg viewBox="0 0 1200 40" preserveAspectRatio="none" style={{ display: "block", width: "100%", height: 40 }}>
-        <path
-          d="M0,20 C50,5 100,35 150,20 C200,5 250,32 300,18 C350,4 400,30 450,20 C500,8 550,34 600,20 C650,6 700,33 750,19 C800,5 850,31 900,20 C950,9 1000,35 1050,18 C1100,3 1150,28 1200,20 L1200,40 L0,40 Z"
-          fill={color}
-        />
+        <path d="M0,20 C50,5 100,35 150,20 C200,5 250,32 300,18 C350,4 400,30 450,20 C500,8 550,34 600,20 C650,6 700,33 750,19 C800,5 850,31 900,20 C950,9 1000,35 1050,18 C1100,3 1150,28 1200,20 L1200,40 L0,40 Z" fill={color} />
       </svg>
     </div>
   );
 }
 
-// Large pull quote
-function PullQuote({ text, attribution }: { text: string; attribution?: string }) {
+function PullQuote({ text }: { text: string }) {
   return (
     <div className="my-8 px-6 py-6 border-l-4" style={{ borderLeftColor: "#E3A24C", background: "rgba(227,162,76,0.07)" }}>
-      <p className="text-2xl sm:text-3xl font-bold leading-snug mb-3" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>
+      <p className="text-2xl sm:text-3xl font-bold leading-snug" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>
         &ldquo;{text}&rdquo;
       </p>
-      {attribution && <p className="text-sm font-medium" style={{ color: "#2F6F73" }}>— {attribution}</p>}
     </div>
   );
 }
 
-// Photo placeholder — swap src for a real image anytime
 function PhotoBlock({ caption, tall = false }: { caption: string; tall?: boolean }) {
   return (
-    <div
-      className="rounded-lg overflow-hidden flex flex-col items-center justify-end"
-      style={{
-        height: tall ? 320 : 220,
-        background: "linear-gradient(160deg, #2F5D50 0%, #2F6F73 100%)",
-        position: "relative",
-      }}
-    >
-      {/* Replace this div with <img src="..." className="w-full h-full object-cover absolute inset-0" /> */}
+    <div className="rounded-lg overflow-hidden flex flex-col items-center justify-end" style={{ height: tall ? 320 : 220, background: "linear-gradient(160deg, #2F5D50 0%, #2F6F73 100%)", position: "relative" }}>
       <div style={{ position: "absolute", inset: 0, opacity: 0.08, backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)", backgroundSize: "18px 18px" }} />
       <div className="relative w-full px-4 pb-4 pt-8" style={{ background: "linear-gradient(to top, rgba(47,93,80,0.95), transparent)" }}>
         <p className="text-xs italic" style={{ color: "#C2D1DB" }}>{caption}</p>
@@ -69,41 +54,224 @@ function PhotoBlock({ caption, tall = false }: { caption: string; tall?: boolean
   );
 }
 
-export default function ZinePage() {
-  const [activeCategory, setActiveCategory] = useState<Category | null>(null);
-  const [expandedStory, setExpandedStory] = useState<string | null>(null);
-  const typedListings = listings as Listing[];
+// ─── MINI ZINE ────────────────────────────────────────────────────────────────
 
-  const displayListings = activeCategory
-    ? typedListings.filter((l) => l.category === activeCategory)
-    : typedListings;
+// Each panel is ~2.75" × 4.25" — one eighth of a letter sheet
+// Fold order: fold lengthwise, fold widthwise, fold widthwise again,
+// unfold, cut center slit, refold into booklet
+
+function Panel({ n, bg = "#F6F1E8", children }: { n: number; bg?: string; children: React.ReactNode }) {
+  return (
+    <div style={{
+      width: "100%", aspectRatio: "2.75 / 4.25",
+      background: bg, position: "relative",
+      border: "1px solid #C2D1DB",
+      overflow: "hidden",
+      fontFamily: "'Inter', sans-serif",
+    }}>
+      {/* Panel number — for folding reference */}
+      <div style={{ position: "absolute", top: 4, right: 6, fontSize: 8, color: "rgba(0,0,0,0.18)", fontWeight: 700, zIndex: 10 }}>{n}</div>
+      <div style={{ padding: "10px 10px 8px", height: "100%", display: "flex", flexDirection: "column" }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function MiniZine({ typedListings }: { typedListings: Listing[] }) {
+  const topListings = typedListings.slice(0, 16);
+  const col1 = topListings.slice(0, 8);
+  const col2 = topListings.slice(8, 16);
 
   return (
-    <div style={{ background: "#F6F1E8" }}>
-
-      {/* ── PRINT TOOLBAR ── */}
-      <div className="no-print sticky top-0 z-50 px-6 py-3 flex items-center justify-between border-b" style={{ background: "#2F5D50", borderColor: "#2F6F73" }}>
-        <div className="flex items-center gap-4">
-          <Link href="/" className="text-sm font-semibold" style={{ color: "#C2D1DB" }}>← Back to atlas</Link>
-          <span className="text-xs" style={{ color: "#7A9E7E" }}>Issue No. 1 · North Durham Community Atlas</span>
-        </div>
-        <button
-          onClick={() => window.print()}
-          className="px-5 py-1.5 rounded text-sm font-semibold"
-          style={{ background: "#C65A1E", color: "white", fontFamily: "'Lora', serif" }}
-        >
-          Print / Save PDF
-        </button>
+    <div>
+      {/* Folding instructions */}
+      <div className="mb-8 p-4 rounded-lg" style={{ background: "#2F5D50" }}>
+        <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#E3A24C" }}>How to fold your zine</p>
+        <ol className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {[
+            { n: "1", text: "Print this page landscape on one sheet of paper" },
+            { n: "2", text: "Fold in half lengthwise (hot dog). Fold in half twice more" },
+            { n: "3", text: "Unfold once. Cut along the middle fold line — only in the center" },
+            { n: "4", text: "Open fully. Fold lengthwise again and push the ends in to form the booklet" },
+          ].map((step) => (
+            <div key={step.n} className="flex gap-2">
+              <span className="shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold" style={{ background: "#E3A24C", color: "#3F352C" }}>{step.n}</span>
+              <p className="text-xs leading-relaxed" style={{ color: "#C2D1DB" }}>{step.text}</p>
+            </div>
+          ))}
+        </ol>
       </div>
 
-      {/* ══════════════════════════════════════════════════
-          SPREAD 1 — COVER
-      ══════════════════════════════════════════════════ */}
+      {/* 8 panels in reading order — 4 cols × 2 rows */}
+      {/* Screen preview */}
+      <div className="no-print grid gap-1" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
+
+        {/* Panel 1 — COVER */}
+        <Panel n={1} bg="#2F5D50">
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <div>
+              <p style={{ fontSize: 7, color: "#7A9E7E", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 4 }}>Issue No. 1 · 2025–2026</p>
+              <p style={{ fontSize: 20, fontFamily: "'Lora', serif", color: "#F6F1E8", fontWeight: 700, lineHeight: 1.1, marginBottom: 4 }}>North<br /><span style={{ color: "#E3A24C" }}>Durham</span><br />Atlas</p>
+            </div>
+            <div>
+              <div style={{ height: 2, background: "#7A9E7E", marginBottom: 5, opacity: 0.4 }} />
+              <p style={{ fontSize: 7, color: "#C2D1DB", fontStyle: "italic", lineHeight: 1.4 }}>Make hidden abundance impossible to ignore.</p>
+              <p style={{ fontSize: 6, color: "#7A9E7E", marginTop: 3 }}>Scugog · Uxbridge · Brock</p>
+            </div>
+          </div>
+        </Panel>
+
+        {/* Panel 2 — INTRO */}
+        <Panel n={2}>
+          <p style={{ fontSize: 7, color: "#2F6F73", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 5 }}>Why this exists</p>
+          <p style={{ fontSize: 9, fontFamily: "'Lora', serif", fontWeight: 700, color: "#3F352C", lineHeight: 1.3, marginBottom: 6 }}>This atlas is a counter-spell.</p>
+          <p style={{ fontSize: 7.5, color: "#3F352C", lineHeight: 1.5, flex: 1 }}>
+            North Durham is full of hidden abundance: repair cafés, below-market farmers, free Legion halls, mutual aid networks. Most residents have no idea these things exist.
+          </p>
+          <p style={{ fontSize: 7.5, color: "#3F352C", lineHeight: 1.5, marginTop: 5 }}>
+            By making fragments visible in one shareable atlas, you alter what people believe is possible in their own community.
+          </p>
+          <p style={{ fontSize: 7, color: "#2F6F73", fontWeight: 600, marginTop: 5, fontStyle: "italic" }}>&ldquo;The map is not the destination. It is the opening move.&rdquo;</p>
+        </Panel>
+
+        {/* Panel 3 — STORIES */}
+        <Panel n={3}>
+          <p style={{ fontSize: 7, color: "#7A9E7E", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 6 }}>Solidarity in action</p>
+          {stories.map((s) => (
+            <div key={s.id} style={{ marginBottom: 8, paddingBottom: 8, borderBottom: "1px solid #C2D1DB" }}>
+              <p style={{ fontSize: 6.5, color: "#2F6F73", fontWeight: 700, marginBottom: 2 }}>{s.source} · {s.date}</p>
+              <p style={{ fontSize: 8, fontFamily: "'Lora', serif", fontWeight: 600, color: "#3F352C", lineHeight: 1.3, marginBottom: 3 }}>{s.title}</p>
+              <p style={{ fontSize: 7, color: "#3F352C", lineHeight: 1.4 }}>{s.excerpt.slice(0, 100)}…</p>
+            </div>
+          ))}
+        </Panel>
+
+        {/* Panel 4 — RESOURCES I */}
+        <Panel n={4}>
+          <p style={{ fontSize: 7, color: "#2F6F73", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 5 }}>Resources</p>
+          {col1.map((l) => (
+            <div key={l.id} style={{ marginBottom: 5 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 3, marginBottom: 1 }}>
+                <div style={{ width: 5, height: 5, borderRadius: "50%", background: CATEGORY_COLORS[l.category as Category], flexShrink: 0 }} />
+                <p style={{ fontSize: 7.5, fontFamily: "'Lora', serif", fontWeight: 600, color: "#3F352C", lineHeight: 1.2 }}>{l.name}</p>
+              </div>
+              <p style={{ fontSize: 6.5, color: "#2F6F73", paddingLeft: 8 }}>{l.hours}</p>
+            </div>
+          ))}
+        </Panel>
+
+        {/* Panel 5 — RESOURCES II */}
+        <Panel n={5}>
+          <p style={{ fontSize: 7, color: "#2F6F73", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 5 }}>Resources cont.</p>
+          {col2.map((l) => (
+            <div key={l.id} style={{ marginBottom: 5 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 3, marginBottom: 1 }}>
+                <div style={{ width: 5, height: 5, borderRadius: "50%", background: CATEGORY_COLORS[l.category as Category], flexShrink: 0 }} />
+                <p style={{ fontSize: 7.5, fontFamily: "'Lora', serif", fontWeight: 600, color: "#3F352C", lineHeight: 1.2 }}>{l.name}</p>
+              </div>
+              <p style={{ fontSize: 6.5, color: "#2F6F73", paddingLeft: 8 }}>{l.hours}</p>
+            </div>
+          ))}
+        </Panel>
+
+        {/* Panel 6 — CATEGORIES */}
+        <Panel n={6} bg="#C2D1DB">
+          <p style={{ fontSize: 7, color: "#2F5D50", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 6 }}>8 categories · {typedListings.length} resources</p>
+          {ALL_CATEGORIES.map((cat) => {
+            const count = typedListings.filter((l) => l.category === cat).length;
+            return (
+              <div key={cat} style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 5 }}>
+                <div style={{ width: 6, height: 6, borderRadius: "50%", background: CATEGORY_COLORS[cat], flexShrink: 0 }} />
+                <p style={{ fontSize: 7.5, color: "#3F352C", flex: 1, fontWeight: 500 }}>{cat}</p>
+                <p style={{ fontSize: 7, color: "#2F5D50", fontWeight: 700 }}>{count}</p>
+              </div>
+            );
+          })}
+          <p style={{ fontSize: 6.5, color: "#2F5D50", marginTop: "auto", paddingTop: 6, fontStyle: "italic" }}>See the full map at the atlas website.</p>
+        </Panel>
+
+        {/* Panel 7 — WHAT'S MISSING */}
+        <Panel n={7} bg="#E3A24C">
+          <p style={{ fontSize: 7, color: "#2F5D50", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 5 }}>What&apos;s still missing</p>
+          <p style={{ fontSize: 7, color: "#3F352C", lineHeight: 1.4, marginBottom: 6 }}>The atlas names gaps — not as complaint, but as coordinate.</p>
+          {MISSING.map((item) => (
+            <div key={item} style={{ display: "flex", gap: 4, marginBottom: 5 }}>
+              <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#C65A1E", flexShrink: 0, marginTop: 2 }} />
+              <p style={{ fontSize: 7, color: "#3F352C", lineHeight: 1.4 }}>{item}</p>
+            </div>
+          ))}
+        </Panel>
+
+        {/* Panel 8 — BACK COVER */}
+        <Panel n={8} bg="#2F5D50">
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <div>
+              <p style={{ fontSize: 7, color: "#7A9E7E", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 8 }}>Know something we don&apos;t?</p>
+              <p style={{ fontSize: 10, fontFamily: "'Lora', serif", color: "#F6F1E8", fontWeight: 600, lineHeight: 1.4, marginBottom: 6 }}>Submit a resource, story, or correction at the atlas website.</p>
+              <div style={{ height: 1, background: "#7A9E7E", marginBottom: 6, opacity: 0.4 }} />
+              <p style={{ fontSize: 7, color: "#C2D1DB", lineHeight: 1.5 }}>Community-authored and independent. Updated monthly. Not affiliated with any government or institution.</p>
+            </div>
+            <div>
+              <div style={{ height: 1, background: "#7A9E7E", marginBottom: 5, opacity: 0.3 }} />
+              <p style={{ fontSize: 7, color: "#7A9E7E", fontWeight: 700 }}>North Durham Community Atlas</p>
+              <p style={{ fontSize: 6.5, color: "#C2D1DB" }}>Scugog · Uxbridge · Brock · Issue No. 1</p>
+            </div>
+          </div>
+        </Panel>
+      </div>
+
+      {/* PRINT-ONLY flat layout — panels arranged for folding */}
+      {/* Arrangement for one-sheet 8-panel zine (landscape letter):
+           Top row (upside down): p2  p7  p6  p3
+           Bottom row (right-side up): p1  p8  p5  p4
+           After printing: fold hotdog × 2, cut center, refold into booklet */}
+      <style>{`
+        @media print {
+          .no-print { display: none !important; }
+          .mini-print { display: grid !important; }
+          body { background: white; margin: 0; }
+          @page { size: letter landscape; margin: 0.25in; }
+        }
+        .mini-print {
+          display: none;
+          grid-template-columns: repeat(4, 1fr);
+          grid-template-rows: repeat(2, 1fr);
+          gap: 2px;
+          height: calc(100vh - 0.5in);
+        }
+        .panel-flip { transform: rotate(180deg); }
+      `}</style>
+
+      <div className="mini-print">
+        {/* Top row — flipped 180° */}
+        <div className="panel-flip"><Panel n={2}><p style={{fontSize:7,color:"#2F6F73",fontWeight:700,textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:5}}>Why this exists</p><p style={{fontSize:9,fontFamily:"'Lora',serif",fontWeight:700,color:"#3F352C",lineHeight:1.3,marginBottom:6}}>This atlas is a counter-spell.</p><p style={{fontSize:7.5,color:"#3F352C",lineHeight:1.5,flex:1}}>North Durham is full of hidden abundance. By making fragments visible, you alter what people believe is possible.</p><p style={{fontSize:7,color:"#2F6F73",fontWeight:600,marginTop:5,fontStyle:"italic"}}>&ldquo;The map is not the destination. It is the opening move.&rdquo;</p></Panel></div>
+        <div className="panel-flip"><Panel n={7} bg="#E3A24C"><p style={{fontSize:7,color:"#2F5D50",fontWeight:700,textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:5}}>What&apos;s still missing</p>{MISSING.map((item)=>(<div key={item} style={{display:"flex",gap:4,marginBottom:5}}><span style={{width:5,height:5,borderRadius:"50%",background:"#C65A1E",flexShrink:0,marginTop:2}}/><p style={{fontSize:7,color:"#3F352C",lineHeight:1.4}}>{item}</p></div>))}</Panel></div>
+        <div className="panel-flip"><Panel n={6} bg="#C2D1DB"><p style={{fontSize:7,color:"#2F5D50",fontWeight:700,textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:6}}>8 categories · {typedListings.length} resources</p>{ALL_CATEGORIES.map((cat)=>{const count=typedListings.filter((l)=>l.category===cat).length;return(<div key={cat} style={{display:"flex",alignItems:"center",gap:4,marginBottom:5}}><div style={{width:6,height:6,borderRadius:"50%",background:CATEGORY_COLORS[cat],flexShrink:0}}/><p style={{fontSize:7.5,color:"#3F352C",flex:1,fontWeight:500}}>{cat}</p><p style={{fontSize:7,color:"#2F5D50",fontWeight:700}}>{count}</p></div>)})}</Panel></div>
+        <div className="panel-flip"><Panel n={3}><p style={{fontSize:7,color:"#7A9E7E",fontWeight:700,textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:6}}>Solidarity in action</p>{stories.map((s)=>(<div key={s.id} style={{marginBottom:8,paddingBottom:8,borderBottom:"1px solid #C2D1DB"}}><p style={{fontSize:6.5,color:"#2F6F73",fontWeight:700,marginBottom:2}}>{s.source} · {s.date}</p><p style={{fontSize:8,fontFamily:"'Lora',serif",fontWeight:600,color:"#3F352C",lineHeight:1.3,marginBottom:3}}>{s.title}</p><p style={{fontSize:7,color:"#3F352C",lineHeight:1.4}}>{s.excerpt.slice(0,100)}…</p></div>))}</Panel></div>
+
+        {/* Bottom row — right-side up */}
+        <Panel n={1} bg="#2F5D50"><div style={{flex:1,display:"flex",flexDirection:"column",justifyContent:"space-between"}}><div><p style={{fontSize:7,color:"#7A9E7E",fontWeight:700,textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:4}}>Issue No. 1 · 2025–2026</p><p style={{fontSize:20,fontFamily:"'Lora',serif",color:"#F6F1E8",fontWeight:700,lineHeight:1.1,marginBottom:4}}>North<br /><span style={{color:"#E3A24C"}}>Durham</span><br />Atlas</p></div><div><div style={{height:2,background:"#7A9E7E",marginBottom:5,opacity:0.4}}/><p style={{fontSize:7,color:"#C2D1DB",fontStyle:"italic",lineHeight:1.4}}>Make hidden abundance impossible to ignore.</p><p style={{fontSize:6,color:"#7A9E7E",marginTop:3}}>Scugog · Uxbridge · Brock</p></div></div></Panel>
+        <Panel n={8} bg="#2F5D50"><div style={{flex:1,display:"flex",flexDirection:"column",justifyContent:"space-between"}}><div><p style={{fontSize:7,color:"#7A9E7E",fontWeight:700,textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:8}}>Know something we don&apos;t?</p><p style={{fontSize:10,fontFamily:"'Lora',serif",color:"#F6F1E8",fontWeight:600,lineHeight:1.4,marginBottom:6}}>Submit a resource, story, or correction at the atlas website.</p><p style={{fontSize:7,color:"#C2D1DB",lineHeight:1.5}}>Community-authored and independent. Updated monthly.</p></div><div><div style={{height:1,background:"#7A9E7E",marginBottom:5,opacity:0.3}}/><p style={{fontSize:7,color:"#7A9E7E",fontWeight:700}}>North Durham Community Atlas</p><p style={{fontSize:6.5,color:"#C2D1DB"}}>Scugog · Uxbridge · Brock · Issue No. 1</p></div></div></Panel>
+        <Panel n={5}><p style={{fontSize:7,color:"#2F6F73",fontWeight:700,textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:5}}>Resources cont.</p>{col2.map((l)=>(<div key={l.id} style={{marginBottom:5}}><div style={{display:"flex",alignItems:"center",gap:3,marginBottom:1}}><div style={{width:5,height:5,borderRadius:"50%",background:CATEGORY_COLORS[l.category as Category],flexShrink:0}}/><p style={{fontSize:7.5,fontFamily:"'Lora',serif",fontWeight:600,color:"#3F352C",lineHeight:1.2}}>{l.name}</p></div><p style={{fontSize:6.5,color:"#2F6F73",paddingLeft:8}}>{l.hours}</p></div>))}</Panel>
+        <Panel n={4}><p style={{fontSize:7,color:"#2F6F73",fontWeight:700,textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:5}}>Resources</p>{col1.map((l)=>(<div key={l.id} style={{marginBottom:5}}><div style={{display:"flex",alignItems:"center",gap:3,marginBottom:1}}><div style={{width:5,height:5,borderRadius:"50%",background:CATEGORY_COLORS[l.category as Category],flexShrink:0}}/><p style={{fontSize:7.5,fontFamily:"'Lora',serif",fontWeight:600,color:"#3F352C",lineHeight:1.2}}>{l.name}</p></div><p style={{fontSize:6.5,color:"#2F6F73",paddingLeft:8}}>{l.hours}</p></div>))}</Panel>
+      </div>
+    </div>
+  );
+}
+
+// ─── DIGITAL ZINE ─────────────────────────────────────────────────────────────
+
+function DigitalZine({ typedListings }: { typedListings: Listing[] }) {
+  const [activeCategory, setActiveCategory] = useState<Category | null>(null);
+  const [expandedStory, setExpandedStory] = useState<string | null>(null);
+  const displayListings = activeCategory ? typedListings.filter((l) => l.category === activeCategory) : typedListings;
+
+  return (
+    <div>
       <section className="relative min-h-screen flex flex-col justify-between px-8 pt-16 pb-0 overflow-hidden" style={{ background: "#2F5D50" }}>
         <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "radial-gradient(circle, #F6F1E8 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
-
         <div className="relative max-w-4xl mx-auto w-full">
-          {/* Masthead */}
           <div className="flex items-start justify-between mb-12">
             <div>
               <p className="text-xs font-bold tracking-widest uppercase mb-1" style={{ color: "#7A9E7E" }}>North Durham · Scugog · Uxbridge · Brock</p>
@@ -114,67 +282,38 @@ export default function ZinePage() {
               <p className="text-xs" style={{ color: "#C2D1DB" }}>Updated monthly</p>
             </div>
           </div>
-
-          {/* Cover title */}
           <div className="mb-10">
             <h1 className="font-bold leading-none mb-4" style={{ fontFamily: "'Lora', serif", color: "#F6F1E8", fontSize: "clamp(3rem, 10vw, 7rem)", letterSpacing: "-0.03em" }}>
-              North<br />
-              <span style={{ color: "#E3A24C" }}>Durham</span><br />
-              Atlas
+              North<br /><span style={{ color: "#E3A24C" }}>Durham</span><br />Atlas
             </h1>
-            <p className="text-xl max-w-lg leading-relaxed" style={{ color: "#C2D1DB" }}>
-              Make hidden abundance impossible to ignore.
-            </p>
+            <p className="text-xl max-w-lg leading-relaxed" style={{ color: "#C2D1DB" }}>Make hidden abundance impossible to ignore.</p>
           </div>
-
-          {/* Cover photo grid */}
           <div className="grid grid-cols-3 gap-3 mb-0">
             <PhotoBlock caption="Port Perry Repair Café, April 2025" tall />
             <PhotoBlock caption="Farmers Market, Scugog" tall />
             <PhotoBlock caption="Durham Forest trails, Uxbridge" tall />
           </div>
         </div>
-
         <TornEdge color="#F6F1E8" />
       </section>
 
-      {/* ══════════════════════════════════════════════════
-          SPREAD 2 — MANIFESTO
-      ══════════════════════════════════════════════════ */}
       <section className="px-8 py-16 max-w-4xl mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-12 items-start">
           <div>
             <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: "#2F6F73" }}>Why this atlas exists</p>
-            <h2 className="text-4xl font-bold leading-tight mb-6" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>
-              This atlas is a<br />counter-spell.
-            </h2>
-            <p className="text-sm leading-relaxed mb-4" style={{ color: "#3F352C" }}>
-              Many communities are taught to see only scarcity while real resources remain fragmented and invisible. The Community Atlas Drop is built to make that invisibility impossible to maintain — starting in North Durham.
-            </p>
-            <p className="text-sm leading-relaxed" style={{ color: "#3F352C" }}>
-              North Durham is full of hidden abundance: the repair café volunteer, the farmer selling below-market, the Legion hall available for free, the mutual aid network helping neighbours through winter. Most residents have no idea these things exist.
-            </p>
+            <h2 className="text-4xl font-bold leading-tight mb-6" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>This atlas is a<br />counter-spell.</h2>
+            <p className="text-sm leading-relaxed mb-4" style={{ color: "#3F352C" }}>Many communities are taught to see only scarcity while real resources remain fragmented and invisible. The Community Atlas Drop is built to make that invisibility impossible to maintain.</p>
+            <p className="text-sm leading-relaxed" style={{ color: "#3F352C" }}>North Durham is full of hidden abundance: the repair café volunteer, the farmer selling below-market, the Legion hall available for free, the mutual aid network helping neighbours through winter.</p>
           </div>
           <div>
-            <PullQuote
-              text="Conventional advocacy says, look what we lack. This atlas says, look what we already have."
-            />
-            <p className="text-sm leading-relaxed mt-6" style={{ color: "#3F352C" }}>
-              Once people use the map to solve daily problems, they become more available for deeper work: housing advocacy, public-space protection, and cooperative enterprise rooted in a place they can see themselves in.
-            </p>
-            <p className="text-sm font-semibold mt-4" style={{ fontFamily: "'Lora', serif", color: "#2F6F73" }}>
-              The map is not the destination. It is the opening move.
-            </p>
+            <PullQuote text="Conventional advocacy says, look what we lack. This atlas says, look what we already have." />
+            <p className="text-sm font-semibold mt-4" style={{ fontFamily: "'Lora', serif", color: "#2F6F73" }}>The map is not the destination. It is the opening move.</p>
           </div>
         </div>
       </section>
 
       <div style={{ background: "#2F6F73" }}>
         <TornEdge flip color="#F6F1E8" />
-
-        {/* ══════════════════════════════════════════════════
-            SPREAD 3 — LIVE MAP
-        ══════════════════════════════════════════════════ */}
         <section className="px-8 py-12">
           <div className="max-w-4xl mx-auto">
             <div className="flex items-end justify-between mb-6">
@@ -182,40 +321,24 @@ export default function ZinePage() {
                 <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "#C2D1DB" }}>Interactive</p>
                 <h2 className="text-3xl font-bold" style={{ fontFamily: "'Lora', serif", color: "#F6F1E8" }}>The Atlas Map</h2>
               </div>
-              <Link href="/atlas" className="no-print text-sm font-semibold px-4 py-2 rounded" style={{ background: "#C65A1E", color: "white", fontFamily: "'Lora', serif" }}>
-                Full screen →
-              </Link>
+              <Link href="/atlas" className="no-print text-sm font-semibold px-4 py-2 rounded" style={{ background: "#C65A1E", color: "white", fontFamily: "'Lora', serif" }}>Full screen →</Link>
             </div>
             <div className="rounded-xl overflow-hidden" style={{ height: 420, boxShadow: "0 4px 24px rgba(0,0,0,0.3)" }}>
-              <ZineMap
-                listings={typedListings}
-                selected={null}
-                onSelect={() => {}}
-              />
+              <ZineMap listings={typedListings} selected={null} onSelect={() => {}} />
             </div>
-            <p className="text-xs mt-3 text-center" style={{ color: "#C2D1DB" }}>
-              {typedListings.length} verified resources across Scugog, Uxbridge, and Brock · Trails, parks and services from OpenStreetMap
-            </p>
+            <p className="text-xs mt-3 text-center" style={{ color: "#C2D1DB" }}>{typedListings.length} verified resources · Trails, parks and services from OpenStreetMap</p>
           </div>
         </section>
-
         <TornEdge color="#F6F1E8" />
       </div>
 
-      {/* ══════════════════════════════════════════════════
-          SPREAD 4 — STORIES
-      ══════════════════════════════════════════════════ */}
       <section className="px-8 py-16 max-w-4xl mx-auto">
         <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "#7A9E7E" }}>Reported & witnessed</p>
         <h2 className="text-3xl font-bold mb-10" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>Stories of Solidarity</h2>
-
         <div className="space-y-0">
-          {stories.map((story, i) => (
+          {stories.map((story) => (
             <div key={story.id} className="border-t" style={{ borderColor: "#C2D1DB" }}>
-              <button
-                className="w-full text-left py-6 flex items-start justify-between gap-4"
-                onClick={() => setExpandedStory(expandedStory === story.id ? null : story.id)}
-              >
+              <button className="w-full text-left py-6 flex items-start justify-between gap-4" onClick={() => setExpandedStory(expandedStory === story.id ? null : story.id)}>
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
                     <span className="text-xs font-bold px-2 py-0.5 rounded" style={{ background: "rgba(47,111,115,0.12)", color: "#2F6F73" }}>{story.source}</span>
@@ -223,13 +346,11 @@ export default function ZinePage() {
                   </div>
                   <p className="text-base font-semibold leading-snug" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>{story.title}</p>
                 </div>
-                <span className="text-xl shrink-0 mt-1" style={{ color: "#2F6F73", transition: "transform 0.2s", display: "inline-block", transform: expandedStory === story.id ? "rotate(45deg)" : "none" }}>+</span>
+                <span className="text-xl shrink-0 mt-1" style={{ color: "#2F6F73", display: "inline-block", transform: expandedStory === story.id ? "rotate(45deg)" : "none", transition: "transform 0.2s" }}>+</span>
               </button>
               {expandedStory === story.id && (
                 <div className="pb-8 grid sm:grid-cols-2 gap-8 items-start">
-                  <div>
-                    <p className="text-sm leading-relaxed" style={{ color: "#3F352C" }}>{story.excerpt}</p>
-                  </div>
+                  <p className="text-sm leading-relaxed" style={{ color: "#3F352C" }}>{story.excerpt}</p>
                   <PhotoBlock caption={`${story.source} · ${story.date}`} />
                 </div>
               )}
@@ -237,59 +358,17 @@ export default function ZinePage() {
           ))}
           <div className="border-t" style={{ borderColor: "#C2D1DB" }} />
         </div>
-
-        <p className="text-xs mt-8 text-center" style={{ color: "#3F352C" }}>
-          Know a story that belongs here?{" "}
-          <Link href="/submit" className="underline font-semibold" style={{ color: "#2F6F73" }}>Submit it.</Link>
-        </p>
       </section>
 
-      {/* ══════════════════════════════════════════════════
-          SPREAD 5 — DIRECTORY
-      ══════════════════════════════════════════════════ */}
       <div style={{ background: "#C2D1DB" }}>
         <TornEdge flip color="#F6F1E8" />
-
         <section className="px-8 py-14">
           <div className="max-w-4xl mx-auto">
-            <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "#2F5D50" }}>The full directory</p>
-            <h2 className="text-3xl font-bold mb-8" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>
-              {typedListings.length} Resources, 3 Townships
-            </h2>
-
-            {/* Category filter */}
+            <h2 className="text-3xl font-bold mb-8" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>{typedListings.length} Resources, 3 Townships</h2>
             <div className="no-print flex flex-wrap gap-2 mb-8">
-              <button
-                onClick={() => setActiveCategory(null)}
-                className="px-3 py-1 rounded-full text-xs font-semibold border"
-                style={{
-                  background: activeCategory === null ? "#2F5D50" : "transparent",
-                  color: activeCategory === null ? "#F6F1E8" : "#3F352C",
-                  borderColor: "#2F5D50",
-                }}
-              >
-                All ({typedListings.length})
-              </button>
-              {ALL_CATEGORIES.map((cat) => {
-                const count = typedListings.filter((l) => l.category === cat).length;
-                return (
-                  <button
-                    key={cat}
-                    onClick={() => setActiveCategory(activeCategory === cat ? null : cat)}
-                    className="px-3 py-1 rounded-full text-xs font-semibold border"
-                    style={{
-                      background: activeCategory === cat ? CATEGORY_COLORS[cat] : "transparent",
-                      color: activeCategory === cat ? "white" : "#3F352C",
-                      borderColor: CATEGORY_COLORS[cat],
-                    }}
-                  >
-                    {cat} ({count})
-                  </button>
-                );
-              })}
+              <button onClick={() => setActiveCategory(null)} className="px-3 py-1 rounded-full text-xs font-semibold border" style={{ background: activeCategory === null ? "#2F5D50" : "transparent", color: activeCategory === null ? "#F6F1E8" : "#3F352C", borderColor: "#2F5D50" }}>All ({typedListings.length})</button>
+              {ALL_CATEGORIES.map((cat) => (<button key={cat} onClick={() => setActiveCategory(activeCategory === cat ? null : cat)} className="px-3 py-1 rounded-full text-xs font-semibold border" style={{ background: activeCategory === cat ? CATEGORY_COLORS[cat] : "transparent", color: activeCategory === cat ? "white" : "#3F352C", borderColor: CATEGORY_COLORS[cat] }}>{cat} ({typedListings.filter((l) => l.category === cat).length})</button>))}
             </div>
-
-            {/* Listings grid */}
             {ALL_CATEGORIES.filter((cat) => !activeCategory || cat === activeCategory).map((cat) => {
               const catListings = displayListings.filter((l) => l.category === cat);
               if (catListings.length === 0) return null;
@@ -302,26 +381,11 @@ export default function ZinePage() {
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {catListings.map((listing) => (
-                      <Link
-                        key={listing.id}
-                        href={`/atlas?id=${listing.id}`}
-                        className="no-print p-4 rounded-lg block transition-all hover:shadow-md"
-                        style={{ background: "white" }}
-                      >
+                      <Link key={listing.id} href={`/atlas?id=${listing.id}`} className="no-print p-4 rounded-lg block transition-all hover:shadow-md" style={{ background: "white" }}>
                         <p className="font-semibold text-sm mb-0.5" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>{listing.name}</p>
                         <p className="text-xs mb-1" style={{ color: "#2F6F73" }}>{listing.hours}</p>
                         <p className="text-xs leading-snug" style={{ color: "#3F352C" }}>{listing.description}</p>
-                        {listing.contact && <p className="text-xs mt-1 italic" style={{ color: "#7A9E7E" }}>{listing.contact}</p>}
                       </Link>
-                    ))}
-                    {/* Print-only layout (no hover/link styles) */}
-                    {catListings.map((listing) => (
-                      <div key={`print-${listing.id}`} className="print-only p-3 break-inside-avoid" style={{ display: "none" }}>
-                        <p className="font-semibold text-sm" style={{ fontFamily: "'Lora', serif", color: "#2F5D50" }}>{listing.name}</p>
-                        <p className="text-xs" style={{ color: "#3F352C" }}>{listing.address}</p>
-                        <p className="text-xs font-medium" style={{ color: "#2F6F73" }}>{listing.hours}</p>
-                        <p className="text-xs mt-0.5 leading-snug" style={{ color: "#3F352C" }}>{listing.description}</p>
-                      </div>
                     ))}
                   </div>
                 </div>
@@ -329,72 +393,82 @@ export default function ZinePage() {
             })}
           </div>
         </section>
-
         <TornEdge color="#E3A24C" />
       </div>
 
-      {/* ══════════════════════════════════════════════════
-          SPREAD 6 — WHAT'S MISSING
-      ══════════════════════════════════════════════════ */}
       <section className="px-8 py-16" style={{ background: "#E3A24C" }}>
         <div className="max-w-4xl mx-auto grid sm:grid-cols-2 gap-12 items-start">
           <div>
             <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "#2F5D50" }}>Named, not forgotten</p>
-            <h2 className="text-4xl font-bold leading-tight mb-6" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>
-              What&apos;s still<br />missing.
-            </h2>
-            <p className="text-sm leading-relaxed" style={{ color: "#3F352C" }}>
-              The atlas doesn&apos;t pretend North Durham has everything it needs. Naming what&apos;s absent is part of the work — not as complaint, but as coordinate.
-            </p>
+            <h2 className="text-4xl font-bold leading-tight mb-6" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>What&apos;s still<br />missing.</h2>
+            <p className="text-sm leading-relaxed" style={{ color: "#3F352C" }}>Naming what&apos;s absent is part of the work — not as complaint, but as coordinate.</p>
           </div>
           <ul className="space-y-4 mt-2">
-            {MISSING.map((item) => (
-              <li key={item} className="flex items-start gap-3">
-                <span className="shrink-0 mt-1.5 w-2 h-2 rounded-full" style={{ background: "#C65A1E" }} />
-                <p className="text-sm leading-snug font-medium" style={{ color: "#3F352C" }}>{item}</p>
-              </li>
-            ))}
+            {MISSING.map((item) => (<li key={item} className="flex items-start gap-3"><span className="shrink-0 mt-1.5 w-2 h-2 rounded-full" style={{ background: "#C65A1E" }} /><p className="text-sm leading-snug font-medium" style={{ color: "#3F352C" }}>{item}</p></li>))}
           </ul>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════
-          SPREAD 7 — BACK COVER / CTA
-      ══════════════════════════════════════════════════ */}
       <div style={{ background: "#2F5D50" }}>
         <TornEdge flip color="#E3A24C" />
-
         <section className="px-8 py-20 text-center">
           <div className="max-w-2xl mx-auto">
-            <p className="text-xs font-bold uppercase tracking-widest mb-6" style={{ color: "#7A9E7E" }}>North Durham · Scugog · Uxbridge · Brock</p>
-            <h2 className="text-4xl sm:text-5xl font-bold leading-tight mb-6" style={{ fontFamily: "'Lora', serif", color: "#F6F1E8" }}>
-              What would happen<br />if North Durham stopped<br />
-              <span style={{ color: "#E3A24C" }}>introducing itself<br />through problems?</span>
-            </h2>
-            <p className="text-base mb-10 leading-relaxed" style={{ color: "#C2D1DB" }}>
-              Know a resource we missed? A story worth telling? A gap worth naming? The atlas grows with the community that builds it.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="/submit" className="no-print px-8 py-3.5 rounded-lg font-semibold text-base" style={{ fontFamily: "'Lora', serif", background: "#C65A1E", color: "white" }}>
-                Add what you know →
-              </Link>
-              <Link href="/atlas" className="no-print px-8 py-3.5 rounded-lg font-semibold text-base border" style={{ fontFamily: "'Lora', serif", borderColor: "#7A9E7E", color: "#F6F1E8" }}>
-                Explore the atlas
-              </Link>
+            <h2 className="text-4xl sm:text-5xl font-bold leading-tight mb-6" style={{ fontFamily: "'Lora', serif", color: "#F6F1E8" }}>What would happen if North Durham stopped introducing itself through problems?</h2>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10">
+              <Link href="/submit" className="no-print px-8 py-3.5 rounded-lg font-semibold text-base" style={{ fontFamily: "'Lora', serif", background: "#C65A1E", color: "white" }}>Add what you know →</Link>
+              <Link href="/atlas" className="no-print px-8 py-3.5 rounded-lg font-semibold text-base border" style={{ fontFamily: "'Lora', serif", borderColor: "#7A9E7E", color: "#F6F1E8" }}>Explore the atlas</Link>
             </div>
-            <p className="text-xs mt-16" style={{ color: "#7A9E7E" }}>
-              Community-authored and independent · Updated monthly · North Durham Community Atlas · Issue No. 1
-            </p>
+            <p className="text-xs mt-16" style={{ color: "#7A9E7E" }}>Community-authored and independent · Updated monthly · North Durham Community Atlas · Issue No. 1</p>
           </div>
         </section>
       </div>
+    </div>
+  );
+}
+
+// ─── PAGE ─────────────────────────────────────────────────────────────────────
+
+export default function ZinePage() {
+  const [mode, setMode] = useState<"mini" | "digital">("mini");
+  const typedListings = listings as Listing[];
+
+  return (
+    <div style={{ background: "#F6F1E8" }}>
+
+      {/* Toolbar */}
+      <div className="no-print sticky top-0 z-50 px-6 py-3 flex items-center justify-between border-b" style={{ background: "#2F5D50", borderColor: "#2F6F73" }}>
+        <div className="flex items-center gap-4">
+          <Link href="/" className="text-sm font-semibold" style={{ color: "#C2D1DB" }}>← Back</Link>
+          {/* Mode toggle */}
+          <div style={{ display: "flex", borderRadius: 8, overflow: "hidden", border: "1px solid rgba(194,209,219,0.3)" }}>
+            {([["mini", "Mini Zine"], ["digital", "Digital Edition"]] as const).map(([key, label]) => (
+              <button key={key} onClick={() => setMode(key)} style={{ padding: "5px 14px", fontSize: 12, fontWeight: 600, fontFamily: "'Lora', serif", border: "none", cursor: "pointer", background: mode === key ? "#E3A24C" : "transparent", color: mode === key ? "#3F352C" : "#C2D1DB", transition: "all 0.15s" }}>
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+        <button onClick={() => window.print()} className="px-5 py-1.5 rounded text-sm font-semibold" style={{ background: "#C65A1E", color: "white", fontFamily: "'Lora', serif" }}>
+          {mode === "mini" ? "Print one-sheet zine →" : "Print / Save PDF →"}
+        </button>
+      </div>
+
+      {mode === "mini" ? (
+        <div className="px-6 py-8 max-w-5xl mx-auto">
+          <div className="mb-6">
+            <h1 className="text-2xl font-bold mb-1" style={{ fontFamily: "'Lora', serif", color: "#3F352C" }}>Mini Zine — One Sheet, 8 Panels</h1>
+            <p className="text-sm" style={{ color: "#3F352C" }}>Print on one sheet of letter paper, fold, and cut. Makes a pocket-sized booklet.</p>
+          </div>
+          <MiniZine typedListings={typedListings} />
+        </div>
+      ) : (
+        <DigitalZine typedListings={typedListings} />
+      )}
 
       <style>{`
         @media print {
           .no-print { display: none !important; }
-          .print-only { display: block !important; }
-          body { background: white; }
-          section { break-inside: avoid; }
+          body { background: white; margin: 0; }
         }
       `}</style>
     </div>
